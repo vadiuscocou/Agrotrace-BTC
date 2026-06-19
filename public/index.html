@@ -134,23 +134,11 @@ body{
 
     <div class="text-center mb-4">
 
-        <a href="pages/dashboard.html">Dashboard</a>
-            
-        </a>
-<a href="explorer.html">Explorer</a>
-  
-</a>
-        <a href="pages/verifier.html"> Vérifier</a>
-            
-        </a>
-
-       <a href="pages/porteur.html">Porteur</a>
-            
-        </a>
-
-        <a href="pages/admin.html">Admin</a>
-            
-        </a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="explorer.html">Explorer</a>
+        <a href="verifier.html">Vérifier</a>
+        <a href="porteur.html">Porteur</a>
+        <a href="admin.html">Admin</a>
 
     </div>
 
@@ -209,14 +197,14 @@ async function chargerProjets() {
                     <!-- BOUTONS ACTIONS -->
                     <div class="d-flex gap-2">
 
-                        <a href="pages/projet-detail.html?id=${p.id}"
+                        <a href="projet-detail.html?id=${p.id}"
                            class="btn btn-primary">
                            👁 Voir le projet
                         </a>
 
                         <button
                             class="btn btn-success"
-                            onclick="window.location.href='pages/investir.html?id=${p.id}'"
+                            onclick="window.location.href='investir.html?id=${p.id}'"
                         >
                             ⚡ Investir en Bitcoin
                         </button>

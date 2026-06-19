@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Détail du projet — AgrotraceBTC</title>
 
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="style.css">
 
 <!-- Bootstrap (optionnel mais utile pour cohérence UI) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +112,7 @@ header{
 <body>
 
 <header>
-  <a href="../index.html" class="btn-retour">← Retour accueil</a>
+  <a href="index.html" class="btn-retour">← Retour accueil</a>
   <h1>🌾 AgrotraceBTC</h1>
 </header>
 
@@ -169,8 +169,7 @@ async function chargerProjet() {
 
     <div class="detail-card">
       <h3>Investir</h3>
-      <button class="btn-investir"
-        window.location.href = "investir.html?id=" + p.id;
+      <button class="btn-investir" onclick="window.location.href='investir.html?id=${p.id}'">
         ⚡ Investir en Bitcoin
       </button>
     </div>
