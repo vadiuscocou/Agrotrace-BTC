@@ -1,333 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <style>
-
-body{
-    background:#081018;
-    color:white;
-    min-height:100vh;
-}
-
-.container{
-    animation:fadePage .8s ease;
-}
-
-@keyframes fadePage{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.card{
-    background:#111827;
-    border:none;
-    border-radius:18px;
-    color:white;
-    transition:.4s;
-    overflow:hidden;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 35px rgba(0,255,120,.25);
-}
-
-.progress{
-    height:12px;
-    background:#1f2937;
-}
-
-.progress-bar{
-    background:linear-gradient(
-        90deg,
-        #00ff88,
-        #00d26a
-    );
-    transition:width 1.2s ease;
-}
-
-.btn{
-    transition:.3s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.hidden{
-    opacity:0;
-    transform:translateY(40px);
-}
-
-.show{
-    opacity:1;
-    transform:translateY(0);
-    transition:.8s;
-}
-
-.pulse{
-    animation:pulse .3s;
-}
-
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(0.95);}
-    100%{transform:scale(1);}
-}
-
-.loading-ui{
-    cursor:progress;
-}
-
-.loading-ui::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:4px;
-    background:linear-gradient(
-        90deg,
-        #00ff88,
-        #00c3ff
-    );
-    z-index:9999;
-    animation:loadingBar 1s linear infinite;
-}
-
-@keyframes loadingBar{
-    from{
-        transform:translateX(-100%);
-    }
-    to{
-        transform:translateX(100%);
-    }
-}
-
-</style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgrotraceBTC</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
-        <style>
-
-body{
-    background: radial-gradient(circle at top,
-    #1e3a8a 0%,
-    #0f172a 45%,
-    #020617 100%);
-    color:white;
-    min-height:100vh;
-}
-
-header{
-    text-align:center;
-    padding:40px 20px;
-}
-
-header h1{
-    color:#facc15;
-    font-weight:bold;
-    text-shadow:0 0 15px rgba(250,204,21,.5);
-}
-
-.nav-btn{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.1);
-    color:white;
-    padding:12px 20px;
-    border-radius:12px;
-    text-decoration:none;
-    transition:.3s;
-}
-
-.nav-btn:hover{
-    background:#facc15;
-    color:black;
-    transform:translateY(-3px);
-}
-
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgroTraceBTC - Investissement agricole Bitcoin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<body class="bg-light">
-
-<div class="container mt-4">
-
-    <h1 class="text-center mb-3">
-        🌾 AgrotraceBTC
-    </h1>
-
-    <p class="text-center text-muted">
-        Investissement agricole traçable grâce à Bitcoin
-    </p>
-
-    <div class="text-center mb-4">
-
-        <a href="dashboard.html">Dashboard</a>
-        <a href="explorer.html">Explorer</a>
-        <a href="verifier.html">Vérifier</a>
-        <a href="porteur.html">Porteur</a>
-        <a href="admin.html">Admin</a>
-
+<body>
+  <nav class="topbar">
+    <div class="container py-3 d-flex justify-content-between align-items-center">
+      <a class="d-flex align-items-center gap-2 text-decoration-none fw-black" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>AgroTraceBTC</span>
+      </a>
+      <div class="d-flex gap-3 align-items-center">
+        <a class="nav-link active" href="index.html">Accueil</a>
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link" href="explorer.html">Explorer</a>
+        <a class="btn btn-primary btn-sm" href="admin.html">Admin</a>
+      </div>
     </div>
+  </nav>
 
-    <div id="projets"></div>
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow">Bitcoin Dev Day 2026 - Hackathon demo ready</span>
+      <h1>Financer l'agriculture avec Lightning, tracer chaque franc avec des hashes.</h1>
+      <p class="lead-copy">
+        AgroTraceBTC relie paiements Bitcoin instantanes, suivi des fonds et validation progressive des jalons agricoles.
+        La demo fonctionne avec LNbits reel ou avec un simulateur integre pour presenter le parcours complet sans friction.
+      </p>
+      <div class="d-flex flex-wrap gap-2 mt-4">
+        <a class="btn btn-primary btn-lg" href="#projects">Voir les projets</a>
+        <a class="btn btn-outline-light btn-lg" href="explorer.html">Explorer le registre</a>
+      </div>
+      <div class="row g-3 mt-5">
+        <div class="col-md-3 col-6"><div class="metric"><span>Projets</span><strong data-stat="projects">0</strong></div></div>
+        <div class="col-md-3 col-6"><div class="metric"><span>Fonds traces</span><strong data-stat="funds">0 FCFA</strong></div></div>
+        <div class="col-md-3 col-6"><div class="metric"><span>Beneficiaires</span><strong data-stat="beneficiaries">0</strong></div></div>
+        <div class="col-md-3 col-6"><div class="metric"><span>Blocs</span><strong data-stat="blocks">0</strong></div></div>
+      </div>
+    </div>
+  </header>
 
-</div>
-
-<script>
-
-async function chargerProjets() {
-    try {
-        const res = await fetch('/api/projets');
-
-        if (!res.ok) {
-            throw new Error("Erreur API : " + res.status);
-        }
-
-        const projets = await res.json();
-
-        console.log("Projets reçus :", projets);
-
-        const html = projets.map(p => {
-
-            const pourcentage =
-                ((p.collecte / p.objectif) * 100).toFixed(0);
-
-            return `
-            <div class="card mb-4">
-                <div class="card-body">
-
-                    <h3>${p.titre}</h3>
-                    <p>📍 ${p.region}</p>
-                    <p>👥 ${p.beneficiaires} bénéficiaires</p>
-
-                    <p>
-                        ${p.collecte.toLocaleString()}
-                        /
-                        ${p.objectif.toLocaleString()}
-                        FCFA
-                    </p>
-
-                    <div class="progress mb-2">
-                        <div class="progress-bar bg-success"
-                             style="width:${pourcentage}%">
-                            ${pourcentage}%
-                        </div>
-                    </div>
-
-                    <!-- BADGE BLOCKCHAIN -->
-                    <p>
-                        <span class="badge bg-info">
-                            🔗 Bitcoin traçable
-                        </span>
-                    </p>
-
-                    <!-- BOUTONS ACTIONS -->
-                    <div class="d-flex gap-2">
-
-                        <a href="projet-detail.html?id=${p.id}"
-                           class="btn btn-primary">
-                           👁 Voir le projet
-                        </a>
-
-                        <button
-                            class="btn btn-success"
-                            onclick="window.location.href='investir.html?id=${p.id}'"
-                        >
-                            ⚡ Investir en Bitcoin
-                        </button>
-
-                    </div>
-
-                </div>
+  <main>
+    <section class="surface section">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-5">
+            <span class="tag green" id="ledger-state">Registre</span>
+            <h2 class="mt-3">Un parcours clair pour convaincre un jury technique.</h2>
+          </div>
+          <div class="col-lg-7">
+            <div class="row g-3">
+              <div class="col-md-4"><div class="panel h-100"><strong>1. Invoice</strong><p class="muted mb-0 mt-2">Creation LNbits ou simulation locale avec QR et hash de paiement.</p></div></div>
+              <div class="col-md-4"><div class="panel h-100"><strong>2. Confirmation</strong><p class="muted mb-0 mt-2">Polling API, prevention des doubles paiements et mise a jour du projet.</p></div></div>
+              <div class="col-md-4"><div class="panel h-100"><strong>3. Traçabilite</strong><p class="muted mb-0 mt-2">Bloc interne SHA-256 chaine pour paiements et jalons agricoles.</p></div></div>
             </div>
-            `;
-        }).join('');
+          </div>
+        </div>
+      </div>
+    </section>
 
-        document.getElementById('projets').innerHTML = html;
-activerAnimations();
-    } catch (err) {
-        console.error("ERREUR FRONT :", err);
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-end gap-3 mb-4">
+          <div>
+            <span class="eyebrow">Projets ouverts</span>
+            <h2 class="mt-3 mb-0">Investissements agricoles actifs</h2>
+          </div>
+          <a href="dashboard.html" class="btn btn-outline-light">Dashboard</a>
+        </div>
+        <div class="row g-4" id="projects-grid"></div>
+      </div>
+    </section>
+  </main>
 
-        document.getElementById('projets').innerHTML =
-            `<p style="color:red">Erreur chargement projets</p>`;
-    }
-}
-
-chargerProjets();
-
-</script>
-<script>
-
-function activerAnimations(){
-
-    const observer = new IntersectionObserver(entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-                entry.target.classList.add("show");
-            }
-
-        });
-
-    });
-
-    document.querySelectorAll('.card').forEach(el => {
-
-        el.classList.add("hidden");
-        observer.observe(el);
-
-    });
-}
-
-// pulse boutons
-document.addEventListener("click",(e)=>{
-
-    if(
-        e.target.classList.contains("btn")
-    ){
-
-        e.target.classList.add("pulse");
-
-        setTimeout(()=>{
-            e.target.classList.remove("pulse");
-        },300);
-
-    }
-
-});
-
-// loading global fetch
-const oldFetch = window.fetch;
-
-window.fetch = async (...args)=>{
-
-    document.body.classList.add("loading-ui");
-
-    try{
-
-        return await oldFetch(...args);
-
-    }finally{
-
-        document.body.classList.remove("loading-ui");
-
-    }
-};
-
-</script>
+  <script src="app.js"></script>
+  <script>AgroTrace.loadHome();</script>
 </body>
 </html>

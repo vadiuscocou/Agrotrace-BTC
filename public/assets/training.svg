@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Agroecology training scene">
+  <rect width="900" height="540" fill="#101917"/>
+  <rect y="330" width="900" height="210" fill="#173d2e"/>
+  <circle cx="720" cy="105" r="68" fill="#9ff4c4"/>
+  <g fill="#f5f7f3" opacity=".9">
+    <circle cx="250" cy="250" r="42"/>
+    <circle cx="445" cy="230" r="42"/>
+    <circle cx="635" cy="255" r="42"/>
+  </g>
+  <g fill="#35d07f">
+    <path d="M190 330 C210 280 290 280 310 330 L330 460 H170 Z"/>
+    <path d="M385 315 C405 265 485 265 505 315 L530 460 H360 Z"/>
+    <path d="M575 335 C595 285 675 285 695 335 L720 460 H550 Z"/>
+  </g>
+  <g stroke="#f5a524" stroke-width="9" fill="none" stroke-linecap="round">
+    <path d="M350 125 H560 V245"/>
+    <path d="M390 170 H530"/>
+    <path d="M390 205 H500"/>
+  </g>
+  <g stroke="#9ff4c4" stroke-width="5" fill="none">
+    <path d="M70 500 C220 430 380 520 520 455 C660 390 760 430 870 380"/>
+  </g>
+</svg>

@@ -1,202 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Détail du projet — AgrotraceBTC</title>
-
-<link rel="stylesheet" href="style.css">
-
-<!-- Bootstrap (optionnel mais utile pour cohérence UI) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-body{
-  background: #0b1220;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-/* HEADER */
-header{
-  background: #111827;
-  padding: 20px;
-  text-align: center;
-}
-
-/* RETOUR */
-.btn-retour{
-  color: #00ff88;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* CARDS */
-.detail-card{
-  background: #111a2e;
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 15px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* PROGRESS */
-.progress-bar{
-  height: 10px;
-  background: #1f2937;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-fill{
-  height: 100%;
-  background: linear-gradient(90deg,#00ff88,#00c3ff);
-  transition: width 1s ease-in-out;
-}
-
-/* JALONS */
-.jalon-item{
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.jalon-item.valide{
-  border-color:#00ff88;
-}
-
-.jalon-item.en_validation{
-  border-color:#f7931a;
-}
-
-/* BUTTON */
-.btn-investir{
-  width: 100%;
-  background: #00ff88;
-  color: black;
-  font-weight: bold;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-investir:hover{
-  background: #00c76a;
-  transform: translateY(-2px);
-}
-
-/* LOADING */
-.loading{
-  text-align:center;
-  color:#aaa;
-}
-
-/* ANIMATIONS GLOBALES */
-.hidden{
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-.show{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projet - AgroTraceBTC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<header>
-  <a href="index.html" class="btn-retour">← Retour accueil</a>
-  <h1>🌾 AgrotraceBTC</h1>
-</header>
-
-<main class="container mt-4">
-
-<div id="projet-detail">
-  <p class="loading">Chargement du projet...</p>
-</div>
-
-</main>
-
-<script>
-const urlParams = new URLSearchParams(window.location.search);
-const projetId = urlParams.get('id');
-
-async function chargerProjet() {
-
-  const res = await fetch(`/api/projets/${projetId}`);
-  const p = await res.json();
-
-  const pct = Math.round((p.collecte / p.objectif) * 100);
-
-  document.getElementById('projet-detail').innerHTML = `
-    
-    <div class="detail-card show">
-      <h2>${p.titre}</h2>
-      <p>📍 ${p.region}</p>
-      <p>👤 ${p.porteur}</p>
+  <nav class="topbar">
+    <div class="container py-3 d-flex justify-content-between align-items-center">
+      <a class="d-flex align-items-center gap-2 text-decoration-none fw-black" href="index.html"><span class="brand-mark">A</span><span>AgroTraceBTC</span></a>
+      <div class="d-flex gap-3"><a class="nav-link" href="dashboard.html">Dashboard</a><a class="nav-link" href="explorer.html">Explorer</a><a class="nav-link" href="admin.html">Admin</a></div>
     </div>
+  </nav>
 
-    <div class="detail-card">
-      <h3>Description</h3>
-      <p>${p.description}</p>
-    </div>
-
-    <div class="detail-card">
-      <h3>Progression</h3>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width:${pct}%"></div>
-      </div>
-      <p>${pct}% financé</p>
-    </div>
-
-    <div class="detail-card">
-      <h3>Jalons</h3>
-      ${p.jalons.map(j => `
-        <div class="jalon-item ${j.statut}">
-          <b>${j.titre}</b> — ${j.montant.toLocaleString()} FCFA
-          <br>
-          <small>${j.statut}</small>
+  <main class="section">
+    <div class="container">
+      <a class="btn btn-outline-light mb-4" href="index.html">Retour</a>
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+          <img id="project-image" class="w-100 rounded-2 mb-4" style="max-height:430px; object-fit:cover;" alt="">
+          <div class="panel">
+            <span class="tag green">Projet financeable</span>
+            <h1 id="project-title" class="mt-3"></h1>
+            <p id="project-meta" class="muted"></p>
+            <p id="project-summary" class="lead-copy"></p>
+            <div class="progress my-3"><div id="project-progress" class="progress-bar"></div></div>
+            <div class="d-flex justify-content-between muted"><span id="project-money"></span><span id="project-progress-label"></span></div>
+            <a id="invest-link" class="btn btn-primary btn-lg mt-4" href="#">Investir via Lightning</a>
+          </div>
         </div>
-      `).join('')}
+        <div class="col-lg-5">
+          <div class="panel mb-4">
+            <h2 class="h4">Impact attendu</h2>
+            <ul id="impact-list" class="mb-0"></ul>
+          </div>
+          <div class="panel mb-4">
+            <h2 class="h4">Jalons et preuves</h2>
+            <div id="milestones"></div>
+          </div>
+          <div class="panel">
+            <h2 class="h4">Paiements confirmes</h2>
+            <div id="transactions"></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </main>
 
-    <div class="detail-card">
-      <h3>Investir</h3>
-      <button class="btn-investir" onclick="window.location.href='investir.html?id=${p.id}'">
-        ⚡ Investir en Bitcoin
-      </button>
-    </div>
-
-  `;
-
-  initAnimations();
-}
-
-function initAnimations(){
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add("show");
-      }
-    });
-  });
-
-  document.querySelectorAll('.detail-card')
-    .forEach(el=>{
-      el.classList.add("hidden");
-      observer.observe(el);
-    });
-}
-
-chargerProjet();
-</script>
-
+  <script src="app.js"></script>
+  <script>AgroTrace.loadProjectDetail();</script>
 </body>
 </html>
