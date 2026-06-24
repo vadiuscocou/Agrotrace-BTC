@@ -11,14 +11,27 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full overflow-hidden flex bg-slate-50 text-slate-800 antialiased selection:bg-orange-500 selection:text-white">
+<body class="h-full overflow-hidden flex bg-slate-50 text-slate-800 antialiased selection:bg-orange-500 selection:text-white" x-data="{ sidebarOpen: false }">
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div x-show="sidebarOpen" 
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-black/50 z-40 md:hidden" 
+         @click="sidebarOpen = false" 
+         style="display: none;"></div>
 
     <!-- Sidebar -->
-    <aside class="w-72 bg-[#063b27] text-white flex flex-col transition-all duration-300 z-20 flex-shrink-0 hidden md:flex shadow-2xl">
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed md:relative inset-y-0 left-0 w-72 bg-[#063b27] text-white flex flex-col transition-transform duration-300 ease-in-out z-50 md:translate-x-0 flex-shrink-0 shadow-2xl">
         
         <!-- Logo Area -->
         <div class="h-20 flex items-center px-8 border-b border-white/10">
@@ -78,7 +91,7 @@
             <a href="{{ url('/') }}" class="text-xl font-black tracking-tight flex items-center gap-2">
                 <i class="fa-brands fa-bitcoin text-orange-400"></i> AGRO<span class="text-orange-400">TRACE</span>
             </a>
-            <button class="text-white/80 hover:text-white text-2xl">
+            <button @click="sidebarOpen = true" class="text-white/80 hover:text-white text-2xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </header>

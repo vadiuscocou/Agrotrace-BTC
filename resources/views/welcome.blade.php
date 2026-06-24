@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
@@ -18,7 +19,7 @@
 <body class="bg-white text-slate-800 antialiased selection:bg-orange-500 selection:text-white">
 
     <!-- Navbar (Glassmorphism) -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+    <nav x-data="{ open: false }" class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
@@ -26,6 +27,14 @@
                     <i class="fa-brands fa-bitcoin text-orange-500 text-3xl group-hover:rotate-12 transition-transform"></i>
                     <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
                 </a>
+
+                <!-- Mobile menu button -->
+                <div class="flex md:hidden items-center">
+                    <button @click="open = !open" class="text-slate-600 hover:text-[#063b27] focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" x-show="!open"></i>
+                        <i class="fa-solid fa-xmark text-2xl" x-show="open" style="display: none;"></i>
+                    </button>
+                </div>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
@@ -41,6 +50,29 @@
                         <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0a4b33] hover:shadow-lg hover:-translate-y-0.5 transition-all">Start Investing</a>
                     @endauth
                 </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full"
+             style="display: none;">
+            <div class="px-6 pt-2 pb-6 space-y-4 flex flex-col">
+                <a href="{{ url('/projects') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Explorer</a>
+                <a href="{{ url('/verification') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Live Proofs</a>
+                <div class="h-px w-full bg-slate-100 my-2"></div>
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="text-base font-bold text-[#063b27]">Go to Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" class="text-base font-semibold text-slate-600">Log in</a>
+                    <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-3 rounded-xl text-center font-bold mt-2">Start Investing</a>
+                @endauth
             </div>
         </div>
     </nav>
