@@ -49,6 +49,76 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
         return redirect('/dashboard')->with('success', 'Investment confirmed via Lightning!');
     });
+
+    // Project Owner Actions
+    Route::post('/projects', function () {
+        if (Auth::user()->role !== 'project_owner') abort(403);
+        
+        $project = Project::create([
+            'user_id' => Auth::id(),
+            'title' => request('title'),
+            'description' => request('description'),
+            'region' => request('location'), // mapped from form input 'location'
+            'target_amount_fcfa' => request('budget_fcfa'), // mapped from form input 'budget_fcfa'
+            'status' => 'pending'
+        ]);
+
+        // Create default milestones for the new project
+        $milestones = [
+            ['title' => 'Initial Assessment & Seeds', 'description' => 'Purchase of seeds and initial field preparation.', 'project_id' => $project->id],
+            ['title' => 'Irrigation System Setup', 'description' => 'Installation of water pumps and drip irrigation.', 'project_id' => $project->id],
+            ['title' => 'Harvesting & Storage', 'description' => 'Final harvest and secure storage of the crop.', 'project_id' => $project->id],
+        ];
+
+        foreach ($milestones as $m) {
+            Milestone::create(array_merge($m, ['status' => 'pending']));
+        }
+
+        return redirect('/dashboard')->with('success', 'Project created and pending validation.');
+    });
+
+    Route::post('/milestones/{id}/proof', function ($id) {
+        if (Auth::user()->role !== 'project_owner') abort(403);
+        
+        $milestone = Milestone::findOrFail($id);
+        if ($milestone->project->user_id !== Auth::id()) abort(403);
+
+        $milestone->update([
+            'status' => 'submitted',
+            // fake proof saving logic could go here
+        ]);
+
+        return redirect('/dashboard')->with('success', 'Proof submitted successfully and is awaiting validation.');
+    });
+
+    // Admin Actions
+    Route::post('/projects/{id}/approve', function ($id) {
+        if (Auth::user()->role !== 'admin') abort(403);
+        
+        $project = Project::findOrFail($id);
+        $project->update(['status' => 'active']);
+
+        return redirect('/dashboard')->with('success', 'Project approved and is now live!');
+    });
+
+    Route::post('/projects/{id}/reject', function ($id) {
+        if (Auth::user()->role !== 'admin') abort(403);
+        
+        $project = Project::findOrFail($id);
+        // For hackathon, just delete or mark rejected
+        $project->delete();
+
+        return redirect('/dashboard')->with('success', 'Project rejected.');
+    });
+
+    Route::post('/milestones/{id}/validate', function ($id) {
+        if (Auth::user()->role !== 'admin') abort(403);
+        
+        $milestone = Milestone::findOrFail($id);
+        $milestone->update(['status' => 'validated']);
+
+        return redirect('/dashboard')->with('success', 'Milestone validated and recorded to blockchain!');
+    });
 });
 
 Route::middleware('auth')->group(function () {

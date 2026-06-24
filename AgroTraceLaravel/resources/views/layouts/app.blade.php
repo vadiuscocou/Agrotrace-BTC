@@ -55,19 +55,19 @@
         <nav class="flex-1 py-8 space-y-2 overflow-y-auto overflow-x-hidden">
             <p x-show="sidebarOpen" class="px-6 text-xs font-bold text-white/40 uppercase tracking-wider mb-4 transition-opacity duration-300 delay-100 min-w-max">Menu</p>
             
-            <a href="{{ url('/dashboard') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('dashboard') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Dashboard">
+            <a href="{{ url('/dashboard') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('dashboard') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Tableau de bord">
                 <i class="fa-solid fa-chart-pie text-xl w-6 text-center"></i>
-                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Dashboard</span>
+                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Tableau de bord</span>
             </a>
             
-            <a href="{{ url('/projects') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('projects') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Explorer Projects">
+            <a href="{{ url('/projects') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('projects') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Explorer les Projets">
                 <i class="fa-solid fa-seedling text-xl w-6 text-center"></i>
-                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Explorer Projects</span>
+                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Explorer les Projets</span>
             </a>
             
-            <a href="{{ url('/verification') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('verification') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Live Proofs">
+            <a href="{{ url('/verification') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('verification') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Preuves en Direct">
                 <i class="fa-solid fa-shield-check text-xl w-6 text-center"></i>
-                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Live Proofs</span>
+                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Preuves en Direct</span>
             </a>
         </nav>
 
@@ -80,11 +80,21 @@
                 </div>
                 <div x-show="sidebarOpen" class="flex-1 min-w-0 transition-opacity duration-300 delay-100">
                     <p class="text-sm font-bold text-white truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-xs text-orange-400 font-medium">{{ ucfirst(Auth::user()->role) }}</p>
+                    <p class="text-xs text-orange-400 font-medium">
+                        @if(Auth::user()->role === 'investor')
+                            Investisseur
+                        @elseif(Auth::user()->role === 'project_owner')
+                            Coopérative
+                        @elseif(Auth::user()->role === 'admin')
+                            Administrateur
+                        @else
+                            {{ ucfirst(Auth::user()->role) }}
+                        @endif
+                    </p>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="ml-auto" x-show="sidebarOpen">
                     @csrf
-                    <button type="submit" class="text-white/50 hover:text-white transition px-2" title="Log out">
+                    <button type="submit" class="text-white/50 hover:text-white transition px-2" title="Déconnexion">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </button>
                 </form>
@@ -93,7 +103,7 @@
             <!-- Mobile/Collapsed Logout -->
             <form method="POST" action="{{ route('logout') }}" class="mt-4 flex justify-center" x-show="!sidebarOpen" style="display: none;">
                 @csrf
-                <button type="submit" class="text-white/50 hover:text-white transition" title="Log out">
+                <button type="submit" class="text-white/50 hover:text-white transition" title="Déconnexion">
                     <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
                 </button>
             </form>

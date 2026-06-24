@@ -39,15 +39,15 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="{{ url('/projects') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Explorer</a>
-                    <a href="{{ url('/verification') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Live Proofs</a>
+                    <a href="{{ url('/verification') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Preuves en direct</a>
                     
                     <div class="h-6 w-px bg-slate-200"></div>
                     
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-[#063b27] hover:text-orange-500 transition">Go to Dashboard <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-[#063b27] hover:text-orange-500 transition">Aller au Tableau de bord <i class="fa-solid fa-arrow-right ml-1"></i></a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Log in</a>
-                        <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0a4b33] hover:shadow-lg hover:-translate-y-0.5 transition-all">Start Investing</a>
+                        <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Se connecter</a>
+                        <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0a4b33] hover:shadow-lg hover:-translate-y-0.5 transition-all">Commencer à Investir</a>
                     @endauth
                 </div>
             </div>
@@ -65,13 +65,13 @@
              style="display: none;">
             <div class="px-6 pt-2 pb-6 space-y-4 flex flex-col">
                 <a href="{{ url('/projects') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Explorer</a>
-                <a href="{{ url('/verification') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Live Proofs</a>
+                <a href="{{ url('/verification') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Preuves en direct</a>
                 <div class="h-px w-full bg-slate-100 my-2"></div>
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="text-base font-bold text-[#063b27]">Go to Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="text-base font-bold text-[#063b27]">Tableau de bord</a>
                 @else
-                    <a href="{{ route('login') }}" class="text-base font-semibold text-slate-600">Log in</a>
-                    <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-3 rounded-xl text-center font-bold mt-2">Start Investing</a>
+                    <a href="{{ route('login') }}" class="text-base font-semibold text-slate-600">Se connecter</a>
+                    <a href="{{ route('register') }}" class="bg-[#063b27] text-white px-5 py-3 rounded-xl text-center font-bold mt-2">Commencer à Investir</a>
                 @endauth
             </div>
         </div>
@@ -91,21 +91,21 @@
             </div>
             
             <h1 class="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
-                Track Every <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Satoshi</span> <br class="hidden md:block">
-                to the Green Fields.
+                Suivez Chaque <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Satoshi</span> <br class="hidden md:block">
+                jusqu'aux Champs.
             </h1>
             
             <p class="mt-6 text-lg md:text-xl leading-8 text-slate-600 max-w-2xl mx-auto mb-10 font-medium">
-                Eliminating the "Trust Gap" in agricultural investment. We use the <b class="text-slate-900">Lightning Network</b> 
-                for instant funding and <b class="text-slate-900">OP_RETURN</b> for immutable on-chain proof of impact.
+                Nous éliminons le "déficit de confiance" dans l'investissement agricole. Nous utilisons le <b class="text-slate-900">Lightning Network</b> 
+                pour des financements instantanés et <b class="text-slate-900">OP_RETURN</b> pour une preuve d'impact immuable sur la blockchain.
             </p>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="{{ route('register') }}" class="w-full sm:w-auto bg-[#063b27] text-white px-8 py-4 rounded-2xl text-lg font-bold hover:bg-[#0a4b33] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    Invest via Lightning
+                    Investir via Lightning
                 </a>
                 <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white border-2 border-slate-200 text-slate-700 px-8 py-4 rounded-2xl text-lg font-bold hover:border-orange-400 hover:text-orange-600 transition-all duration-300 group">
-                    View Live Proofs <i class="fa-solid fa-arrow-up-right-from-square ml-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    Voir les Preuves en direct <i class="fa-solid fa-arrow-up-right-from-square ml-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
                 </a>
             </div>
         </div>
@@ -115,8 +115,8 @@
     <div class="bg-slate-50 py-24 sm:py-32 border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">The Paradigm Shift</h2>
-                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">How AgroTrace changes everything</p>
+                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Le Changement de Paradigme</h2>
+                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Comment AgroTrace change la donne</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
@@ -125,9 +125,9 @@
                     <div class="h-12 w-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Instant Micropayments</h3>
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Micropaiements Instantanés</h3>
                     <p class="text-slate-500 leading-relaxed text-sm">
-                        Diaspora investors can fund agricultural inputs from anywhere in the world instantly using the Lightning Network. Zero banking friction.
+                        Les investisseurs de la diaspora peuvent financer les intrants agricoles de n'importe où dans le monde instantanément via le réseau Lightning. Zéro friction bancaire.
                     </p>
                 </div>
                 
@@ -136,9 +136,9 @@
                     <div class="h-12 w-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-link"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Immutable Proofs</h3>
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Preuves Immuables</h3>
                     <p class="text-slate-500 leading-relaxed text-sm">
-                        Every milestone achieved (e.g. seeds planted) is hashed and anchored to the Bitcoin base chain via OP_RETURN. Absolute transparency.
+                        Chaque jalon atteint (ex. semences plantées) est haché et ancré sur la blockchain Bitcoin via OP_RETURN. Une transparence absolue.
                     </p>
                 </div>
 
@@ -147,9 +147,9 @@
                     <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-leaf"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">ESG Monetization</h3>
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Monétisation ESG</h3>
                     <p class="text-slate-500 leading-relaxed text-sm">
-                        Verified impacts generate On-Chain Certificates that can be sold to international ESG funds, creating a sustainable revenue loop.
+                        Les impacts vérifiés génèrent des certificats On-Chain qui peuvent être vendus à des fonds ESG internationaux, créant une boucle de revenus durables.
                     </p>
                 </div>
             </div>
