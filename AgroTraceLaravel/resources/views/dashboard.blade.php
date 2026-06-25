@@ -22,32 +22,64 @@
     <!-- Stats Overview -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
-            <div class="h-14 w-14 rounded-full bg-green-50 flex items-center justify-center text-green-600 text-2xl">
+            <div class="h-14 w-14 rounded-full bg-green-50 flex items-center justify-center text-green-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-money-bill-wave"></i>
             </div>
             <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total Investi</p>
-                <p class="text-2xl font-black text-slate-900">{{ number_format($investments->sum('amount_fcfa')) }} <span class="text-sm text-slate-400">FCFA</span></p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Investi</p>
+                <p class="text-xl font-black text-slate-900">{{ number_format($investments->sum('amount_fcfa')) }} <span class="text-xs text-slate-400">FCFA</span></p>
             </div>
         </div>
         
         <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
-            <div class="h-14 w-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-2xl">
+            <div class="h-14 w-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-leaf"></i>
             </div>
             <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Projets</p>
-                <p class="text-2xl font-black text-slate-900">{{ $investments->unique('project_id')->count() }} <span class="text-sm text-slate-400">Soutenus</span></p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Projets</p>
+                <p class="text-xl font-black text-slate-900">{{ $investments->unique('project_id')->count() }} <span class="text-xs text-slate-400">Soutenus</span></p>
             </div>
         </div>
 
         <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
-            <div class="h-14 w-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-2xl">
+            <div class="h-14 w-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-certificate"></i>
             </div>
             <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Impact ESG</p>
-                <p class="text-2xl font-black text-slate-900">Vérifié <span class="text-sm text-slate-400">Sur Blockchain</span></p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Impact ESG</p>
+                <p class="text-xl font-black text-slate-900">Vérifié <span class="text-xs text-slate-400">On-Chain</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Section -->
+    <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3 mt-12">
+        <i class="fa-solid fa-arrow-trend-up text-orange-500"></i> Rendements & Dividendes
+    </h2>
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-16">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex-1">
+                <p class="text-slate-400 font-bold mb-2 uppercase tracking-widest text-xs">Gains redistribués</p>
+                <div class="flex items-end gap-3 mb-4">
+                    <span class="text-4xl font-black text-orange-500">12,500</span>
+                    <span class="text-lg font-bold text-slate-400 pb-1 flex items-center gap-2"><i class="fa-brands fa-bitcoin"></i> SATS</span>
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed max-w-lg">
+                    Vos investissements ont généré un retour de <strong class="text-green-600">+8.5%</strong> en moyenne via les récoltes et les certificats ESG.
+                </p>
+            </div>
+            <div class="w-full md:w-auto bg-slate-50 border border-slate-100 p-5 rounded-2xl">
+                <div class="flex items-center justify-between gap-6 mb-3 border-b border-slate-200 pb-3">
+                    <span class="text-slate-500 text-xs font-medium">Dernier paiement</span>
+                    <span class="text-slate-900 text-sm font-bold">+ 4,200 SATS</span>
+                </div>
+                <div class="flex items-center justify-between gap-6">
+                    <span class="text-slate-500 text-xs font-medium">Prochain estimé</span>
+                    <span class="text-orange-500 text-sm font-bold">~ 8,300 SATS</span>
+                </div>
+                <button class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-2.5 px-4 rounded-xl transition shadow-sm flex items-center justify-center gap-2" onclick="alert('Simulation : Ouverture de la facture Lightning (Invoice) pour retrait.')">
+                    <i class="fa-solid fa-bolt"></i> Retirer vers Wallet
+                </button>
             </div>
         </div>
     </div>

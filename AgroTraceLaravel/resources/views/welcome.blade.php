@@ -119,7 +119,7 @@
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Comment AgroTrace change la donne</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Feature 1 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="h-12 w-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-6">
@@ -130,8 +130,19 @@
                         Les investisseurs de la diaspora peuvent financer les intrants agricoles de n'importe où dans le monde instantanément via le réseau Lightning. Zéro friction bancaire.
                     </p>
                 </div>
+
+                <!-- Feature 2: Escrow -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">Déblocage sous Conditions</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">
+                        L'argent de la diaspora est sécurisé. Les fonds ne sont versés à la coopérative que jalon par jalon, uniquement après validation stricte des preuves (photos, reçus).
+                    </p>
+                </div>
                 
-                <!-- Feature 2 -->
+                <!-- Feature 3 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="h-12 w-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-link"></i>
@@ -142,7 +153,7 @@
                     </p>
                 </div>
 
-                <!-- Feature 3 -->
+                <!-- Feature 4 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-leaf"></i>
@@ -156,84 +167,79 @@
         </div>
     </div>
     
-    <!-- How it works (Redesigned) -->
-    <div class="py-24 sm:py-32 bg-white relative overflow-hidden">
-        <!-- Decorative background -->
-        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 2px 2px, black 1px, transparent 0); background-size: 32px 32px;"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="mx-auto max-w-2xl lg:text-center mb-20">
+    <!-- How it works (Clean Design) -->
+    <div class="bg-slate-50 pt-12 sm:pt-16 pb-24 sm:pb-32 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl lg:text-center mb-16">
                 <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Écosystème AgroTrace</h2>
-                <p class="mt-2 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">Un Cercle Vertueux de Confiance</p>
+                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Un Cercle Vertueux de Confiance</p>
                 <p class="mt-6 text-lg leading-8 text-slate-600">Découvrez comment nos différents acteurs interagissent pour révolutionner le financement agricole africain grâce au Bitcoin.</p>
             </div>
             
-            <div class="grid lg:grid-cols-3 gap-12">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Actor 1: Cooperative -->
-                <div class="group relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-default">
-                    <div class="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-10 group-hover:rotate-12 transition-all duration-700">
-                        <i class="fa-solid fa-seedling text-[150px] text-green-500"></i>
-                    </div>
-                    <div class="h-16 w-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-inner group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white transition-all duration-500">
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-users"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">1. Les Coopératives</h3>
-                    <p class="text-slate-600 leading-relaxed mb-8">
-                        Les agriculteurs locaux s'inscrivent sur la plateforme, décrivent leurs besoins (le projet) et le divisent en étapes clés (jalons).
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">1. Coopératives</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                        Les agriculteurs s'inscrivent sur la plateforme, décrivent leurs besoins et les divisent en étapes clés (jalons).
                     </p>
-                    <ul class="space-y-4 text-sm font-bold text-slate-500">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-green-500 text-lg"></i> Création de projets</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-green-500 text-lg"></i> Soumission de preuves (photos)</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-green-500 text-lg"></i> Réception des fonds</li>
+                    <ul class="space-y-3 text-sm font-medium text-slate-600">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Création de projets</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Soumission de preuves</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Réception des fonds</li>
                     </ul>
                 </div>
 
                 <!-- Actor 2: Investor -->
-                <div class="group relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-default">
-                    <div class="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-10 group-hover:-rotate-12 transition-all duration-700">
-                        <i class="fa-solid fa-globe text-[150px] text-orange-500"></i>
-                    </div>
-                    <div class="h-16 w-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-inner group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-hand-holding-dollar"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">2. La Diaspora</h3>
-                    <p class="text-slate-600 leading-relaxed mb-8">
-                        Les investisseurs parcourent les projets et utilisent le réseau Lightning pour financer instantanément l'économie locale.
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">2. La Diaspora</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                        Les investisseurs utilisent le réseau Lightning pour financer instantanément l'économie locale.
                     </p>
-                    <ul class="space-y-4 text-sm font-bold text-slate-500">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-orange-500 text-lg"></i> Financement sans frais bancaires</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-orange-500 text-lg"></i> Suivi en temps réel de l'impact</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-orange-500 text-lg"></i> Portefeuille d'investissements</li>
+                    <ul class="space-y-3 text-sm font-medium text-slate-600">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Sans frais bancaires</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Suivi de l'impact</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Portefeuille transparent</li>
                     </ul>
                 </div>
 
                 <!-- Actor 3: Admin / Protocol -->
-                <div class="group relative bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-900/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-default">
-                    <div class="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-20 group-hover:rotate-12 transition-all duration-700">
-                        <i class="fa-brands fa-bitcoin text-[150px] text-white"></i>
-                    </div>
-                    <div class="h-16 w-16 bg-white/10 text-white rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-inner group-hover:scale-110 group-hover:bg-white group-hover:text-slate-900 transition-all duration-500">
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <h3 class="text-2xl font-black text-white mb-4">3. Le Protocole (Admin)</h3>
-                    <p class="text-slate-400 leading-relaxed mb-8">
-                        Les preuves soumises sont vérifiées. Une fois validées, elles sont ancrées dans la blockchain de manière immuable.
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">3. Le Protocole</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                        Les preuves soumises sont vérifiées. Une fois validées, elles sont ancrées dans la blockchain Bitcoin.
                     </p>
-                    <ul class="space-y-4 text-sm font-bold text-slate-300">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-blue-400 text-lg"></i> Vérification des jalons</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-blue-400 text-lg"></i> Hachage des preuves (SHA-256)</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-blue-400 text-lg"></i> Ancrage OP_RETURN (Bitcoin)</li>
+                    <ul class="space-y-3 text-sm font-medium text-slate-600">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Validation des jalons</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Hachage des preuves</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Ancrage OP_RETURN</li>
                     </ul>
                 </div>
-            </div>
-            
-            <!-- Connection Line (Visual Only) -->
-            <div class="hidden lg:flex justify-center mt-16 gap-6 items-center text-slate-400 text-sm font-black uppercase tracking-widest bg-slate-50 py-4 px-8 rounded-full w-max mx-auto shadow-sm">
-                <span class="text-green-600">Le Besoin</span>
-                <i class="fa-solid fa-arrow-right-long animate-pulse text-slate-300"></i>
-                <span class="text-orange-500">Le Financement</span>
-                <i class="fa-solid fa-arrow-right-long animate-pulse text-slate-300"></i>
-                <span class="text-slate-900">La Preuve Irréfutable</span>
+                
+                <!-- Actor 4: ROI -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">4. Le Rendement</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                        Les revenus des récoltes et la vente de Certificats ESG créent un véritable ROI pour l'investisseur.
+                    </p>
+                    <ul class="space-y-3 text-sm font-medium text-slate-600">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Remboursement post-récolte</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Dividendes (ESG)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Réception en SATS</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
