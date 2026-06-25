@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'AgroTrace BTC | Dashboard')</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23f7931a'/%3E%3Cpath fill='%23fff' d='M21.78 15.37c.41-2.75-1.68-4.23-4.52-5.2l.92-3.72-2.27-.56-.9 3.63c-.59-.15-1.2-.28-1.82-.41l.91-3.66-2.27-.56-.92 3.7c-.5-.11-.98-.23-1.45-.35l.01-.04-3.13-.78-.6 2.42s1.68.38 1.64.41c.92.23 1.08.83 1.05 1.31l-1.05 4.23c.06.01.14.04.22.09-.07-.02-.15-.04-.23-.06l-1.47 5.92c-.1.25-.33.62-.85.49.03.04-1.65-.41-1.65-.41l-1.12 2.58 2.96.74c.55.14 1.1.28 1.63.42l-.93 3.75 2.27.56.91-3.67c.61.16 1.2.3 1.78.43l-.91 3.68 2.27.56.93-3.73c3.83.72 6.72.43 7.95-3.03.99-2.78-.05-4.38-2.02-5.42 1.44-.33 2.53-1.29 2.76-3.26zm-3.83 6.83c-.69 2.78-5.38 1.28-6.9 1.9l1.22-4.91c1.51.37 6.4 1.15 5.68 3.01zm.48-5.38c-.63 2.53-4.54 1.2-5.8 1.51l1.11-4.47c1.26.31 5.34.87 4.69 2.96z'/%3E%3C/svg%3E">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
