@@ -63,11 +63,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'status' => 'pending'
         ]);
 
+        $target = request('budget_fcfa', 0);
         // Create default milestones for the new project
         $milestones = [
-            ['title' => 'Initial Assessment & Seeds', 'description' => 'Purchase of seeds and initial field preparation.', 'project_id' => $project->id],
-            ['title' => 'Irrigation System Setup', 'description' => 'Installation of water pumps and drip irrigation.', 'project_id' => $project->id],
-            ['title' => 'Harvesting & Storage', 'description' => 'Final harvest and secure storage of the crop.', 'project_id' => $project->id],
+            ['title' => 'Initial Assessment & Seeds', 'description' => 'Purchase of seeds and initial field preparation.', 'project_id' => $project->id, 'amount_fcfa' => $target * 0.3],
+            ['title' => 'Irrigation System Setup', 'description' => 'Installation of water pumps and drip irrigation.', 'project_id' => $project->id, 'amount_fcfa' => $target * 0.4],
+            ['title' => 'Harvesting & Storage', 'description' => 'Final harvest and secure storage of the crop.', 'project_id' => $project->id, 'amount_fcfa' => $target * 0.3],
         ];
 
         foreach ($milestones as $m) {

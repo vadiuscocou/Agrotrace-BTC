@@ -101,36 +101,34 @@
             <div x-show="createModalOpen" x-transition.opacity class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity" @click="createModalOpen = false" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div x-show="createModalOpen" x-transition.opacity.duration.300ms class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <i class="fa-solid fa-tractor text-green-600"></i>
+                <div class="bg-white px-6 pt-6 pb-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-[#063b27]/10">
+                            <i class="fa-solid fa-tractor text-[#063b27] text-xl"></i>
                         </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Créer un Projet Agricole</h3>
-                            <div class="mt-2">
-                                <form action="{{ url('/projects') }}" method="POST" id="createProjectForm">
-                                    @csrf
-                                    <div class="mb-4">
-                                        <label class="block text-slate-700 text-sm font-bold mb-2" for="title">Titre du Projet</label>
-                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-1 focus:ring-[#063b27]" id="title" name="title" type="text" required placeholder="ex: Coopérative Maïs Koudougou">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-slate-700 text-sm font-bold mb-2" for="location">Localisation</label>
-                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-1 focus:ring-[#063b27]" id="location" name="location" type="text" required placeholder="ex: Burkina Faso">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-slate-700 text-sm font-bold mb-2" for="budget">Budget Cible (FCFA)</label>
-                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-1 focus:ring-[#063b27]" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description</label>
-                                        <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-1 focus:ring-[#063b27]" id="description" name="description" rows="3" required placeholder="Décrivez votre projet..."></textarea>
-                                    </div>
-                                </form>
+                        <h3 class="text-xl font-black text-slate-900" id="modal-title">Créer un Projet Agricole</h3>
+                    </div>
+                    <form action="{{ url('/projects') }}" method="POST" id="createProjectForm">
+                        @csrf
+                        <div class="mb-5">
+                            <label class="block text-slate-700 text-sm font-bold mb-2" for="title">Titre du Projet</label>
+                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="title" name="title" type="text" required placeholder="ex: Coopérative Maïs Koudougou">
+                        </div>
+                        <div class="grid grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2" for="location">Localisation</label>
+                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="location" name="location" type="text" required placeholder="ex: Burkina Faso">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2" for="budget">Budget Cible (FCFA)</label>
+                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
                             </div>
                         </div>
-                    </div>
+                        <div>
+                            <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description détaillée</label>
+                            <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Décrivez l'impact et les objectifs de votre projet..."></textarea>
+                        </div>
+                    </form>
                 </div>
                 <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
                     <button type="button" onclick="document.getElementById('createProjectForm').submit()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-[#063b27] text-base font-medium text-white hover:bg-[#0a4b33] focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
