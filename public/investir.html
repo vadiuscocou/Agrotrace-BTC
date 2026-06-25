@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Investir — AgrotraceBTC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<style>
+
+body{
+  background:#0b1220;
+  color:white;
+  min-height:100vh;
+}
+
+.box{
+  max-width:700px;
+  margin:40px auto;
+  padding:30px;
+  border-radius:20px;
+
+  background:rgba(17,26,46,.95);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:
+    0 0 20px rgba(0,255,136,.08),
+    0 0 50px rgba(0,255,136,.04);
+}
+
+h2{
+  color:#00ff88;
+  text-shadow:0 0 10px #00ff88;
+}
+
+.form-control{
+  background:#172036;
+  color:white;
+  border:none;
+}
+
+.form-control:focus{
+  background:#172036;
+  color:white;
+  box-shadow:0 0 10px #00ff88;
+}
+
+.btn-warning{
+  background:linear-gradient(
+    90deg,
+    #00ff88,
+    #00c3ff
+  );
+  border:none;
+  color:black;
+  font-weight:bold;
+}
+
+.btn-warning:hover{
+  opacity:.9;
+}
+
+#qrcode{
+  display:flex;
+  justify-content:center;
+  margin:25px 0;
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,255,255,.04);
+}
+
+#invoice{
+  color:#cbd5e1;
+  font-size:13px;
+}
+
+.status{
+  text-align:center;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.success{
+  color:#00ff88;
+}
+
+.hidden{
+  opacity:0;
+  transform:translateY(20px);
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+  transition:.8s;
+}
+
+.pulse{
+  animation:pulse .3s;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(.96);}
+  100%{transform:scale(1);}
+}
+
+.loading-ui::before{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:4px;
+  z-index:9999;
+
+  background:linear-gradient(
+    90deg,
+    #00ff88,
+    #00c3ff
+  );
+
+  animation:loadingBar 1s linear infinite;
+}
+
+@keyframes loadingBar{
+  from{transform:translateX(-100%);}
+  to{transform:translateX(100%);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 class="text-center">
+⚡ Investissement Bitcoin
+</h2>
+
+<div id="info" class="text-center text-secondary mb-3"></div>
+
+<hr>
+
+<div class="mb-3">
+<label>Montant (FCFA)</label>
+<input
+  id="montant"
+  class="form-control"
+  placeholder="Ex: 5000">
+</div>
+
+<div class="mb-3">
+<label>Nom investisseur</label>
+<input
+  id="investisseur"
+  class="form-control"
+  placeholder="Votre nom">
+</div>
+
+<button
+class="btn btn-warning w-100"
+onclick="payer()">
+Générer paiement Lightning </button>
+
+<div id="qrcode"></div>
+
+<div id="invoice" class="text-break text-center"></div>
+
+<div id="status" class="status">
+⚡ Génère une facture Lightning pour commencer
+</div>
+
+</div>
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const projetId = urlParams.get('id');
+
+let currentHash = null;
+
+async function payer(){
+
+  const montant =
+    document.getElementById("montant").value;
+
+  const investisseur =
+    document.getElementById("investisseur").value;
+
+  if(!montant){
+    alert("Entre un montant");
+    return;
+  }
+
+  if(!investisseur){
+    alert("Entre votre nom");
+    return;
+  }
+
+  try{
+
+    const res = await fetch('/api/invoice', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        projetId,
+        montant,
+        investisseur
+      })
+    });
+
+    const data = await res.json();
+
+    if(!data.success){
+      alert("Erreur invoice");
+      return;
+    }
+
+    currentHash = data.hash;
+
+    document.getElementById("invoice").innerText =
+      data.invoice;
+
+    document.getElementById("qrcode").innerHTML = "";
+
+    new QRCode(
+      document.getElementById("qrcode"),
+      {
+        text:data.invoice,
+        width:220,
+        height:220
+      }
+    );
+
+    document.getElementById("status").innerHTML =
+      "⏳ Paiement Lightning en attente...";
+
+    verifierPaiement();
+
+  }catch(err){
+
+    console.error(err);
+    alert("Erreur serveur");
+
+  }
+}
+
+async function verifierPaiement(){
+
+  const montant =
+    document.getElementById("montant").value;
+
+  const interval = setInterval(async ()=>{
+
+    try{
+
+      const res = await fetch(
+        `/api/check/${currentHash}?projetId=${projetId}&montant=${montant}`
+      );
+
+      const data = await res.json();
+
+      if(data.paid){
+
+        clearInterval(interval);
+
+        document.getElementById("status").innerHTML =
+        `
+        <div class="success">
+          ✅ Paiement confirmé sur Lightning Network
+          <br>
+          🔗 Fonds enregistrés dans AgrotraceBTC
+        </div>
+        `;
+
+        setTimeout(()=>{
+          window.location.href = "projet-detail.html?id=" + projetId;
+        },2000);
+
+      }
+
+    }catch(err){
+      console.error(err);
+    }
+
+  },3000);
+}
+
+/* Animations */
+
+document.addEventListener("click",(e)=>{
+
+  if(e.target.classList.contains("btn")){
+
+    e.target.classList.add("pulse");
+
+    setTimeout(()=>{
+      e.target.classList.remove("pulse");
+    },300);
+
+  }
+
+});
+
+/* Loading global */
+
+const oldFetch = window.fetch;
+
+window.fetch = async (...args)=>{
+
+  document.body.classList.add("loading-ui");
+
+  try{
+    return await oldFetch(...args);
+  }
+  finally{
+    document.body.classList.remove("loading-ui");
+  }
+
+};
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

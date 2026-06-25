@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Wallet | AgroTrace BTC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Simple -->
+    <nav class="p-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-black text-green-800 tracking-tighter">AGROTRACE <span
+                    class="text-orange-500">BTC</span></a>
+            <a href="projects.html" class="text-slate-400 hover:text-slate-600 font-bold text-sm transition">
+                <i class="fa-solid fa-xmark mr-2"></i> Annuler
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="max-w-md w-full bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden">
+
+            <!-- Icon Section -->
+            <div class="bg-gradient-to-br from-green-800 to-green-950 p-10 text-center relative">
+                <div
+                    class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500 to-transparent">
+                </div>
+                <div
+                    class="w-20 h-20 bg-white rounded-3xl mx-auto flex items-center justify-center shadow-xl relative z-10">
+                    <i class="fa-solid fa-bolt-lightning text-4xl text-orange-500"></i>
+                </div>
+                <h2 class="text-white text-2xl font-black mt-6 relative z-10 uppercase tracking-tight">Connect Your
+                    Wallet</h2>
+                <p class="text-green-200 text-sm mt-2 relative z-10">Choose your preferred Lightning interface</p>
+            </div>
+
+            <!-- Wallet List -->
+            <div class="p-8 space-y-3">
+
+                <!-- Option 1: Browser Extension (Alby) -->
+                <button onclick="simulateConnect('Alby')"
+                    class="w-full group flex items-center justify-between p-4 bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 rounded-2xl transition-all duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-2xl">
+                            🐝</div>
+                        <div class="text-left">
+                            <p class="font-black text-slate-800">Alby (Browser Extension)</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Recommended for
+                                Desktop</p>
+                        </div>
+                    </div>
+                    <i
+                        class="fa-solid fa-chevron-right text-slate-300 group-hover:text-orange-400 group-hover:translate-x-1 transition"></i>
+                </button>
+
+                <!-- Option 2: Mobile Wallet (BlueWallet/Phoenix) -->
+                <button onclick="simulateConnect('Mobile')"
+                    class="w-full group flex items-center justify-between p-4 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-200 rounded-2xl transition-all duration-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-2xl">
+                            📱</div>
+                        <div class="text-left">
+                            <p class="font-black text-slate-800">Mobile Wallet</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">BlueWallet /
+                                Phoenix / Zeus</p>
+                        </div>
+                    </div>
+                    <i
+                        class="fa-solid fa-chevron-right text-slate-300 group-hover:text-blue-400 group-hover:translate-x-1 transition"></i>
+                </button>
+
+                <!-- Option 3: LNURL / WalletConnect -->
+                <button onclick="simulateConnect('LNURL')"
+                    class="w-full group flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-100 hover:border-slate-300 rounded-2xl transition-all duration-300">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-2xl text-slate-400">
+                            <i class="fa-solid fa-qrcode"></i></div>
+                        <div class="text-left">
+                            <p class="font-black text-slate-800">Scan QR Code</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Connect via
+                                LNURL-Auth</p>
+                        </div>
+                    </div>
+                    <i
+                        class="fa-solid fa-chevron-right text-slate-300 group-hover:text-slate-600 group-hover:translate-x-1 transition"></i>
+                </button>
+
+            </div>
+
+            <!-- Footer Info -->
+            <div class="px-8 pb-8 text-center">
+                <p class="text-[10px] text-slate-400 font-medium leading-relaxed italic">
+                    <i class="fa-solid fa-shield-halved mr-1"></i>
+                    Non-custodial connection. AgroTrace does not hold your keys.
+                    Impact tracking is tied to your Bitcoin identity.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Succès (Simulation) -->
+    <div id="successModal"
+        class="fixed inset-0 bg-green-900/90 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-sm w-full text-center shadow-2xl">
+            <div
+                class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fa-solid fa-check-double"></i>
+            </div>
+            <h3 class="text-2xl font-black mb-2">Connected!</h3>
+            <p class="text-slate-500 text-sm mb-8">Your <span id="walletName" class="font-bold text-orange-500"></span>
+                wallet is ready to fund the future of agriculture.</p>
+            <a href="projects.html" class="block w-full bg-green-800 text-white font-bold py-4 rounded-2xl">Explore
+                Projects</a>
+        </div>
+    </div>
+
+    <script>
+        function simulateConnect(name) {
+            document.getElementById('walletName').innerText = name;
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+    </script>
+
+    <!-- [INCLURE LE MENU DEMO NAV ICI] -->
+
+</body>
+
+</html>
