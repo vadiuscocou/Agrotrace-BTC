@@ -54,6 +54,26 @@
                 <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
                     {{ $project->description }}
                 </p>
+                
+                @if($project->milestones->count() > 0)
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Jalons du projet</h4>
+                    <ul class="space-y-2">
+                        @foreach($project->milestones as $milestone)
+                        <li class="flex items-center gap-2 text-sm">
+                            @if(in_array($milestone->status, ['verified', 'validated']))
+                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                            @elseif($milestone->status == 'submitted')
+                                <i class="fa-solid fa-circle-pause text-orange-400"></i>
+                            @else
+                                <i class="fa-regular fa-circle text-slate-300"></i>
+                            @endif
+                            <span class="text-slate-700 font-medium">{{ $milestone->title }}</span>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
             </div>
 
             <!-- Card Footer & Action -->
@@ -66,7 +86,7 @@
                 </div>
                 
                 @auth
-                    @if(Auth::user()->role === 'investor' && $project->status == 'validated')
+                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['active', 'verified']))
                     <form action="{{ url('/invest/'.$project->id) }}" method="POST">
                         @csrf
                         <div class="relative mb-3">

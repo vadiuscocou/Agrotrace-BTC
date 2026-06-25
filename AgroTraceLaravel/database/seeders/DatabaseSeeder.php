@@ -18,23 +18,23 @@ class DatabaseSeeder extends Seeder
         // Users
         $admin = \App\Models\User::create(['name' => 'Admin Agro', 'email' => 'admin@agrotrace.com', 'password' => bcrypt('password'), 'role' => 'admin']);
         $investor = \App\Models\User::create(['name' => 'Investisseur', 'email' => 'investor@agrotrace.com', 'password' => bcrypt('password'), 'role' => 'investor']);
-        $owner = \App\Models\User::create(['name' => 'Cooperative Maize #042', 'email' => 'coop@agrotrace.com', 'password' => bcrypt('password'), 'role' => 'project_owner']);
+        $owner = \App\Models\User::create(['name' => 'Fédération des Coopératives', 'email' => 'coop@agrotrace.com', 'password' => bcrypt('password'), 'role' => 'project_owner']);
 
         // Project
         $project = \App\Models\Project::create([
             'user_id' => $owner->id,
-            'title' => 'Maize Cooperative #042',
-            'description' => 'Eliminating the Trust Gap in agricultural investment in Malanville, North Benin.',
-            'region' => 'Malanville, North Benin',
+            'title' => 'Coopérative de Maïs #042',
+            'description' => 'Éliminer le déficit de confiance dans l\'investissement agricole à Malanville, Nord Bénin.',
+            'region' => 'Malanville, Nord Bénin',
             'target_amount_fcfa' => 5000000,
             'status' => 'verified',
             'image' => 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800'
         ]);
 
         // Milestones
-        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Purchase of hybrid maize seeds', 'amount_fcfa' => 1000000, 'status' => 'validated', 'proof_image' => 'seeds.jpg', 'tx_hash' => '0xabcd1234']);
-        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Irrigation system setup', 'amount_fcfa' => 2000000, 'status' => 'funded', 'tx_hash' => '0xefgh5678']);
-        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Harvest logistics & storage', 'amount_fcfa' => 2000000, 'status' => 'pending']);
+        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Achat de semences de maïs hybride', 'amount_fcfa' => 1000000, 'status' => 'validated', 'proof_image' => 'seeds.jpg', 'tx_hash' => '0xabcd1234']);
+        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Mise en place du système d\'irrigation', 'amount_fcfa' => 2000000, 'status' => 'funded', 'tx_hash' => '0xefgh5678']);
+        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Logistique de récolte et stockage', 'amount_fcfa' => 2000000, 'status' => 'pending']);
 
         // Investment
         \App\Models\Investment::create([

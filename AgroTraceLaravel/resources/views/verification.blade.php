@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Live On-Chain Proofs')
+@section('title', 'Preuves On-Chain en direct')
 @section('content')
 
 <!-- Header -->
