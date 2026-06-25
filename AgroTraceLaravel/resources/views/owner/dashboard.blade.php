@@ -124,6 +124,16 @@
                                 <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
                             </div>
                         </div>
+                        <div class="grid grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2" for="latitude">Latitude (GPS)</label>
+                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="latitude" name="latitude" type="number" step="any" placeholder="ex: 12.25">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2" for="longitude">Longitude (GPS)</label>
+                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="longitude" name="longitude" type="number" step="any" placeholder="ex: -2.3667">
+                            </div>
+                        </div>
                         <div>
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description détaillée</label>
                             <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Décrivez l'impact et les objectifs de votre projet..."></textarea>

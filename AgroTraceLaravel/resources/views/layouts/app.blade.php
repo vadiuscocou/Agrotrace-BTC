@@ -67,6 +67,11 @@
                 <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Explorer les Projets</span>
             </a>
             
+            <a href="{{ url('/impact-map') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('impact-map') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Impact Map">
+                <i class="fa-solid fa-map-location-dot text-xl w-6 text-center"></i>
+                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Impact Map</span>
+            </a>
+            
             <a href="{{ url('/verification') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('verification') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Preuves en Direct">
                 <i class="fa-solid fa-shield-check text-xl w-6 text-center"></i>
                 <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Preuves en Direct</span>

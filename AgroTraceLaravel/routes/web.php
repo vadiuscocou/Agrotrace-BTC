@@ -19,6 +19,9 @@ Route::get('/projects', function () {
 Route::get('/verification', function () {
     return view('verification', ['milestones' => Milestone::with('project')->where('status', 'validated')->get()]);
 });
+Route::get('/impact-map', function () {
+    return view('impact-map', ['projects' => Project::whereIn('status', ['active', 'verified'])->get()]);
+});
 
 // Dashboard Route (Dynamic)
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -59,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'title' => request('title'),
             'description' => request('description'),
             'region' => request('location'), // mapped from form input 'location'
+            'latitude' => request('latitude'),
+            'longitude' => request('longitude'),
             'target_amount_fcfa' => request('budget_fcfa'), // mapped from form input 'budget_fcfa'
             'status' => 'pending'
         ]);

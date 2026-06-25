@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Malanville, Nord Bénin',
             'target_amount_fcfa' => 5000000,
             'status' => 'verified',
+            'latitude' => 11.8667,
+            'longitude' => 3.3833,
             'image' => 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800'
         ]);
 
@@ -55,6 +57,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Ouidah, Sud Bénin',
             'target_amount_fcfa' => 2500000,
             'status' => 'active',
+            'latitude' => 6.3573,
+            'longitude' => 2.0862,
             'image' => 'https://images.unsplash.com/photo-1548550023-2bf3c49b338c?auto=format&fit=crop&q=80&w=800'
         ]);
 
@@ -69,6 +73,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Divo, Côte d\'Ivoire',
             'target_amount_fcfa' => 8000000,
             'status' => 'pending',
+            'latitude' => 5.8374,
+            'longitude' => -5.3572,
             'image' => 'https://images.unsplash.com/photo-1582212952409-bc015f8aebcc?auto=format&fit=crop&q=80&w=800'
         ]);
 
@@ -84,6 +90,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Niayes, Sénégal',
             'target_amount_fcfa' => 3500000,
             'status' => 'active',
+            'latitude' => 14.8833,
+            'longitude' => -17.0333,
             'image' => 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&q=80&w=800'
         ]);
 
@@ -98,6 +106,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Vallée du Fleuve, Sénégal',
             'target_amount_fcfa' => 6000000,
             'status' => 'active',
+            'latitude' => 16.3268,
+            'longitude' => -14.9388,
             'image' => 'https://images.unsplash.com/photo-1586771107445-d3af9e152003?auto=format&fit=crop&q=80&w=800'
         ]);
 
@@ -113,6 +123,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Sikasso, Mali',
             'target_amount_fcfa' => 4500000,
             'status' => 'pending',
+            'latitude' => 11.3174,
+            'longitude' => -5.6666,
             'image' => 'https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&q=80&w=800'
         ]);
         
@@ -127,6 +139,8 @@ class DatabaseSeeder extends Seeder
             'region' => 'Forêt de Lama, Bénin',
             'target_amount_fcfa' => 1800000,
             'status' => 'active',
+            'latitude' => 6.9500,
+            'longitude' => 2.1667,
             'image' => 'https://images.unsplash.com/photo-1587049352847-ecbfba39f997?auto=format&fit=crop&q=80&w=800'
         ]);
         
