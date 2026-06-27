@@ -113,6 +113,28 @@
         </div>
     </div>
 
+    <!-- Stats Section -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 -mt-16 sm:-mt-20 mb-24">
+        <div class="grid md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Total Distribué</p>
+                <p class="text-3xl font-black text-[#063b27]">12.45M <span class="text-lg text-slate-400 font-bold">FCFA</span></p>
+            </div>
+            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Volume Bitcoin</p>
+                <p class="text-3xl font-black text-orange-500">0.428 <span class="text-lg font-bold">BTC</span></p>
+            </div>
+            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Preuves On-Chain</p>
+                <p class="text-3xl font-black text-[#063b27]">1,242 <i class="fa-solid fa-link text-slate-200 ml-1"></i></p>
+            </div>
+            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Émissions CO2 Évitées</p>
+                <p class="text-3xl font-black text-green-500">14.5 <span class="text-lg font-bold">T</span></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Features / The "Why" -->
     <div class="bg-slate-50 py-24 sm:py-32 border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -169,6 +191,70 @@
         </div>
     </div>
     
+    <!-- Comparison Table / Why AgroTrace Emerged -->
+    <div class="bg-white py-24 sm:py-32">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl lg:text-center mb-16">
+                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Pourquoi AgroTrace ?</h2>
+                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Le Problème vs La Solution</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100">
+                <!-- Traditional -->
+                <div class="bg-slate-50 p-10 sm:p-14 border-b md:border-b-0 md:border-r border-slate-200">
+                    <h3 class="text-2xl font-black mb-8 text-slate-700 flex items-center gap-3">
+                        Base de données traditionnelle
+                    </h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-600 font-medium text-lg leading-snug">Données modifiées par l'administrateur</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-600 font-medium text-lg leading-snug">SWIFT : 3 à 5 jours, frais de 5 %</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-600 font-medium text-lg leading-snug">Les preuves peuvent être falsifiées</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-600 font-medium text-lg leading-snug">Virement minimum : 10 000 FCFA</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Bitcoin -->
+                <div class="bg-[#063b27] p-10 sm:p-14 relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10">
+                        <i class="fa-brands fa-bitcoin text-[15rem] text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-8 text-orange-400 flex items-center gap-3 relative z-10">
+                        Bitcoin / Lightning
+                    </h3>
+                    <ul class="space-y-6 relative z-10">
+                        <li class="flex items-start gap-4">
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <span class="text-white font-medium text-lg leading-snug">Immutable (Personne ne peut modifier)</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <span class="text-white font-medium text-lg leading-snug">Paiement instantané, 0 frais</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <span class="text-white font-medium text-lg leading-snug">Les preuves existent indéfiniment sur la chaîne</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <span class="text-white font-medium text-lg leading-snug">Micro-investissez à partir de 1 000 FCFA</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- How it works (Clean Design) -->
     <div class="bg-slate-50 pt-12 sm:pt-16 pb-24 sm:pb-32 border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
