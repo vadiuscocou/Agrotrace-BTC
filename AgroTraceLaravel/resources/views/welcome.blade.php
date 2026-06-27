@@ -115,26 +115,26 @@
 
     <!-- Stats Section -->
     <div class="max-w-6xl mx-auto px-6 lg:px-8 mt-16 mb-24 relative z-10">
-        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+        <div class="bg-white rounded-3xl shadow-xl border-2 border-slate-200 overflow-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-4 divide-y divide-slate-200 md:divide-y-0 md:divide-x md:divide-slate-200">
                 <div class="p-8 text-center hover:bg-slate-50 transition-colors">
                     <div class="text-orange-500 text-2xl mb-3"><i class="fa-solid fa-vault"></i></div>
-                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Distribué</p>
+                    <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">Total Distribué</p>
                     <p class="text-3xl font-black text-[#063b27]">12.45M <span class="text-sm text-slate-500 font-bold ml-1">FCFA</span></p>
                 </div>
                 <div class="p-8 text-center hover:bg-slate-50 transition-colors">
                     <div class="text-orange-500 text-2xl mb-3"><i class="fa-brands fa-bitcoin"></i></div>
-                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Volume Bitcoin</p>
+                    <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">Volume Bitcoin</p>
                     <p class="text-3xl font-black text-[#063b27]">0.428 <span class="text-sm text-slate-500 font-bold ml-1">BTC</span></p>
                 </div>
                 <div class="p-8 text-center hover:bg-slate-50 transition-colors">
                     <div class="text-[#063b27] text-2xl mb-3"><i class="fa-solid fa-link"></i></div>
-                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Preuves On-Chain</p>
+                    <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">Preuves On-Chain</p>
                     <p class="text-3xl font-black text-[#063b27]">1,242</p>
                 </div>
                 <div class="p-8 text-center hover:bg-slate-50 transition-colors">
                     <div class="text-green-500 text-2xl mb-3"><i class="fa-solid fa-leaf"></i></div>
-                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Émissions CO2 Évitées</p>
+                    <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">Émissions CO2 Évitées</p>
                     <p class="text-3xl font-black text-[#063b27]">14.5 <span class="text-sm text-slate-500 font-bold ml-1">T</span></p>
                 </div>
             </div>
@@ -142,54 +142,54 @@
     </div>
 
     <!-- Features / The "Why" -->
-    <div class="bg-slate-50 py-24 sm:py-32 border-t border-slate-100">
+    <div class="bg-white py-24 sm:py-32">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Le Changement de Paradigme</h2>
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Le Changement de Paradigme</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Comment AgroTrace change la donne</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Feature 1 -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">Micropaiements Instantanés</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">
+                    <p class="text-slate-600 leading-relaxed text-sm">
                         Les investisseurs de la diaspora peuvent financer les intrants agricoles de n'importe où dans le monde instantanément via le réseau Lightning. Zéro friction bancaire.
                     </p>
                 </div>
 
                 <!-- Feature 2: Escrow -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-lock"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">Déblocage sous Conditions</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">
+                    <p class="text-slate-600 leading-relaxed text-sm">
                         L'argent de la diaspora est sécurisé. Les fonds ne sont versés à la coopérative que jalon par jalon, uniquement après validation stricte des preuves (photos, reçus).
                     </p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-link"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">Preuves Immuables</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">
+                    <p class="text-slate-600 leading-relaxed text-sm">
                         Chaque jalon atteint (ex. semences plantées) est haché et ancré sur la blockchain Bitcoin via OP_RETURN. Une transparence absolue.
                     </p>
                 </div>
 
                 <!-- Feature 4 -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-leaf"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">Monétisation ESG</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">
+                    <p class="text-slate-600 leading-relaxed text-sm">
                         Les impacts vérifiés génèrent des certificats On-Chain qui peuvent être vendus à des fonds ESG internationaux, créant une boucle de revenus durables.
                     </p>
                 </div>
@@ -198,33 +198,33 @@
     </div>
     
     <!-- Comparison Table / Why AgroTrace Emerged -->
-    <div class="bg-slate-50 py-24">
+    <div class="bg-white py-24">
         <div class="max-w-6xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Pourquoi AgroTrace ?</h2>
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Pourquoi AgroTrace ?</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Le Problème vs La Solution</p>
             </div>
             
-            <div class="grid md:grid-cols-2 rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-slate-100">
+            <div class="grid md:grid-cols-2 rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgb(0,0,0,0.15)] bg-white border-4 border-slate-200">
                 <!-- Traditional -->
                 <div class="p-8 md:p-12 lg:p-16 bg-white">
-                    <h3 class="text-2xl font-black mb-8 text-slate-700">Base de données traditionnelle</h3>
+                    <h3 class="text-2xl font-black mb-8 text-slate-800">Base de données traditionnelle</h3>
                     <ul class="space-y-6">
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
-                            <span class="text-slate-600 font-medium text-lg leading-snug">Données modifiées par l'administrateur</span>
+                            <div class="bg-red-100 text-red-600 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-700 font-semibold text-lg leading-snug">Données modifiées par l'administrateur</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
-                            <span class="text-slate-600 font-medium text-lg leading-snug">SWIFT : 3 à 5 jours, frais de 5 %</span>
+                            <div class="bg-red-100 text-red-600 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-700 font-semibold text-lg leading-snug">SWIFT : 3 à 5 jours, frais de 5 %</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
-                            <span class="text-slate-600 font-medium text-lg leading-snug">Les preuves peuvent être falsifiées</span>
+                            <div class="bg-red-100 text-red-600 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-700 font-semibold text-lg leading-snug">Les preuves peuvent être falsifiées</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
-                            <span class="text-slate-600 font-medium text-lg leading-snug">Virement minimum : 10 000 FCFA</span>
+                            <div class="bg-red-100 text-red-600 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <span class="text-slate-700 font-semibold text-lg leading-snug">Virement minimum : 10 000 FCFA</span>
                         </li>
                     </ul>
                 </div>
@@ -234,19 +234,19 @@
                     <ul class="space-y-6">
                         <li class="flex items-start gap-4">
                             <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
-                            <span class="text-white font-medium text-lg leading-snug">Immutable (Personne ne peut modifier)</span>
+                            <span class="text-white font-semibold text-lg leading-snug">Immutable (Personne ne peut modifier)</span>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
-                            <span class="text-white font-medium text-lg leading-snug">Paiement instantané, 0 frais</span>
+                            <span class="text-white font-semibold text-lg leading-snug">Paiement instantané, 0 frais</span>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
-                            <span class="text-white font-medium text-lg leading-snug">Les preuves existent indéfiniment sur la chaîne</span>
+                            <span class="text-white font-semibold text-lg leading-snug">Les preuves existent indéfiniment sur la chaîne</span>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
-                            <span class="text-white font-medium text-lg leading-snug">Micro-investissez à partir de 1 000 FCFA</span>
+                            <span class="text-white font-semibold text-lg leading-snug">Micro-investissez à partir de 1 000 FCFA</span>
                         </li>
                     </ul>
                 </div>
@@ -255,76 +255,75 @@
     </div>
 
     <!-- How it works (Clean Design) -->
-    <div class="bg-slate-50 pt-12 sm:pt-16 pb-24 sm:pb-32 border-t border-slate-100">
+    <div class="bg-white pt-12 sm:pt-16 pb-24 sm:pb-32">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Écosystème AgroTrace</h2>
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Écosystème AgroTrace</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Un Cercle Vertueux de Confiance</p>
-                <p class="mt-6 text-lg leading-8 text-slate-600">Découvrez comment nos différents acteurs interagissent pour révolutionner le financement agricole africain grâce au Bitcoin.</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Actor 1: Cooperative -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Actor 1: Cooperatives -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-6">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-seedling"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">1. Coopératives</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
-                        Les agriculteurs s'inscrivent sur la plateforme, décrivent leurs besoins et les divisent en étapes clés (jalons).
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">1. Les Coopératives</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm mb-6">
+                        Elles créent des projets agricoles, documentent leurs besoins et s'engagent sur des pratiques durables.
                     </p>
-                    <ul class="space-y-3 text-sm font-medium text-slate-600">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Création de projets</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Soumission de preuves</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Réception des fonds</li>
+                    <ul class="space-y-3 text-sm font-semibold text-slate-700">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-600"></i> Projets vérifiés</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-600"></i> Traçabilité GPS</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-600"></i> Réception sans intermédiaire</li>
                     </ul>
                 </div>
 
-                <!-- Actor 2: Investor -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <!-- Actor 2: Investors -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-6">
-                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        <i class="fa-solid fa-bolt"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">2. La Diaspora</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                    <h3 class="text-xl font-bold mb-3 text-[#063b27]">2. Les Investisseurs</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm mb-6">
                         Les investisseurs utilisent le réseau Lightning pour financer instantanément l'économie locale.
                     </p>
-                    <ul class="space-y-3 text-sm font-medium text-slate-600">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Sans frais bancaires</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Suivi de l'impact</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500"></i> Portefeuille transparent</li>
+                    <ul class="space-y-3 text-sm font-semibold text-slate-700">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-600"></i> Sans frais bancaires</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-600"></i> Suivi de l'impact</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-600"></i> Portefeuille transparent</li>
                     </ul>
                 </div>
 
                 <!-- Actor 3: Admin / Protocol -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">3. Le Protocole</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
+                    <p class="text-slate-600 leading-relaxed text-sm mb-6">
                         Les preuves soumises sont vérifiées. Une fois validées, elles sont ancrées dans la blockchain Bitcoin.
                     </p>
-                    <ul class="space-y-3 text-sm font-medium text-slate-600">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Validation des jalons</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Hachage des preuves</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500"></i> Ancrage OP_RETURN</li>
+                    <ul class="space-y-3 text-sm font-semibold text-slate-700">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-600"></i> Validation des jalons</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-600"></i> Hachage des preuves</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-600"></i> Ancrage OP_RETURN</li>
                     </ul>
                 </div>
                 
                 <!-- Actor 4: ROI -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-[2rem] shadow-2xl border-4 border-slate-100 hover:shadow-[0_25px_60px_rgb(0,0,0,0.2)] hover:-translate-y-2 transition-all duration-300">
                     <div class="h-12 w-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-6">
                         <i class="fa-solid fa-sack-dollar"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-[#063b27]">4. Le Rendement</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm mb-6">
-                        Les revenus des récoltes et la vente de Certificats ESG créent un véritable ROI pour l'investisseur.
+                    <p class="text-slate-600 leading-relaxed text-sm mb-6">
+                        Une fois la récolte vendue, les profits sont redistribués proportionnellement via Lightning.
                     </p>
-                    <ul class="space-y-3 text-sm font-medium text-slate-600">
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Remboursement post-récolte</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Dividendes (ESG)</li>
-                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Réception en SATS</li>
+                    <ul class="space-y-3 text-sm font-semibold text-slate-700">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-600"></i> Distribution automatique</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-600"></i> Liquidité immédiate</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-600"></i> Preuve de paiement</li>
                     </ul>
                 </div>
             </div>
