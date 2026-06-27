@@ -49,6 +49,17 @@
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
+        <!-- Terms and Conditions -->
+        <div class="mt-6">
+            <label for="terms" class="inline-flex items-center">
+                <input id="terms" type="checkbox" class="rounded border-gray-300 text-[#063b27] shadow-sm focus:ring-[#063b27]" name="terms" required>
+                <span class="ms-2 text-sm text-gray-600">
+                    J'ai lu et j'accepte les <a href="{{ route('terms') }}" target="_blank" class="underline text-[#063b27] hover:text-gray-900">conditions d'utilisation</a>.
+                </span>
+            </label>
+            <x-input-error :messages="$errors->get('terms')" class="mt-2" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

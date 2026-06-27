@@ -22,6 +22,9 @@ Route::get('/verification', function () {
 Route::get('/impact-map', function () {
     return view('impact-map', ['projects' => Project::whereIn('status', ['active', 'verified'])->get()]);
 });
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
 
 // Dashboard Route (Dynamic)
 Route::middleware(['auth', 'verified'])->group(function () {
