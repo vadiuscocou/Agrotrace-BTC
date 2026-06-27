@@ -84,13 +84,23 @@
                             Projet : {{ $milestone->project->title }}
                         </p>
                         
-                        <!-- Fake Image Proof Placeholder -->
-                        <div class="w-full h-32 bg-slate-100 rounded-xl border border-slate-200 mb-4 flex items-center justify-center text-slate-400">
-                            <div class="text-center">
-                                <i class="fa-solid fa-image text-2xl mb-1"></i>
-                                <p class="text-[10px] font-bold uppercase tracking-widest">Preuve Image Jointe</p>
+                        <!-- Actual Image Proof or Placeholder -->
+                        @if($milestone->proof_image)
+                            <div class="mb-4">
+                                <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-full h-auto max-h-48 object-cover rounded-xl border border-slate-200">
                             </div>
-                        </div>
+                        @else
+                            <div class="w-full h-32 bg-slate-100 rounded-xl border border-slate-200 mb-4 flex items-center justify-center text-slate-400">
+                                <div class="text-center">
+                                    <i class="fa-solid fa-image text-2xl mb-1"></i>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest">Aucune image jointe</p>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($milestone->proof_notes)
+                            <p class="text-sm text-slate-600 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100 italic">"{{ $milestone->proof_notes }}"</p>
+                        @endif
                         
                         <form action="{{ url('/milestones/' . $milestone->id . '/validate') }}" method="POST">
                             @csrf

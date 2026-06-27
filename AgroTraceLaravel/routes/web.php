@@ -92,9 +92,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $milestone = Milestone::findOrFail($id);
         if ($milestone->project->user_id !== Auth::id()) abort(403);
 
+        $path = request()->file('proof_image') ? request()->file('proof_image')->store('proofs', 'public') : null;
+
         $milestone->update([
             'status' => 'submitted',
-            // fake proof saving logic could go here
+            'proof_image' => $path,
+            'proof_notes' => request('proof_notes'),
         ]);
 
         return redirect('/dashboard')->with('success', 'Proof submitted successfully and is awaiting validation.');
