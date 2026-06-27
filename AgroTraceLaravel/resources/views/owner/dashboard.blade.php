@@ -166,14 +166,13 @@
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                             <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Soumettre une Preuve de Jalon</h3>
                             <div class="mt-4">
-                                <form :action="'{{ url('/milestones') }}/' + currentMilestoneId + '/proof'" method="POST" id="submitProofForm">
+                                <form :action="'{{ url('/milestones') }}/' + currentMilestoneId + '/proof'" method="POST" id="submitProofForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center bg-slate-50">
                                         <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400 mb-2"></i>
-                                        <p class="text-sm text-slate-500 font-medium">Cliquez pour télécharger une photo ou un reçu</p>
-                                        <p class="text-xs text-slate-400 mt-1">PNG, JPG, PDF jusqu'à 5MB</p>
-                                        <input type="file" class="hidden">
-                                        <p class="mt-4 text-xs text-orange-500 font-bold bg-orange-50 p-2 rounded inline-block"><i class="fa-solid fa-circle-info"></i> Pour la démo, l'envoi de fichier est simulé</p>
+                                        <p class="text-sm text-slate-500 font-medium">Sélectionnez une photo ou un reçu</p>
+                                        <p class="text-xs text-slate-400 mt-1">PNG, JPG jusqu'à 5MB</p>
+                                        <input type="file" name="proof_image" accept="image/*" class="mt-4 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" required>
                                     </div>
                                     <div class="mt-4">
                                         <label class="block text-slate-700 text-sm font-bold mb-2" for="proof_desc">Détails de la preuve</label>
