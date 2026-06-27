@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -102,36 +102,40 @@
                 pour des financements instantanés et <b class="text-slate-900">OP_RETURN</b> pour une preuve d'impact immuable sur la blockchain.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mt-4">
-                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-orange-400 text-white px-8 py-3.5 rounded-full text-base font-black tracking-wide shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 transition-all duration-300">
-                    <i class="fa-solid fa-bolt text-yellow-200 mr-2"></i> Investir via Lightning
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-[#063b27] text-white px-8 py-4 rounded-xl text-lg font-bold shadow-lg hover:shadow-2xl hover:-translate-y-0.5 hover:bg-[#0a4b33] transition-all duration-300 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-bolt text-orange-400"></i> Investir via Lightning
                 </a>
-                <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white/60 backdrop-blur-md border border-slate-200/60 text-slate-700 px-8 py-3.5 rounded-full text-base font-bold hover:bg-white hover:text-[#063b27] hover:border-slate-300 hover:shadow-sm transition-all duration-300 group">
-                    Voir les Preuves <i class="fa-solid fa-arrow-right ml-2 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white border-2 border-[#063b27] text-[#063b27] px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#063b27] hover:text-white transition-all duration-300 flex items-center justify-center gap-3 group">
+                    Voir les Preuves <i class="fa-solid fa-arrow-right opacity-70 group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Stats Section (Glassmorphism) -->
-    <div class="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 mt-12 mb-24">
-        <div class="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white shadow-xl shadow-slate-200/40 p-2 sm:p-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200/50">
-                <div class="p-6 text-center hover:bg-white/40 transition-colors rounded-3xl md:rounded-l-3xl md:rounded-r-none">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Total Distribué</p>
-                    <p class="text-3xl font-black text-slate-800 tracking-tight">12.45M <span class="text-base text-slate-400 font-bold ml-1">FCFA</span></p>
+    <!-- Stats Section -->
+    <div class="max-w-6xl mx-auto px-6 lg:px-8 mt-16 mb-24 relative z-10">
+        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                <div class="p-8 text-center hover:bg-slate-50 transition-colors">
+                    <div class="text-orange-500 text-2xl mb-3"><i class="fa-solid fa-vault"></i></div>
+                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Distribué</p>
+                    <p class="text-3xl font-black text-[#063b27]">12.45M <span class="text-sm text-slate-500 font-bold ml-1">FCFA</span></p>
                 </div>
-                <div class="p-6 text-center hover:bg-white/40 transition-colors md:rounded-none">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Volume Bitcoin</p>
-                    <p class="text-3xl font-black text-orange-500 tracking-tight">0.428 <span class="text-base font-bold ml-1">BTC</span></p>
+                <div class="p-8 text-center hover:bg-slate-50 transition-colors">
+                    <div class="text-orange-500 text-2xl mb-3"><i class="fa-brands fa-bitcoin"></i></div>
+                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Volume Bitcoin</p>
+                    <p class="text-3xl font-black text-[#063b27]">0.428 <span class="text-sm text-slate-500 font-bold ml-1">BTC</span></p>
                 </div>
-                <div class="p-6 text-center hover:bg-white/40 transition-colors md:rounded-none">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Preuves On-Chain</p>
-                    <p class="text-3xl font-black text-slate-800 tracking-tight">1,242 <i class="fa-solid fa-link text-slate-300 text-xl ml-1"></i></p>
+                <div class="p-8 text-center hover:bg-slate-50 transition-colors">
+                    <div class="text-[#063b27] text-2xl mb-3"><i class="fa-solid fa-link"></i></div>
+                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Preuves On-Chain</p>
+                    <p class="text-3xl font-black text-[#063b27]">1,242</p>
                 </div>
-                <div class="p-6 text-center hover:bg-white/40 transition-colors rounded-3xl md:rounded-r-3xl md:rounded-l-none">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Émissions Évitées</p>
-                    <p class="text-3xl font-black text-green-600 tracking-tight">14.5 <span class="text-base font-bold ml-1">T</span></p>
+                <div class="p-8 text-center hover:bg-slate-50 transition-colors">
+                    <div class="text-green-500 text-2xl mb-3"><i class="fa-solid fa-leaf"></i></div>
+                    <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Émissions CO2 Évitées</p>
+                    <p class="text-3xl font-black text-[#063b27]">14.5 <span class="text-sm text-slate-500 font-bold ml-1">T</span></p>
                 </div>
             </div>
         </div>
@@ -194,61 +198,54 @@
     </div>
     
     <!-- Comparison Table / Why AgroTrace Emerged -->
-    <div class="bg-white py-24 sm:py-32">
+    <div class="bg-slate-50 py-24">
         <div class="max-w-6xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
                 <h2 class="text-base font-bold leading-7 text-orange-500 tracking-widest uppercase">Pourquoi AgroTrace ?</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Le Problème vs La Solution</p>
             </div>
             
-            <div class="grid md:grid-cols-2 rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100">
+            <div class="grid md:grid-cols-2 rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-slate-100">
                 <!-- Traditional -->
-                <div class="bg-slate-50 p-10 sm:p-14 border-b md:border-b-0 md:border-r border-slate-200">
-                    <h3 class="text-2xl font-black mb-8 text-slate-700 flex items-center gap-3">
-                        Base de données traditionnelle
-                    </h3>
+                <div class="p-8 md:p-12 lg:p-16 bg-white">
+                    <h3 class="text-2xl font-black mb-8 text-slate-700">Base de données traditionnelle</h3>
                     <ul class="space-y-6">
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
                             <span class="text-slate-600 font-medium text-lg leading-snug">Données modifiées par l'administrateur</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
                             <span class="text-slate-600 font-medium text-lg leading-snug">SWIFT : 3 à 5 jours, frais de 5 %</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
                             <span class="text-slate-600 font-medium text-lg leading-snug">Les preuves peuvent être falsifiées</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-red-100 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
+                            <div class="bg-red-50 text-red-500 h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-xmark text-sm"></i></div>
                             <span class="text-slate-600 font-medium text-lg leading-snug">Virement minimum : 10 000 FCFA</span>
                         </li>
                     </ul>
                 </div>
                 <!-- Bitcoin -->
-                <div class="bg-[#063b27] p-10 sm:p-14 relative overflow-hidden">
-                    <div class="absolute -right-10 -bottom-10 opacity-10">
-                        <i class="fa-brands fa-bitcoin text-[15rem] text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-black mb-8 text-orange-400 flex items-center gap-3 relative z-10">
-                        Bitcoin / Lightning
-                    </h3>
-                    <ul class="space-y-6 relative z-10">
+                <div class="p-8 md:p-12 lg:p-16 bg-[#063b27]">
+                    <h3 class="text-2xl font-black mb-8 text-orange-400">Bitcoin / Lightning</h3>
+                    <ul class="space-y-6">
                         <li class="flex items-start gap-4">
-                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
                             <span class="text-white font-medium text-lg leading-snug">Immutable (Personne ne peut modifier)</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
                             <span class="text-white font-medium text-lg leading-snug">Paiement instantané, 0 frais</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
                             <span class="text-white font-medium text-lg leading-snug">Les preuves existent indéfiniment sur la chaîne</span>
                         </li>
                         <li class="flex items-start gap-4">
-                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-orange-500/30"><i class="fa-solid fa-check text-sm"></i></div>
+                            <div class="bg-orange-500 text-white h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-check text-sm"></i></div>
                             <span class="text-white font-medium text-lg leading-snug">Micro-investissez à partir de 1 000 FCFA</span>
                         </li>
                     </ul>
