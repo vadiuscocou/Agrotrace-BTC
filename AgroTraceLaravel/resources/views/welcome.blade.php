@@ -102,35 +102,37 @@
                 pour des financements instantanés et <b class="text-slate-900">OP_RETURN</b> pour une preuve d'impact immuable sur la blockchain.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-[#063b27] text-white px-8 py-4 rounded-2xl text-lg font-bold hover:bg-[#0a4b33] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    Investir via Lightning
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mt-4">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-orange-400 text-white px-8 py-3.5 rounded-full text-base font-black tracking-wide shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                    <i class="fa-solid fa-bolt text-yellow-200 mr-2"></i> Investir via Lightning
                 </a>
-                <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white border-2 border-slate-200 text-slate-700 px-8 py-4 rounded-2xl text-lg font-bold hover:border-orange-400 hover:text-orange-600 transition-all duration-300 group">
-                    Voir les Preuves en direct <i class="fa-solid fa-arrow-up-right-from-square ml-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white/60 backdrop-blur-md border border-slate-200/60 text-slate-700 px-8 py-3.5 rounded-full text-base font-bold hover:bg-white hover:text-[#063b27] hover:border-slate-300 hover:shadow-sm transition-all duration-300 group">
+                    Voir les Preuves <i class="fa-solid fa-arrow-right ml-2 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Stats Section -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 -mt-16 sm:-mt-20 mb-24">
-        <div class="grid md:grid-cols-4 gap-4 sm:gap-6">
-            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Total Distribué</p>
-                <p class="text-3xl font-black text-[#063b27]">12.45M <span class="text-lg text-slate-400 font-bold">FCFA</span></p>
-            </div>
-            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Volume Bitcoin</p>
-                <p class="text-3xl font-black text-orange-500">0.428 <span class="text-lg font-bold">BTC</span></p>
-            </div>
-            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Preuves On-Chain</p>
-                <p class="text-3xl font-black text-[#063b27]">1,242 <i class="fa-solid fa-link text-slate-200 ml-1"></i></p>
-            </div>
-            <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 transition-transform">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Émissions CO2 Évitées</p>
-                <p class="text-3xl font-black text-green-500">14.5 <span class="text-lg font-bold">T</span></p>
+    <!-- Stats Section (Glassmorphism) -->
+    <div class="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 mt-12 mb-24">
+        <div class="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white shadow-xl shadow-slate-200/40 p-2 sm:p-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200/50">
+                <div class="p-6 text-center hover:bg-white/40 transition-colors rounded-3xl md:rounded-l-3xl md:rounded-r-none">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Total Distribué</p>
+                    <p class="text-3xl font-black text-slate-800 tracking-tight">12.45M <span class="text-base text-slate-400 font-bold ml-1">FCFA</span></p>
+                </div>
+                <div class="p-6 text-center hover:bg-white/40 transition-colors md:rounded-none">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Volume Bitcoin</p>
+                    <p class="text-3xl font-black text-orange-500 tracking-tight">0.428 <span class="text-base font-bold ml-1">BTC</span></p>
+                </div>
+                <div class="p-6 text-center hover:bg-white/40 transition-colors md:rounded-none">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Preuves On-Chain</p>
+                    <p class="text-3xl font-black text-slate-800 tracking-tight">1,242 <i class="fa-solid fa-link text-slate-300 text-xl ml-1"></i></p>
+                </div>
+                <div class="p-6 text-center hover:bg-white/40 transition-colors rounded-3xl md:rounded-r-3xl md:rounded-l-none">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Émissions Évitées</p>
+                    <p class="text-3xl font-black text-green-600 tracking-tight">14.5 <span class="text-base font-bold ml-1">T</span></p>
+                </div>
             </div>
         </div>
     </div>
