@@ -330,8 +330,123 @@
         </div>
     </div>
     
+    <!-- À Propos / Comment ça marche -->
+    <div class="bg-slate-50 py-24 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-base font-bold leading-7 text-[#063b27] tracking-widest uppercase mb-2">À Propos de Nous</h2>
+            <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl mb-8">Notre Mission : Connecter la Diaspora à la Terre</p>
+            <p class="text-lg text-slate-600 leading-relaxed font-medium">
+                AgroTrace est né d'un constat simple : l'agriculture africaine manque cruellement de financements, tandis que les investisseurs de la diaspora ou du monde entier hésitent à investir par manque de confiance et de traçabilité. 
+                <br><br>
+                Notre plateforme est un <b>pont de confiance</b>. Nous utilisons le réseau Bitcoin (Lightning Network) pour permettre des investissements instantanés et sans frais bancaires. Mais surtout, nous utilisons la blockchain pour rendre chaque preuve de travail <b>immuable</b>. L'argent n'est débloqué aux agriculteurs que lorsqu'ils prouvent (photos, reçus) que l'étape précédente du projet a été réalisée.
+            </p>
+        </div>
+    </div>
+
+    <!-- FAQ (Bulles de discussion) -->
+    <div class="bg-white py-24 border-t border-slate-100" id="faq">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase mb-2">Questions Fréquentes</h2>
+                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Vous avez des questions ?</p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Q1 -->
+                <div class="flex gap-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-user text-slate-500"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
+                        <p class="text-slate-800 font-semibold">En tant qu'agriculteur, dois-je avoir des fonds pour lancer mon projet sur AgroTrace ?</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 flex-row-reverse">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
+                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
+                        <p class="font-medium text-slate-100">Non, absolument pas ! L'inscription est gratuite. Ce sont les investisseurs qui financent votre projet. L'argent vous est ensuite versé étape par étape, au fur et à mesure que vous validez les jalons de votre projet agricole.</p>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="flex gap-4 pt-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-user text-slate-500"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
+                        <p class="text-slate-800 font-semibold">Comment se rémunèrent les investisseurs et la plateforme ?</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 flex-row-reverse">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
+                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
+                        <p class="font-medium text-slate-100">AgroTrace se rémunère via une commission transparente (environ 2%) sur les levées de fonds. Quant aux investisseurs, ils reçoivent leur capital initial plus un taux d'intérêt (par exemple 8%) une fois que la récolte a été vendue avec succès !</p>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="flex gap-4 pt-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-user text-slate-500"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
+                        <p class="text-slate-800 font-semibold">Comment l'agriculteur reçoit-il l'argent si c'est du Bitcoin ?</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 flex-row-reverse">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
+                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
+                        <p class="font-medium text-slate-100">La plateforme s'occupe de la conversion ! Dès qu'une preuve est validée, le contrat libère le Bitcoin vers une passerelle partenaire qui le convertit instantanément en FCFA et l'envoie sur le compte Mobile Money (MTN, Moov, etc.) de l'agriculteur.</p>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="flex gap-4 pt-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-user text-slate-500"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
+                        <p class="text-slate-800 font-semibold">Dois-je m'y connaître en cryptomonnaie ou en Bitcoin pour utiliser la plateforme ?</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 flex-row-reverse">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
+                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
+                        <p class="font-medium text-slate-100">Pas du tout ! L'interface masque toute la complexité technique. Si vous êtes agriculteur, vous ne verrez que des montants en monnaie locale (FCFA). Si vous êtes investisseur, vous scannez simplement un QR Code depuis votre application pour envoyer les fonds de manière instantanée.</p>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="flex gap-4 pt-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-user text-slate-500"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
+                        <p class="text-slate-800 font-semibold">Le risque de perte (sécheresse, mauvaise récolte) est-il couvert ?</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 flex-row-reverse">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
+                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
+                        <p class="font-medium text-slate-100">Investir dans l'économie réelle comporte toujours des risques. Cependant, grâce à notre système de paiement par "tranches" (Jalons), le risque est drastiquement réduit. Si le projet s'arrête à l'étape 2 (ex: catastrophe naturelle), les fonds des étapes 3 et 4 ne sont pas débloqués et restent sécurisés pour les investisseurs.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-slate-400 text-sm font-medium">
             &copy; 2026 AgroTrace BTC - Built for the Bitcoin Mastermind Hackathon.
         </div>

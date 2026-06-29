@@ -16,48 +16,85 @@
 </div>
 
 <div class="p-8">
+    <!-- Financial KPIs -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex items-center gap-6">
+            <div class="h-16 w-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-500 text-2xl">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Volume Total Financé</p>
+                <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalInvested) }} <span class="text-lg text-slate-400">FCFA</span></h3>
+            </div>
+        </div>
+        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex items-center gap-6 relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 text-orange-50/50 text-9xl">
+                <i class="fa-brands fa-bitcoin"></i>
+            </div>
+            <div class="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500 text-2xl relative z-10">
+                <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+            <div class="relative z-10">
+                <p class="text-sm font-bold text-orange-400 uppercase tracking-widest mb-1">Commissions AgroTrace</p>
+                <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalFeesSats) }} <span class="text-lg text-slate-400">SATS</span></h3>
+                <p class="text-xs text-slate-500 font-medium">≈ {{ number_format($totalFeesSats / 6) }} FCFA collectés en frais (2%)</p>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        <!-- Pending Projects Queue -->
+        <!-- Projects Management -->
         <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col">
             <div class="p-6 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
                 <h2 class="text-lg font-bold text-slate-800 flex items-center gap-3">
-                    <i class="fa-solid fa-list-check text-orange-500"></i> File d'attente des Projets
+                    <i class="fa-solid fa-list-check text-orange-500"></i> Gestion des Projets
                 </h2>
-                <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded-md">{{ $projects->where('status', 'pending')->count() }}</span>
+                <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded-md">{{ $projects->count() }}</span>
             </div>
             
             <div class="p-6 flex-1">
                 <div class="space-y-4">
-                    @foreach($projects->where('status', 'pending') as $project)
+                    @foreach($projects->sortByDesc('created_at') as $project)
                     <div class="border border-slate-200 rounded-2xl p-5 hover:border-orange-300 hover:shadow-md transition bg-white group">
                         <div class="flex justify-between items-start mb-3">
                             <h3 class="font-bold text-slate-900">{{ $project->title }}</h3>
                             <span class="text-xs font-black text-slate-400 uppercase">{{ number_format($project->target_amount_fcfa) }} CFA</span>
                         </div>
-                        <p class="text-xs text-slate-500 mb-4 font-medium"><i class="fa-solid fa-user mr-1"></i> {{ optional($project->user)->name ?? 'Unknown' }} &nbsp;&bull;&nbsp; <i class="fa-solid fa-location-dot mr-1"></i> {{ $project->region }}</p>
+                        <p class="text-xs text-slate-500 mb-2 font-medium"><i class="fa-solid fa-user mr-1"></i> {{ optional($project->user)->name ?? 'Unknown' }} &nbsp;&bull;&nbsp; <i class="fa-solid fa-location-dot mr-1"></i> {{ $project->region }}</p>
                         
-                        <div class="flex gap-2">
-                            <form action="{{ url('/projects/' . $project->id . '/approve') }}" method="POST" class="flex-1">
+                        @if($project->supporting_documents)
+                            <a href="{{ asset('storage/' . $project->supporting_documents) }}" target="_blank" class="inline-block text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded mb-4 hover:bg-blue-100">
+                                <i class="fa-solid fa-file-pdf"></i> Voir le document justificatif
+                            </a>
+                        @else
+                            <p class="text-xs text-slate-400 mb-4 italic">Aucun document</p>
+                        @endif
+
+                        <div class="mt-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <form action="{{ url('/projects/' . $project->id . '/status') }}" method="POST" class="flex gap-2 items-center">
                                 @csrf
-                                <button type="submit" class="w-full bg-green-50 text-green-700 hover:bg-green-100 font-bold text-xs py-2.5 rounded-xl border border-green-200 transition">
-                                    Approuver
-                                </button>
-                            </form>
-                            <form action="{{ url('/projects/' . $project->id . '/reject') }}" method="POST" class="flex-1">
-                                @csrf
-                                <button type="submit" class="w-full bg-red-50 text-red-700 hover:bg-red-100 font-bold text-xs py-2.5 rounded-xl border border-red-200 transition">
-                                    Rejeter
+                                <select name="status" class="flex-1 text-sm border-slate-200 rounded-lg py-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <option value="submitted" {{ $project->status == 'submitted' ? 'selected' : '' }}>Soumis</option>
+                                    <option value="under_review" {{ $project->status == 'under_review' ? 'selected' : '' }}>En étude</option>
+                                    <option value="validated" {{ $project->status == 'validated' ? 'selected' : '' }}>Validé</option>
+                                    <option value="awaiting_funding" {{ $project->status == 'awaiting_funding' ? 'selected' : '' }}>En attente de financement</option>
+                                    <option value="funded" {{ $project->status == 'funded' ? 'selected' : '' }}>Financé</option>
+                                    <option value="in_progress" {{ $project->status == 'in_progress' ? 'selected' : '' }}>En cours</option>
+                                    <option value="completed" {{ $project->status == 'completed' ? 'selected' : '' }}>Terminé</option>
+                                </select>
+                                <button type="submit" class="bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold text-xs py-2 px-4 rounded-lg transition">
+                                    Mettre à jour
                                 </button>
                             </form>
                         </div>
                     </div>
                     @endforeach
                     
-                    @if($projects->where('status', 'pending')->count() == 0)
+                    @if($projects->count() == 0)
                     <div class="text-center py-10 text-slate-400 text-sm font-medium">
                         <i class="fa-solid fa-check-circle text-3xl mb-2 text-slate-200 block"></i>
-                        Aucun projet en attente de révision.
+                        Aucun projet sur la plateforme.
                     </div>
                     @endif
                 </div>
