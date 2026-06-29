@@ -30,6 +30,7 @@
                         <th class="p-6">Date de Vérification</th>
                         <th class="p-6">Coopérative / Projet</th>
                         <th class="p-6">Jalon Atteint</th>
+                        <th class="p-6">Preuve Visuelle</th>
                         <th class="p-6 text-right">Ancrage Bitcoin (OP_RETURN)</th>
                     </tr>
                 </thead>
@@ -44,9 +45,24 @@
                             <p class="text-xs text-slate-500">{{ $milestone->project->title }}</p>
                         </td>
                         <td class="p-6">
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-bold">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-bold block mb-2 w-fit">
                                 {{ $milestone->title }}
                             </span>
+                            <p class="text-xs text-slate-500 line-clamp-2 max-w-xs">{{ $milestone->description }}</p>
+                        </td>
+                        <td class="p-6">
+                            @if($milestone->proof_image)
+                                <div class="flex items-center gap-3">
+                                    <a href="{{ asset('storage/' . $milestone->proof_image) }}" target="_blank" class="block shrink-0">
+                                        <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-12 h-12 rounded-lg object-cover border border-slate-200 shadow-sm hover:scale-105 transition">
+                                    </a>
+                                    @if($milestone->proof_notes)
+                                        <p class="text-[11px] text-slate-500 italic max-w-xs line-clamp-2">"{{ $milestone->proof_notes }}"</p>
+                                    @endif
+                                </div>
+                            @else
+                                <span class="text-xs text-slate-400 italic">Preuve textuelle uniquement</span>
+                            @endif
                         </td>
                         <td class="p-6 text-right">
                             <a href="#" class="inline-flex items-center gap-2 font-mono text-orange-500 hover:text-orange-600 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-xl transition">
@@ -58,7 +74,7 @@
                     
                     @if($milestones->count() == 0)
                     <tr>
-                        <td colspan="4" class="p-12 text-center text-slate-400">
+                        <td colspan="5" class="p-12 text-center text-slate-400">
                             <i class="fa-solid fa-clock-rotate-left text-3xl mb-3 opacity-50 block"></i>
                             Aucune preuve validée pour le moment.
                         </td>

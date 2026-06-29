@@ -32,9 +32,29 @@
                     <h3 class="text-xl font-bold text-[#063b27]">{{ $project->title }}</h3>
                     <p class="text-slate-500 text-sm font-medium mt-1"><i class="fa-solid fa-location-dot"></i> {{ $project->region }}</p>
                 </div>
-                <div class="text-right">
+                <div class="text-right flex flex-col items-end">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Budget</p>
-                    <p class="font-black text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-400">FCFA</span></p>
+                    <p class="font-black text-slate-900 mb-2">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-400">FCFA</span></p>
+                    @if($project->status == 'submitted')
+                        <span class="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
+                    @elseif($project->status == 'under_review')
+                        <span class="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
+                    @elseif($project->status == 'validated')
+                        <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold"><i class="fa-solid fa-check"></i> Validé</span>
+                    @elseif($project->status == 'awaiting_funding')
+                        <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold"><i class="fa-solid fa-hourglass-half"></i> En attente de fonds</span>
+                    @elseif($project->status == 'funded' || $project->status == 'in_progress')
+                        <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold mb-2"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
+                        @if($project->status == 'in_progress')
+                        <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}', amount: {{ $project->target_amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
+                            <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
+                        </button>
+                        @endif
+                    @elseif($project->status == 'completed')
+                        <span class="inline-block px-2 py-1 bg-slate-800 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-check-double"></i> Terminé
+                        </span>
+                    @endif
                 </div>
             </div>
 
@@ -96,7 +116,7 @@
     </div>
 
     <!-- Create Project Modal -->
-    <div x-data="{ createModalOpen: false }" @open-create-modal.window="createModalOpen = true" x-show="createModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div x-data="{ createModalOpen: false, milestones: [{title: '', amount: '', desc: ''}] }" @open-create-modal.window="createModalOpen = true" x-show="createModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="createModalOpen" x-transition.opacity class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity" @click="createModalOpen = false" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -108,7 +128,7 @@
                         </div>
                         <h3 class="text-xl font-black text-slate-900" id="modal-title">Créer un Projet Agricole</h3>
                     </div>
-                    <form action="{{ url('/projects') }}" method="POST" id="createProjectForm">
+                    <form action="{{ url('/projects') }}" method="POST" id="createProjectForm" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-5">
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="title">Titre du Projet</label>
@@ -134,9 +154,37 @@
                                 <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="longitude" name="longitude" type="number" step="any" placeholder="ex: -2.3667">
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-5">
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description détaillée</label>
                             <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Décrivez l'impact et les objectifs de votre projet..."></textarea>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <label class="block text-slate-700 text-sm font-bold mb-2" for="document">Document justificatif (PDF, Image)</label>
+                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="document" name="document" type="file" accept=".pdf,image/*">
+                        </div>
+
+                        <div class="mb-5 border-t border-slate-200 pt-5">
+                            <div class="flex justify-between items-center mb-4">
+                                <label class="block text-slate-700 text-sm font-bold">Jalons du Projet</label>
+                                <button type="button" @click="milestones.push({title: '', amount: '', desc: ''})" class="text-xs bg-orange-100 text-orange-600 font-bold py-1 px-3 rounded-lg hover:bg-orange-200 transition"><i class="fa-solid fa-plus"></i> Ajouter un jalon</button>
+                            </div>
+                            
+                            <template x-for="(milestone, index) in milestones" :key="index">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3 relative">
+                                    <button type="button" @click="milestones.splice(index, 1)" x-show="milestones.length > 1" class="absolute top-2 right-2 text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
+                                    
+                                    <div class="grid grid-cols-2 gap-3 mb-3 pr-6">
+                                        <div>
+                                            <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][title]'" x-model="milestone.title" type="text" required placeholder="Titre du jalon">
+                                        </div>
+                                        <div>
+                                            <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][amount]'" x-model="milestone.amount" type="number" required placeholder="Budget FCFA">
+                                        </div>
+                                    </div>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][desc]'" x-model="milestone.desc" type="text" required placeholder="Description détaillée">
+                                </div>
+                            </template>
                         </div>
                     </form>
                 </div>
@@ -188,6 +236,56 @@
                         Soumettre
                     </button>
                     <button type="button" @click="proofModalOpen = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repay Project Modal -->
+    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', projectAmount: 0, repayAmount: 0 }" 
+         @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; projectAmount = $event.detail.amount; repayAmount = projectAmount * 1.08;" 
+         x-show="repayModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div x-show="repayModalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-75" @click="repayModalOpen = false"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            <div x-show="repayModalOpen" class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+                <div class="bg-white px-6 pt-6 pb-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100">
+                            <i class="fa-solid fa-hand-holding-dollar text-orange-500 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900">Rembourser les Investisseurs</h3>
+                    </div>
+                    
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 text-center">
+                        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1" x-text="projectTitle"></p>
+                        <p class="text-xs text-slate-400 mb-4">Distribution automatique via Lightning Network</p>
+                        
+                        <div class="flex justify-between items-center border-t border-slate-200 pt-3">
+                            <span class="text-sm text-slate-600 font-medium">Capital levé :</span>
+                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount) + ' FCFA'"></span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-sm text-slate-600 font-medium">Intérêts (8%) :</span>
+                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount * 0.08) + ' FCFA'"></span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 border-t border-slate-200 mt-2">
+                            <span class="text-sm font-black text-slate-900">Total à reverser :</span>
+                            <span class="text-xl font-black text-orange-500" x-text="new Intl.NumberFormat('fr-FR').format(repayAmount) + ' FCFA'"></span>
+                        </div>
+                    </div>
+
+                    <form :action="'{{ url('/projects') }}/' + projectId + '/repay'" method="POST" id="repayProjectForm">
+                        @csrf
+                    </form>
+                </div>
+                <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
+                    <button type="button" onclick="document.getElementById('repayProjectForm').submit()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        <i class="fa-brands fa-bitcoin mr-2 mt-1"></i> Envoyer les fonds
+                    </button>
+                    <button type="button" @click="repayModalOpen = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
                     </button>
                 </div>
