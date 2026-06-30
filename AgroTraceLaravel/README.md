@@ -1,97 +1,86 @@
 # AgroTrace BTC 🌾⚡
 
-**Track Every Satoshi to the Green Fields.**
+**Connectez votre portefeuille à la terre. Tracez chaque Satoshi jusqu'aux champs verdoyants.**
 
-AgroTrace BTC est une plateforme web développée (MVP) pour le **Hackathon Bitcoin Mastermind 2026**. Elle connecte les investisseurs de la diaspora avec des coopératives agricoles locales en Afrique, en utilisant le **Lightning Network** pour des micropaiements instantanés et des preuves on-chain via **OP_RETURN** pour garantir la transparence ESG (Environnement, Social, Gouvernance).
-
-## 🚀 Fonctionnalités Principales
-
-- **Investissement Lightning** : Simulation de paiements ultra-rapides et sans friction avec calcul de frais de réseau (2%).
-- **Jalons (Milestones) On-Chain** : Suivi transparent de l'avancement des projets (ex: "Semences achetées", "Récolte"). Une fois validées, ces étapes sont ancrées de manière immuable sur la blockchain Bitcoin (simulation).
-- **Architecture Multi-Rôles** : 3 tableaux de bord (Dashboards) distincts selon votre profil utilisateur.
-- **Design Premium** : Interface utilisateur repensée en **Tailwind CSS pur** (Glassmorphism, animations, UI/UX de haute qualité).
-
-## 🌍 Les Pages et Dashboards
-
-### Pages Publiques
-- `/` (**Accueil**) : Landing page vitrine expliquant le concept et les avantages du projet.
-- `/projects` (**Explorateur**) : Grille des projets agricoles certifiés nécessitant des financements.
-- `/verification` (**Preuves en direct**) : Registre public type "Block Explorer" listant les jalons agricoles validés et leur empreinte OP_RETURN.
-
-### Les Rôles et Leurs Tableaux de Bord (Dashboards)
-La page `/dashboard` s'adapte automatiquement selon votre rôle.
-
-1. **Investisseur (Diaspora)** :
-   - Vue sur l'historique des investissements, le total investi en FCFA et l'équivalent en SATS.
-   - Accès rapide aux reçus Blockchain.
-2. **Coopérative (Porteur de Projet)** :
-   - Gestion des projets agricoles.
-   - Soumission de preuves (photos, reçus) pour valider l'avancement des "Jalons" (Milestones).
-3. **Administrateur Système** :
-   - Back-office de la plateforme.
-   - Validation des nouveaux projets et vérification des preuves soumises par les agriculteurs avant l'inscription sur la blockchain.
+AgroTrace BTC est une plateforme novatrice qui permet à la diaspora et aux investisseurs du monde entier de financer directement des coopératives agricoles au Bénin, en utilisant la puissance et la rapidité du réseau **Bitcoin Lightning**.
 
 ---
 
-## 🛠️ Installation (Après un `git clone`)
+## 📖 Partie 1 : Comment fonctionne la plateforme ? (Guide Investisseur)
 
-Une fois que vous avez cloné le projet sur votre machine locale, suivez ces étapes pour lancer l'application :
+Notre objectif est de rendre l'investissement agricole **simple, transparent et rentable** pour n'importe qui, même sans connaissances techniques poussées. Voici comment ça marche en 4 étapes simples :
+
+### 1. 🔍 Choisissez un projet qui a du sens
+Parcourez notre catalogue de projets agricoles (ex: *Plantation de Tomates Bio*, *Coopérative de Maïs*). Chaque projet affiche clairement son objectif financier, sa localisation au Bénin et le retour sur investissement estimé (généralement autour de +30%).
+
+### 2. ⚡ Investissez instantanément avec Bitcoin
+Une fois le projet choisi, vous pouvez investir la somme de votre choix. Le paiement s'effectue via le **Lightning Network** de Bitcoin. C'est instantané, sécurisé, et les frais de transfert sont quasiment nuls (frais fixes de plateforme de 2%). Fini les virements internationaux lents et coûteux !
+
+### 3. 🛡️ Suivez l'avancement en toute transparence (Le cœur de la confiance)
+C'est ici qu'AgroTrace se démarque. L'argent n'est pas envoyé "à l'aveugle". 
+Le projet est divisé en **Jalons** (étapes de travail, ex: *Achat des semences*, *Récolte*). À chaque étape, la coopérative doit fournir des preuves (photos, factures) sur la plateforme.
+Une fois la preuve validée par nos équipes, elle est **gravée pour toujours sur la blockchain Bitcoin** (via un "OP_RETURN"). Personne ne pourra jamais la falsifier. Vous avez la garantie absolue que l'argent sert à travailler la terre.
+
+### 4. 📈 Récoltez vos bénéfices
+Une fois le projet terminé et la récolte vendue sur le marché local, les bénéfices sont calculés. Vous recevrez automatiquement votre capital de départ ainsi que vos intérêts (dividendes) directement sur votre portefeuille Lightning.
+
+---
+
+## 💻 Partie 2 : Guide Technique (Installation et Démarrage)
+
+Cette section est destinée aux développeurs et aux juges du Hackathon souhaitant faire tourner le projet sur leur machine locale.
 
 ### 1. Prérequis
 - **PHP** 8.2 ou supérieur
-- **Composer**
-- **Node.js** & NPM
-- **MySQL** (via XAMPP, WAMP, ou autre)
+- **Composer** (Gestionnaire de paquets PHP)
+- **Node.js** & **NPM** (Pour compiler le design Tailwind)
+- **MySQL** (Via XAMPP, WAMP, Laravel Herd ou autre)
 
-### 2. Configuration
-Ouvrez un terminal à la racine du projet et exécutez :
+### 2. Cloner et configurer le projet
+Ouvrez un terminal et exécutez les commandes suivantes :
 
 ```bash
-# Installer les dépendances PHP
+# 1. Cloner le dépôt (si ce n'est pas déjà fait)
+git clone <URL_DU_DEPOT>
+cd AgroTraceLaravel
+
+# 2. Installer les dépendances PHP
 composer install
 
-# Installer les dépendances Frontend (Tailwind, Vite)
+# 3. Installer les dépendances Frontend (Tailwind CSS)
 npm install
 
-# Copier le fichier d'environnement
+# 4. Créer le fichier d'environnement et générer la clé de sécurité
 cp .env.example .env
-
-# Générer la clé d'application Laravel
 php artisan key:generate
 ```
 
-### 3. Base de données
-1. Créez une base de données MySQL nommée `agrotrace`.
-2. Ouvrez le fichier `.env` et vérifiez vos identifiants (généralement `DB_USERNAME=root` et `DB_PASSWORD=` vide).
-3. Lancez les migrations :
+### 3. Base de données et Fausses Données (Seeding)
+1. Créez une base de données MySQL vierge nommée `agrotrace`.
+2. Ouvrez le fichier `.env` à la racine du projet et vérifiez vos identifiants de base de données (par défaut `DB_USERNAME=root` et `DB_PASSWORD=` vide).
+3. Construisez la base de données et remplissez-la avec nos données de test (Investisseurs, Coopératives et Projets au Bénin) :
 ```bash
-php artisan migrate:fresh
+php artisan migrate:fresh --seed
 ```
 
-### 4. Compilation et Lancement
-Pour que le design (Tailwind) s'affiche correctement, vous devez compiler les assets :
+### 4. Démarrer l'application
+Pour que l'interface s'affiche correctement, vous devez d'abord compiler le design :
 ```bash
 npm run build
 ```
-*(Ou `npm run dev` si vous souhaitez modifier le code en direct).*
+*(Note : Si vous souhaitez modifier le code en direct, utilisez plutôt `npm run dev` dans un terminal séparé).*
 
-Enfin, lancez le serveur local Laravel :
+Enfin, lancez le serveur web local :
 ```bash
 php artisan serve
 ```
-Le projet sera accessible sur **[http://localhost:8000](http://localhost:8000)**.
 
----
+🎉 **Félicitations !** Le projet est maintenant accessible sur **[http://localhost:8000](http://localhost:8000)**.
 
-## 🔑 Comment se connecter / Tester
+### 🔑 Comment se connecter pour tester ?
+Grâce à la commande de "seeding" effectuée à l'étape 3, des comptes de test sont déjà créés :
+- **Admin** : `admin@agrotrace.com` / Mot de passe : `password`
+- **Investisseur** : `investor@agrotrace.com` / Mot de passe : `password`
+- **Coopérative** : `coop@agrotrace.com` / Mot de passe : `password`
 
-Le système d'authentification utilise **Laravel Breeze**.
-Pour tester les différents rôles, nous vous recommandons de **créer des comptes via la page d'inscription** :
-
-1. Allez sur **[http://localhost:8000/register](http://localhost:8000/register)**.
-2. Remplissez les champs (Nom, Email, Mot de passe).
-3. **Important** : Sélectionnez le "Type de Compte" dans la liste déroulante (Investisseur ou Coopérative Agricole).
-4. Une fois l'inscription validée, vous serez automatiquement redirigé vers le Dashboard correspondant à votre rôle.
-5. *(Pour tester l'interface Administrateur, vous devrez changer manuellement la valeur `role` à `admin` pour votre utilisateur dans la table `users` de la base de données phpMyAdmin).*
-
-Bon hackathon ! ⚡
+*(Vous pouvez également créer de nouveaux comptes librement via la page `S'inscrire`).*
