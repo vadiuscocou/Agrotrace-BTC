@@ -192,11 +192,51 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return back()->with('error', 'Veuillez déclarer la quantité et le prix.');
         }
 
-        // En simulation : on marque juste le projet comme terminé
+        $revenueFcfa = $quantity * $price;
+        $investorsShareFcfa = $revenueFcfa * 0.30;
+        
+        // Taux de conversion fictif pour le hackathon : 1 FCFA = 6 SATS
+        $investorsShareSats = $investorsShareFcfa * 6;
+
+        // Répartition pro-rata
+        $totalProjectAmount = $project->target_amount_fcfa;
+        $investments = $project->investments()->where('status', 'paid')->get();
+
+        foreach ($investments as $investment) {
+            $percentage = $investment->amount_fcfa / $totalProjectAmount;
+            $dividendSats = $investorsShareSats * $percentage;
+            
+            $investor = $investment->user;
+            $investor->balance_sats += $dividendSats;
+            $investor->save();
+        }
+
         $project->update(['status' => 'completed']);
 
-        // Dans la vraie vie, le backend interagirait avec LNbits pour envoyer les 30% aux investisseurs
-        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! Les dividendes (30%) ont été routés automatiquement vers les portefeuilles Lightning de vos investisseurs.');
+        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! (Simulation) La facture Lightning a été validée et le solde interne des investisseurs a été crédité de leurs dividendes en SATS.');
+    });
+
+    Route::post('/withdraw', function () {
+        if (Auth::user()->role !== 'investor') abort(403);
+        
+        $bolt11 = request('bolt11');
+        if (!$bolt11) {
+            return back()->with('error', 'Veuillez fournir une facture Lightning valide.');
+        }
+
+        $user = Auth::user();
+        
+        if ($user->balance_sats <= 0) {
+            return back()->with('error', 'Votre solde est insuffisant pour un retrait.');
+        }
+
+        $amount = $user->balance_sats;
+
+        // Simulation : on remet le solde à 0 et on affiche le succès
+        $user->balance_sats = 0;
+        $user->save();
+
+        return redirect('/dashboard')->with('success', 'Retrait de ' . number_format($amount) . ' SATS effectué avec succès vers votre portefeuille Lightning ! (Simulation)');
     });
 
     // Admin Actions
