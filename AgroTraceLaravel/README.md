@@ -22,13 +22,16 @@ Le projet est divisé en jalons (étapes de travail, par exemple : Achat des sem
 Une fois la preuve validée par nos équipes, elle est gravée pour toujours sur la blockchain Bitcoin (via la fonction OP_RETURN).
 Personne ne pourra jamais la falsifier. Vous avez la garantie absolue que l'argent sert à travailler la terre.
 
-4. Récoltez vos bénéfices
-Une fois le projet terminé et la récolte vendue sur le marché local, les bénéfices sont calculés.
-Vous recevrez automatiquement votre capital de départ ainsi que vos intérêts (dividendes) directement sur votre portefeuille Lightning.
+4. Le Retour sur Investissement (ROI) Automatisé
+Une fois le projet terminé, le retour sur investissement est calculé et distribué de manière transparente :
+- L'agriculteur se connecte sur son espace et clique sur "Déclarer sa Récolte". Il entre simplement la quantité récoltée (en kg) et le prix de vente moyen.
+- La plateforme calcule automatiquement le chiffre d'affaires total généré.
+- Le contrat intelligent virtuel s'applique immédiatement : 70% pour la coopérative, et 30% de bénéfices pour les investisseurs.
+- Le système effectue un routage automatique des dividendes (les 30%) directement vers les portefeuilles Lightning Network des investisseurs, au prorata de leur investissement initial. Tout est instantané !
 
 Le Contrat Numérique et les Garanties
 Pour protéger toutes les parties prenantes, AgroTrace intègre un système de contrat d'engagement numérique :
-- Un modèle "Crowdfunding" : Le contrat lie l'agriculteur d'un côté, et la plateforme AgroTrace de l'autre (qui représente légalement le regroupement des multiples investisseurs du projet). 
+- Un modèle "Crowdfunding" (Financement Participatif) et Règles de Financement : La plateforme permet une flexibilité totale. Un investisseur peut financer plusieurs projets différents pour diversifier ses risques. Inversement, un seul projet agricole peut être financé par des dizaines d'investisseurs différents. Le contrat lie l'agriculteur d'un côté, et la plateforme AgroTrace de l'autre (qui représente légalement l'ensemble des investisseurs). 
 - Génération automatique & Signature : À la seconde même où une coopérative crée un projet sur la plateforme, un contrat est généré. La plateforme crée une empreinte cryptographique (Hash) basée sur les données du projet. Ce Hash fait office de signature numérique irrévocable pour l'agriculteur.
 - Répartition équitable : Le contrat stipule clairement la règle d'or d'AgroTrace : 70% des revenus vont à l'agriculteur, et 30% sont redistribués aux investisseurs. Il prévoit également des clauses de force majeure (catastrophes naturelles) pour sécuriser le modèle.
 
