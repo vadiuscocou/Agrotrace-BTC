@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 // Public Project Routes
 Route::get('/projects', function () {
     return view('projects', ['projects' => Project::with('user')->get()]);

@@ -40,6 +40,7 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{ url('/about') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">À propos</a>
                     <a href="{{ url('/projects') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Explorer</a>
                     <a href="{{ url('/verification') }}" class="text-sm font-semibold text-slate-600 hover:text-[#063b27] transition">Preuves en direct</a>
                     
@@ -66,6 +67,7 @@
              class="md:hidden bg-white border-b border-slate-100 shadow-lg absolute w-full"
              style="display: none;">
             <div class="px-6 pt-2 pb-6 space-y-4 flex flex-col">
+                <a href="{{ url('/about') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">À propos</a>
                 <a href="{{ url('/projects') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Explorer</a>
                 <a href="{{ url('/verification') }}" class="text-base font-semibold text-slate-600 hover:text-[#063b27]">Preuves en direct</a>
                 <div class="h-px w-full bg-slate-100 my-2"></div>
@@ -330,18 +332,7 @@
         </div>
     </div>
     
-    <!-- À Propos / Comment ça marche -->
-    <div class="bg-slate-50 py-24 border-t border-slate-200">
-        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-            <h2 class="text-base font-bold leading-7 text-[#063b27] tracking-widest uppercase mb-2">À Propos de Nous</h2>
-            <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl mb-8">Notre Mission : Connecter la Diaspora à la Terre</p>
-            <p class="text-lg text-slate-600 leading-relaxed font-medium">
-                AgroTrace est né d'un constat simple : l'agriculture africaine manque cruellement de financements, tandis que les investisseurs de la diaspora ou du monde entier hésitent à investir par manque de confiance et de traçabilité. 
-                <br><br>
-                Notre plateforme est un <b>pont de confiance</b>. Nous utilisons le réseau Bitcoin (Lightning Network) pour permettre des investissements instantanés et sans frais bancaires. Mais surtout, nous utilisons la blockchain pour rendre chaque preuve de travail <b>immuable</b>. L'argent n'est débloqué aux agriculteurs que lorsqu'ils prouvent (photos, reçus) que l'étape précédente du projet a été réalisée.
-            </p>
-        </div>
-    </div>
+
 
     <!-- Chat Widget (Floating) -->
     <div x-data="chatWidget()" class="fixed bottom-6 right-6 z-50 font-sans">
