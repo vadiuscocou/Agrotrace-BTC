@@ -35,9 +35,7 @@ class DatabaseSeeder extends Seeder
 
         // Milestones
         \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Achat de semences de maïs hybride', 'amount_fcfa' => 1000000, 'status' => 'validated', 'proof_image' => 'seeds.jpg', 'tx_hash' => '0xabcd1234']);
-        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Mise en place du système d\'irrigation', 'amount_fcfa' => 2000000, 'status' => 'submitted', 'tx_hash' => '0xefgh5678']);
-        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Logistique de récolte et stockage', 'amount_fcfa' => 2000000, 'status' => 'pending']);
-
+        \App\Models\Milestone::create(['project_id' => $project->id, 'title' => 'Mise en place du système d\'irrigation', 'amount_fcfa' => 4000000, 'status' => 'submitted', 'tx_hash' => '0xefgh5678']);
         // Investment (Fully funded)
         \App\Models\Investment::create([
             'project_id' => $project->id,
@@ -115,7 +113,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Achat des plants de manguiers', 'amount_fcfa' => 2000000, 'status' => 'pending']);
-        
+        \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Entretien et engrais', 'amount_fcfa' => 2500000, 'status' => 'pending']);        
         // Unpaid investment example
         \App\Models\Investment::create([
             'project_id' => $project4->id,

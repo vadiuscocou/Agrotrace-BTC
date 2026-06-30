@@ -122,7 +122,7 @@
     </div>
 
     <!-- Create Project Modal -->
-    <div x-data="{ createModalOpen: false, milestones: [{title: '', amount: '', desc: ''}] }" @open-create-modal.window="createModalOpen = true" x-show="createModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div x-data="{ createModalOpen: false, milestones: [{title: '', amount: '', desc: ''}, {title: '', amount: '', desc: ''}] }" @open-create-modal.window="createModalOpen = true" x-show="createModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="createModalOpen" x-transition.opacity class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity" @click="createModalOpen = false" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -172,13 +172,11 @@
 
                         <div class="mb-5 border-t border-slate-200 pt-5">
                             <div class="flex justify-between items-center mb-4">
-                                <label class="block text-slate-700 text-sm font-bold">Jalons du Projet</label>
-                                <button type="button" @click="milestones.push({title: '', amount: '', desc: ''})" class="text-xs bg-orange-100 text-orange-600 font-bold py-1 px-3 rounded-lg hover:bg-orange-200 transition"><i class="fa-solid fa-plus"></i> Ajouter un jalon</button>
+                                <label class="block text-slate-700 text-sm font-bold">Jalons du Projet (2 obligatoires)</label>
                             </div>
                             
                             <template x-for="(milestone, index) in milestones" :key="index">
                                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3 relative">
-                                    <button type="button" @click="milestones.splice(index, 1)" x-show="milestones.length > 1" class="absolute top-2 right-2 text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
                                     
                                     <div class="grid grid-cols-2 gap-3 mb-3 pr-6">
                                         <div>
