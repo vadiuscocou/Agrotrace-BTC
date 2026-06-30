@@ -75,109 +75,58 @@ class DatabaseSeeder extends Seeder
             'status' => 'paid'
         ]);
 
-        // Demo Project 3 (En étude - under_review)
+        // Demo Project 3 (En attente de fonds - awaiting_funding)
         $project3 = \App\Models\Project::create([
-            'user_id' => $owner->id,
-            'title' => 'Coopérative de Cacao "Fèves Magiques"',
-            'description' => 'Modernisation des équipements de séchage de cacao pour améliorer la qualité et le prix de vente.',
-            'region' => 'Collines',
-            'target_amount_fcfa' => 8000000,
-            'status' => 'under_review',
-            'latitude' => 5.8374,
-            'longitude' => -5.3572,
-            'image' => 'https://images.unsplash.com/photo-1582212952409-bc015f8aebcc?auto=format&fit=crop&q=80&w=800'
-        ]);
-
-        \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Achat des séchoirs solaires', 'amount_fcfa' => 4000000, 'status' => 'pending']);
-        \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Formation des agriculteurs', 'amount_fcfa' => 2000000, 'status' => 'pending']);
-        \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Logistique et transport', 'amount_fcfa' => 2000000, 'status' => 'pending']);
-
-        // Demo Project 4 (Terminé - completed)
-        $project4 = \App\Models\Project::create([
-            'user_id' => $owner->id,
-            'title' => 'Plantation de Tomates Bio',
-            'description' => 'Culture de tomates sous serre avec système d\'irrigation intelligent.',
-            'region' => 'Borgou',
-            'target_amount_fcfa' => 3500000,
-            'status' => 'completed',
-            'latitude' => 14.8833,
-            'longitude' => -17.0333,
-            'image' => 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&q=80&w=800'
-        ]);
-
-        \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Installation des serres', 'amount_fcfa' => 2000000, 'status' => 'validated', 'proof_image' => 'serre.jpg', 'tx_hash' => '0xbeef5678']);
-        \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Achat des semences et engrais bio', 'amount_fcfa' => 1500000, 'status' => 'validated', 'proof_image' => 'engrais.jpg', 'tx_hash' => '0xcafe9012']);
-
-        \App\Models\Investment::create([
-            'project_id' => $project4->id,
-            'user_id' => $investor->id,
-            'amount_fcfa' => 3500000,
-            'amount_sats' => 21000000,
-            'fee_sats' => 420000,
-            'payment_hash' => 'lnbc210k1p...',
-            'status' => 'paid'
-        ]);
-
-        // Demo Project 5 (Validé, en attente de fonds - awaiting_funding)
-        $project5 = \App\Models\Project::create([
             'user_id' => $owner->id,
             'title' => 'Riziculture de la Vallée',
             'description' => 'Aménagement de parcelles pour la culture de riz irrigué à haut rendement.',
             'region' => 'Ouémé',
             'target_amount_fcfa' => 6000000,
             'status' => 'awaiting_funding',
-            'latitude' => 16.3268,
-            'longitude' => -14.9388,
+            'latitude' => 6.4973,
+            'longitude' => 2.6051,
             'image' => 'https://images.unsplash.com/photo-1586771107445-d3af9e152003?auto=format&fit=crop&q=80&w=800'
         ]);
 
-        \App\Models\Milestone::create(['project_id' => $project5->id, 'title' => 'Aménagement du terrain', 'amount_fcfa' => 3000000, 'status' => 'pending']);
-        \App\Models\Milestone::create(['project_id' => $project5->id, 'title' => 'Achat de semences de riz', 'amount_fcfa' => 1500000, 'status' => 'pending']);
-        \App\Models\Milestone::create(['project_id' => $project5->id, 'title' => 'Moissonneuse en location', 'amount_fcfa' => 1500000, 'status' => 'pending']);
+        \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Aménagement du terrain', 'amount_fcfa' => 3000000, 'status' => 'pending']);
+        \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Achat de semences de riz', 'amount_fcfa' => 1500000, 'status' => 'pending']);
 
-        // Demo Project 6 (Soumis - submitted)
-        $project6 = \App\Models\Project::create([
+        \App\Models\Investment::create([
+            'project_id' => $project3->id,
+            'user_id' => $investor->id,
+            'amount_fcfa' => 1500000,
+            'amount_sats' => 9000000,
+            'fee_sats' => 180000,
+            'payment_hash' => 'lnbc90k1p...',
+            'status' => 'paid'
+        ]);
+
+        // Demo Project 4 (En attente de fonds - awaiting_funding)
+        $project4 = \App\Models\Project::create([
             'user_id' => $owner->id,
-            'title' => 'Plantation de Manguiers Améliorés',
-            'description' => 'Création d\'un verger de manguiers greffés pour l\'exportation de mangues fraîches.',
+            'title' => 'Plantation de Manguiers',
+            'description' => 'Création d\'un verger de manguiers greffés pour l\'exportation.',
             'region' => 'Zou',
             'target_amount_fcfa' => 4500000,
-            'status' => 'submitted',
-            'latitude' => 11.3174,
-            'longitude' => -5.6666,
+            'status' => 'awaiting_funding',
+            'latitude' => 7.1828,
+            'longitude' => 1.9912,
             'image' => 'https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&q=80&w=800'
         ]);
         
-        \App\Models\Milestone::create(['project_id' => $project6->id, 'title' => 'Achat des plants de manguiers', 'amount_fcfa' => 2000000, 'status' => 'pending']);
-        \App\Models\Milestone::create(['project_id' => $project6->id, 'title' => 'Forage pour irrigation', 'amount_fcfa' => 2500000, 'status' => 'pending']);
-
-        // Demo Project 7 (En cours - in_progress)
-        $project7 = \App\Models\Project::create([
-            'user_id' => $owner->id,
-            'title' => 'Apiculture et Production de Miel',
-            'description' => 'Installation de 500 ruches modernes pour la production de miel pur de forêt.',
-            'region' => 'Atlantique',
-            'target_amount_fcfa' => 1800000,
-            'status' => 'in_progress',
-            'latitude' => 6.9500,
-            'longitude' => 2.1667,
-            'image' => 'https://images.unsplash.com/photo-1587049352847-ecbfba39f997?auto=format&fit=crop&q=80&w=800'
-        ]);
+        \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Achat des plants de manguiers', 'amount_fcfa' => 2000000, 'status' => 'pending']);
         
-        \App\Models\Milestone::create(['project_id' => $project7->id, 'title' => 'Fabrication des ruches', 'amount_fcfa' => 800000, 'status' => 'validated', 'proof_image' => 'ruches.jpg', 'tx_hash' => '0xbeef1111']);
-        \App\Models\Milestone::create(['project_id' => $project7->id, 'title' => 'Matériel de récolte et tenues', 'amount_fcfa' => 500000, 'status' => 'submitted', 'proof_image' => 'combinaisons.jpg']);
-        \App\Models\Milestone::create(['project_id' => $project7->id, 'title' => 'Centrifugeuse à miel', 'amount_fcfa' => 500000, 'status' => 'pending']);
-
+        // Unpaid investment example
         \App\Models\Investment::create([
-            'project_id' => $project7->id,
+            'project_id' => $project4->id,
             'user_id' => $investor->id,
-            'amount_fcfa' => 1800000,
-            'amount_sats' => 10800000,
-            'fee_sats' => 216000,
-            'payment_hash' => 'lnbc108k1p...',
-            'status' => 'paid'
+            'amount_fcfa' => 500000,
+            'amount_sats' => 3000000,
+            'fee_sats' => 60000,
+            'payment_hash' => 'lnbc30k1p...',
+            'status' => 'pending'
         ]);
-        
+
         // Subscription
         \App\Models\Subscription::create([
             'user_id' => $owner->id,
