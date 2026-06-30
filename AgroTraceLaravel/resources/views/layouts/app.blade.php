@@ -28,7 +28,7 @@
          x-transition:leave="transition-opacity ease-linear duration-300"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black/50 z-[1900] lg:hidden" 
+         class="fixed inset-0 bg-black/50 lg:hidden" style="z-index: 1900;"
          @click="mobileMenuOpen = false" 
          style="display: none;"></div>
 
@@ -38,10 +38,10 @@
             'lg:translate-x-0',
             sidebarOpen ? 'lg:w-72' : 'lg:w-20'
         ]" 
-        class="fixed lg:relative inset-y-0 left-0 bg-[#063b27] text-white flex flex-col transition-all duration-300 ease-in-out z-[2000] flex-shrink-0 shadow-2xl w-72">
+        class="fixed lg:relative inset-y-0 left-0 bg-[#063b27] text-white flex flex-col transition-all duration-300 ease-in-out flex-shrink-0 shadow-2xl w-72" style="z-index: 9999;">
         
         <!-- Toggle Button (Desktop Only) -->
-        <button @click="sidebarOpen = !sidebarOpen" class="hidden lg:flex absolute -right-4 top-8 bg-orange-500 text-white rounded-full w-8 h-8 items-center justify-center shadow-lg hover:bg-orange-600 transition-transform z-[2010]">
+        <button @click="sidebarOpen = !sidebarOpen" class="hidden lg:flex absolute -right-4 top-8 bg-orange-500 text-white rounded-full w-8 h-8 items-center justify-center shadow-lg hover:bg-orange-600 transition-transform" style="z-index: 10000;">
             <i class="fa-solid fa-chevron-left transition-transform duration-300" :class="!sidebarOpen ? 'rotate-180' : ''"></i>
         </button>
 
@@ -122,7 +122,7 @@
     <div class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50 relative min-w-0">
         
         <!-- Mobile Header -->
-        <header class="lg:hidden h-16 bg-[#063b27] text-white flex items-center justify-between px-4 shadow-md z-[1950] shrink-0">
+        <header class="lg:hidden h-16 bg-[#063b27] text-white flex items-center justify-between px-4 shadow-md shrink-0" style="z-index: 1950;">
             <a href="{{ url('/') }}" class="text-xl font-black tracking-tight flex items-center gap-2">
                 <i class="fa-brands fa-bitcoin text-orange-400"></i> AGRO<span class="text-orange-400">TRACE</span>
             </a>
