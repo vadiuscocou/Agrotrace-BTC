@@ -24,6 +24,12 @@ Une fois la preuve validée par nos équipes, elle est **gravée pour toujours s
 ### 4. 📈 Récoltez vos bénéfices
 Une fois le projet terminé et la récolte vendue sur le marché local, les bénéfices sont calculés. Vous recevrez automatiquement votre capital de départ ainsi que vos intérêts (dividendes) directement sur votre portefeuille Lightning.
 
+### 📜 Le Contrat Numérique et les Garanties
+Pour protéger tout le monde, AgroTrace intègre un système de contrat d'engagement numérique :
+- **Un modèle "Crowdfunding"** : Le contrat lie *l'agriculteur* d'un côté, et *la plateforme AgroTrace* de l'autre (qui représente légalement le regroupement des multiples investisseurs du projet). 
+- **Génération automatique & Signature** : À la seconde même où une coopérative crée un projet sur la plateforme, un contrat est généré. La plateforme crée une empreinte cryptographique (Hash) basée sur les données du projet. Ce Hash fait office de **signature numérique irrévocable** pour l'agriculteur.
+- **Répartition équitable** : Le contrat stipule clairement la règle d'or d'AgroTrace : 70% des revenus vont à l'agriculteur, et 30% sont redistribués aux investisseurs. Il prévoit également des clauses de force majeure (catastrophes naturelles) pour sécuriser le modèle.
+
 ---
 
 ## 💻 Partie 2 : Guide Technique (Installation et Démarrage)
