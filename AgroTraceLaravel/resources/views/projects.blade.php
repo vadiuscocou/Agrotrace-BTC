@@ -90,13 +90,26 @@
                 
                 @auth
                     @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
+                    @php
+                        $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
+                        if ($project->remaining_amount < $minInvestment) {
+                            $minInvestment = $project->remaining_amount;
+                        }
+                        $isFixed = ($project->remaining_amount <= $minInvestment);
+                    @endphp
                     <form action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
                         @csrf
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Montant à investir (FCFA)</label>
-                            <input type="number" name="amount_fcfa" min="1000" max="{{ $project->remaining_amount }}" step="1000" value="{{ min(50000, $project->remaining_amount) }}" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-bold" required>
+                            <div class="flex justify-between items-end mb-1">
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest">Montant à investir (FCFA)</label>
+                                <span class="text-[10px] text-slate-400 font-bold">Min: {{ number_format($minInvestment) }}</span>
+                            </div>
+                            <input type="number" name="amount_fcfa" min="{{ $minInvestment }}" max="{{ $project->remaining_amount }}" step="1000" value="{{ $isFixed ? $project->remaining_amount : $minInvestment }}" {{ $isFixed ? 'readonly' : '' }} class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-bold {{ $isFixed ? 'opacity-70 cursor-not-allowed' : '' }}" required>
+                            @if($isFixed)
+                                <p class="text-[10px] text-orange-500 mt-1 font-medium"><i class="fa-solid fa-lock text-[8px]"></i> Montant restant verrouillé pour clôturer le projet.</p>
+                            @endif
                         </div>
-                        <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Simuler un paiement Lightning pour cet investissement ? (Calcule 2% de frais via routage intelligent)')">
+                        <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Générer une facture Lightning pour cet investissement ?')">
                             <i class="fa-solid fa-bolt"></i> Investir
                         </button>
                     </form>

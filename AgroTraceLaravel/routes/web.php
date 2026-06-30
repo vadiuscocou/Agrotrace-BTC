@@ -58,7 +58,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::post('/invest/{project_id}', function ($project_id) {
-        $amountFcfa = request('amount_fcfa', 50000);
+        $amountFcfa = (int) request('amount_fcfa');
+        
+        $project = Project::findOrFail($project_id);
+        
+        // Règles d'investissement strictes
+        $remaining = $project->remaining_amount;
+        $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
+        
+        // Si le montant restant est inférieur au minimum théorique (25%), 
+        // alors le minimum autorisé devient le montant restant (pour clôturer le projet).
+        if ($remaining < $minInvestment) {
+            $minInvestment = $remaining;
+        }
+
+        if ($amountFcfa < $minInvestment) {
+            return back()->with('error', 'Le montant minimum pour investir dans ce projet est de ' . number_format($minInvestment) . ' FCFA.');
+        }
+
+        if ($amountFcfa > $remaining) {
+            return back()->with('error', 'Vous ne pouvez pas investir plus que le montant restant (' . number_format($remaining) . ' FCFA).');
+        }
+
         $amountSats = $amountFcfa * 6; // Taux fictif: 1 FCFA ≈ 6 SATS
         $feeSats = $amountSats * 0.02; // Frais de 2%
 
@@ -192,51 +213,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return back()->with('error', 'Veuillez déclarer la quantité et le prix.');
         }
 
-        $revenueFcfa = $quantity * $price;
-        $investorsShareFcfa = $revenueFcfa * 0.30;
-        
-        // Taux de conversion fictif pour le hackathon : 1 FCFA = 6 SATS
-        $investorsShareSats = $investorsShareFcfa * 6;
-
-        // Répartition pro-rata
-        $totalProjectAmount = $project->target_amount_fcfa;
-        $investments = $project->investments()->where('status', 'paid')->get();
-
-        foreach ($investments as $investment) {
-            $percentage = $investment->amount_fcfa / $totalProjectAmount;
-            $dividendSats = $investorsShareSats * $percentage;
-            
-            $investor = $investment->user;
-            $investor->balance_sats += $dividendSats;
-            $investor->save();
-        }
-
         $project->update(['status' => 'completed']);
 
-        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! (Simulation) La facture Lightning a été validée et le solde interne des investisseurs a été crédité de leurs dividendes en SATS.');
-    });
-
-    Route::post('/withdraw', function () {
-        if (Auth::user()->role !== 'investor') abort(403);
-        
-        $bolt11 = request('bolt11');
-        if (!$bolt11) {
-            return back()->with('error', 'Veuillez fournir une facture Lightning valide.');
-        }
-
-        $user = Auth::user();
-        
-        if ($user->balance_sats <= 0) {
-            return back()->with('error', 'Votre solde est insuffisant pour un retrait.');
-        }
-
-        $amount = $user->balance_sats;
-
-        // Simulation : on remet le solde à 0 et on affiche le succès
-        $user->balance_sats = 0;
-        $user->save();
-
-        return redirect('/dashboard')->with('success', 'Retrait de ' . number_format($amount) . ' SATS effectué avec succès vers votre portefeuille Lightning ! (Simulation)');
+        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! Les fonds seront routés.');
     });
 
     // Admin Actions

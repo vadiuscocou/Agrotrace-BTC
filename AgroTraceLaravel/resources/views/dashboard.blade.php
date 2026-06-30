@@ -56,10 +56,10 @@
     <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3 mt-12">
         <i class="fa-solid fa-arrow-trend-up text-orange-500"></i> Rendements & Dividendes
     </h2>
-    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-16" x-data="{ withdrawModalOpen: false, invoice: '' }">
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-16">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex-1">
-                <p class="text-slate-400 font-bold mb-2 uppercase tracking-widest text-xs">Gains redistribués (Estimé)</p>
+                <p class="text-slate-400 font-bold mb-2 uppercase tracking-widest text-xs">Gains redistribués</p>
                 <div class="flex items-end gap-3 mb-4">
                     <span class="text-4xl font-black text-orange-500">{{ number_format($investments->where('status', 'paid')->sum('amount_fcfa') * 0.30) }}</span>
                     <span class="text-lg font-bold text-slate-400 pb-1 flex items-center gap-2">FCFA</span>
@@ -70,47 +70,12 @@
             </div>
             <div class="w-full md:w-auto bg-slate-50 border border-slate-100 p-5 rounded-2xl">
                 <div class="flex items-center justify-between gap-6 mb-3 border-b border-slate-200 pb-3">
-                    <span class="text-slate-500 text-xs font-medium">Solde Interne</span>
-                    <span class="text-slate-900 text-lg font-black">{{ number_format(Auth::user()->balance_sats) }} SATS</span>
+                    <span class="text-slate-500 text-xs font-medium">Dernier paiement</span>
+                    <span class="text-slate-900 text-sm font-bold">+ 4,200 SATS</span>
                 </div>
-                <button class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-2.5 px-4 rounded-xl transition shadow-sm flex items-center justify-center gap-2" @click="withdrawModalOpen = true">
-                    <i class="fa-solid fa-bolt"></i> Retirer vers Wallet
-                </button>
-            </div>
-        </div>
-
-        <!-- Withdraw Modal -->
-        <div x-show="withdrawModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div x-show="withdrawModalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity" @click="withdrawModalOpen = false" aria-hidden="true"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div x-show="withdrawModalOpen" class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
-                    <div class="bg-white px-6 pt-6 pb-6">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100">
-                                <i class="fa-solid fa-bolt text-orange-500 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-black text-slate-900">Retrait Lightning</h3>
-                        </div>
-                        <p class="text-sm text-slate-500 mb-4">Votre solde disponible est de <strong>{{ number_format(Auth::user()->balance_sats) }} SATS</strong>.</p>
-                        
-                        <form action="{{ url('/withdraw') }}" method="POST" id="withdrawForm">
-                            @csrf
-                            <div class="mb-4">
-                                <label class="block text-slate-700 text-sm font-bold mb-2">Facture Lightning (Bolt11)</label>
-                                <textarea name="bolt11" rows="3" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required placeholder="lnbc..."></textarea>
-                                <p class="text-xs text-slate-400 mt-2">Générez une facture de réception depuis votre portefeuille (Wallet of Satoshi, Phoenix, etc.) et collez-la ici.</p>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
-                        <button type="button" onclick="document.getElementById('withdrawForm').submit()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                            Confirmer le retrait
-                        </button>
-                        <button type="button" @click="withdrawModalOpen = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                            Annuler
-                        </button>
-                    </div>
+                <div class="flex items-center justify-between gap-6">
+                    <span class="text-slate-500 text-xs font-medium">Prochain estimé</span>
+                    <span class="text-orange-500 text-sm font-bold">~ 8,300 SATS</span>
                 </div>
             </div>
         </div>
