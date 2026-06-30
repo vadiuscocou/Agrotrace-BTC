@@ -27,39 +27,37 @@
         @foreach($projects as $project)
         <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
             <!-- Project Header -->
-            <div class="bg-slate-50 border-b border-slate-100 p-6 flex justify-between items-center">
-                <div>
-                    <h3 class="text-xl font-bold text-[#063b27]">{{ $project->title }}</h3>
-                    <p class="text-slate-500 text-sm font-medium mt-1"><i class="fa-solid fa-location-dot"></i> {{ $project->region }}</p>
-                </div>
-                <div class="text-right flex flex-col items-end">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Budget</p>
-                    <p class="font-black text-slate-900 mb-2">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-400">FCFA</span></p>
-                    @if($project->status == 'submitted')
-                        <span class="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
-                    @elseif($project->status == 'under_review')
-                        <span class="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
-                    @elseif($project->status == 'validated')
-                        <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold"><i class="fa-solid fa-check"></i> Validé</span>
-                    @elseif($project->status == 'awaiting_funding')
-                        <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold"><i class="fa-solid fa-hourglass-half"></i> En attente de fonds</span>
-                    @elseif($project->status == 'funded' || $project->status == 'in_progress')
-                        <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold mb-2"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
-                        @if($project->status == 'in_progress')
-                        <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}', amount: {{ $project->target_amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
-                            <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
-                        </button>
-                        @endif
-                    @if($project->status == 'completed')
-                        <span class="inline-block px-2 py-1 bg-slate-800 text-white rounded text-xs font-bold">
-                            <i class="fa-solid fa-check-double"></i> Terminé
-                        </span>
-                    @endif
-                </div>
+            <div class="text-right flex flex-col items-end">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Budget</p>
+                <p class="font-black text-slate-900 mb-2">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-400">FCFA</span></p>
+
+                {{-- Début de la chaîne de statut --}}
+                @if($project->status == 'submitted')
+                <span class="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
+                @elseif($project->status == 'under_review')
+                <span class="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
+                @elseif($project->status == 'validated')
+                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold"><i class="fa-solid fa-check"></i> Validé</span>
+                @elseif($project->status == 'awaiting_funding')
+                <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold"><i class="fa-solid fa-hourglass-half"></i> En attente de fonds</span>
+                @elseif($project->status == 'funded' || $project->status == 'in_progress')
+                <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold mb-2"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
+                @if($project->status == 'in_progress')
+                <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}', amount: {{ $project->target_amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
+                    <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
+                </button>
+                @endif
+                @endif {{-- <--- C'EST CE @endif QUI MANQUAIT ICI POUR FERMER LA CHAÎNE --}}
+
+                @if($project->status == 'completed')
+                <span class="inline-block px-2 py-1 bg-slate-800 text-white rounded text-xs font-bold">
+                    <i class="fa-solid fa-check-double"></i> Terminé
+                </span>
+                @endif
             </div>
-            
+
             <div class="bg-slate-50 px-6 py-3 border-b border-slate-100 flex justify-end">
-                <a href="{{ route('projects.contract', $project->id) }}" target="_blank" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 px-3 py-1.5 rounded-lg transition inline-flex items-center gap-2">
+                <a href="{{ url('/projects/' . $project->id . '/contract') }}" target="_blank" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 px-3 py-1.5 rounded-lg transition inline-flex items-center gap-2">
                     <i class="fa-solid fa-file-contract"></i> Voir le Contrat d'Engagement
                 </a>
             </div>
@@ -67,37 +65,37 @@
             <!-- Milestones Section -->
             <div class="p-6">
                 <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Jalons du Projet</h4>
-                
+
                 <div class="space-y-4">
                     @foreach($project->milestones as $milestone)
                     <div class="bg-white border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-slate-200 transition">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
                                 @if($milestone->status == 'pending')
-                                    <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+                                <span class="h-2 w-2 rounded-full bg-slate-300"></span>
                                 @elseif($milestone->status == 'submitted')
-                                    <span class="h-2 w-2 rounded-full bg-orange-400 animate-pulse"></span>
+                                <span class="h-2 w-2 rounded-full bg-orange-400 animate-pulse"></span>
                                 @else
-                                    <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                                <span class="h-2 w-2 rounded-full bg-green-500"></span>
                                 @endif
                                 <h5 class="font-bold text-slate-800">{{ $milestone->title }}</h5>
                             </div>
                             <p class="text-xs text-slate-500 line-clamp-1 ml-4">{{ $milestone->description }}</p>
                         </div>
-                        
+
                         <div class="flex-shrink-0 ml-4 sm:ml-0">
                             @if($milestone->status == 'pending')
-                                <button @click="currentMilestoneId = {{ $milestone->id }}; proofModalOpen = true" class="bg-white border border-slate-200 text-slate-600 hover:text-[#063b27] hover:border-[#063b27] font-bold text-xs px-4 py-2 rounded-lg transition">
-                                    <i class="fa-solid fa-camera mr-1"></i> Soumettre Preuve
-                                </button>
+                            <button @click="currentMilestoneId = {{ $milestone->id }}; proofModalOpen = true" class="bg-white border border-slate-200 text-slate-600 hover:text-[#063b27] hover:border-[#063b27] font-bold text-xs px-4 py-2 rounded-lg transition">
+                                <i class="fa-solid fa-camera mr-1"></i> Soumettre Preuve
+                            </button>
                             @elseif($milestone->status == 'submitted')
-                                <span class="inline-block px-3 py-1.5 bg-orange-50 text-orange-600 rounded-lg text-xs font-bold border border-orange-100">
-                                    <i class="fa-solid fa-clock mr-1"></i> En révision
-                                </span>
+                            <span class="inline-block px-3 py-1.5 bg-orange-50 text-orange-600 rounded-lg text-xs font-bold border border-orange-100">
+                                <i class="fa-solid fa-clock mr-1"></i> En révision
+                            </span>
                             @else
-                                <span class="inline-block px-3 py-1.5 bg-green-50 text-green-700 rounded-lg text-xs font-bold border border-green-100">
-                                    <i class="fa-solid fa-check mr-1"></i> Validé
-                                </span>
+                            <span class="inline-block px-3 py-1.5 bg-green-50 text-green-700 rounded-lg text-xs font-bold border border-green-100">
+                                <i class="fa-solid fa-check mr-1"></i> Validé
+                            </span>
                             @endif
                         </div>
                     </div>
@@ -164,7 +162,7 @@
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description détaillée</label>
                             <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Décrivez l'impact et les objectifs de votre projet..."></textarea>
                         </div>
-                        
+
                         <div class="mb-5">
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="document">Document justificatif (PDF, Image)</label>
                             <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="document" name="document" type="file" accept=".pdf,image/*">
@@ -175,11 +173,11 @@
                                 <label class="block text-slate-700 text-sm font-bold">Jalons du Projet</label>
                                 <button type="button" @click="milestones.push({title: '', amount: '', desc: ''})" class="text-xs bg-orange-100 text-orange-600 font-bold py-1 px-3 rounded-lg hover:bg-orange-200 transition"><i class="fa-solid fa-plus"></i> Ajouter un jalon</button>
                             </div>
-                            
+
                             <template x-for="(milestone, index) in milestones" :key="index">
                                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3 relative">
                                     <button type="button" @click="milestones.splice(index, 1)" x-show="milestones.length > 1" class="absolute top-2 right-2 text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
-                                    
+
                                     <div class="grid grid-cols-2 gap-3 mb-3 pr-6">
                                         <div>
                                             <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][title]'" x-model="milestone.title" type="text" required placeholder="Titre du jalon">
@@ -250,9 +248,9 @@
     </div>
 
     <!-- Repay Project Modal -->
-    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', projectAmount: 0, repayAmount: 0 }" 
-         @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; projectAmount = $event.detail.amount; repayAmount = projectAmount * 1.08;" 
-         x-show="repayModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
+    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', projectAmount: 0, repayAmount: 0 }"
+        @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; projectAmount = $event.detail.amount; repayAmount = projectAmount * 1.08;"
+        x-show="repayModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="repayModalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-75" @click="repayModalOpen = false"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
@@ -264,11 +262,11 @@
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Rembourser les Investisseurs</h3>
                     </div>
-                    
+
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 text-center">
                         <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1" x-text="projectTitle"></p>
                         <p class="text-xs text-slate-400 mb-4">Distribution automatique via Lightning Network</p>
-                        
+
                         <div class="flex justify-between items-center border-t border-slate-200 pt-3">
                             <span class="text-sm text-slate-600 font-medium">Capital levé :</span>
                             <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount) + ' FCFA'"></span>
