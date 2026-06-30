@@ -65,9 +65,13 @@
                             @endif
                         </td>
                         <td class="p-6 text-right">
-                            <a href="#" class="inline-flex items-center gap-2 font-mono text-orange-500 hover:text-orange-600 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-xl transition">
-                                8c92...1f4e <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            @if($milestone->blockchain_tx_id)
+                            <a href="#" class="inline-flex items-center gap-2 font-mono text-orange-500 hover:text-orange-600 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-xl transition" title="{{ $milestone->blockchain_tx_id }}">
+                                {{ substr($milestone->blockchain_tx_id, 0, 4) }}...{{ substr($milestone->blockchain_tx_id, -4) }} <i class="fa-solid fa-link text-[10px]"></i>
                             </a>
+                            @else
+                            <span class="text-xs text-slate-400">Non ancré</span>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

@@ -43,11 +43,11 @@
 
         <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
             <div class="h-14 w-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-2xl flex-shrink-0">
-                <i class="fa-solid fa-certificate"></i>
+                <i class="fa-solid fa-arrow-trend-up"></i>
             </div>
             <div>
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Impact ESG</p>
-                <p class="text-xl font-black text-slate-900">Vérifié <span class="text-xs text-slate-400">On-Chain</span></p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Bénéfices Attendus</p>
+                <p class="text-xl font-black text-slate-900">+{{ number_format($investments->sum('amount_fcfa') * 0.30) }} <span class="text-xs text-slate-400">FCFA (30%)</span></p>
             </div>
         </div>
     </div>
@@ -61,11 +61,11 @@
             <div class="flex-1">
                 <p class="text-slate-400 font-bold mb-2 uppercase tracking-widest text-xs">Gains redistribués</p>
                 <div class="flex items-end gap-3 mb-4">
-                    <span class="text-4xl font-black text-orange-500">12,500</span>
-                    <span class="text-lg font-bold text-slate-400 pb-1 flex items-center gap-2"><i class="fa-brands fa-bitcoin"></i> SATS</span>
+                    <span class="text-4xl font-black text-orange-500">{{ number_format($investments->where('status', 'paid')->sum('amount_fcfa') * 0.30) }}</span>
+                    <span class="text-lg font-bold text-slate-400 pb-1 flex items-center gap-2">FCFA</span>
                 </div>
                 <p class="text-slate-500 text-sm leading-relaxed max-w-lg">
-                    Vos investissements ont généré un retour de <strong class="text-green-600">+8.5%</strong> en moyenne via les récoltes et les certificats ESG.
+                    Vos investissements génèrent un retour estimé de <strong class="text-green-600">+30%</strong> après la vente des récoltes. Les paiements Lightning seront activés automatiquement à la fin des projets.
                 </p>
             </div>
             <div class="w-full md:w-auto bg-slate-50 border border-slate-100 p-5 rounded-2xl">
@@ -94,9 +94,16 @@
         <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 p-6 flex flex-col hover:shadow-md transition-shadow group">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-2">Actif</span>
-                    <h4 class="font-bold text-lg text-slate-900">{{ $inv->project->title }}</h4>
-                    <p class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-location-dot"></i> {{ $inv->project->region }}</p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-black uppercase tracking-widest">{{ $inv->project->formatted_id }}</span>
+                        @if($inv->status == 'paid')
+                            <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-black uppercase tracking-widest">Actif</span>
+                        @else
+                            <span class="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded text-[10px] font-black uppercase tracking-widest">En attente</span>
+                        @endif
+                    </div>
+                    <h4 class="font-bold text-lg text-slate-900 leading-tight">{{ $inv->project->title }}</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-1"><i class="fa-solid fa-location-dot"></i> {{ $inv->project->region }}</p>
                 </div>
             </div>
             

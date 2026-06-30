@@ -50,6 +50,9 @@
                 </div>
                 <div class="flex items-center gap-2 text-slate-500 text-sm font-medium mb-4">
                     <i class="fa-solid fa-users"></i> {{ $project->user->name }}
+                    <span class="ml-2 px-2 py-0.5 bg-green-50 border border-green-100 text-green-700 rounded-full text-xs font-bold" title="Trust Score">
+                        <i class="fa-solid fa-shield-halved"></i> Score: {{ $project->user->trust_score }}/100
+                    </span>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
                     {{ $project->description }}
@@ -82,25 +85,27 @@
                     <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
                         <span>Objectif</span>
                     </div>
-                    <p class="font-black text-lg text-slate-900">{{ number_format($project->budget_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
+                    <p class="font-black text-lg text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
                 </div>
                 
                 @auth
-                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['active', 'verified']))
-                    <form action="{{ url('/invest/'.$project->id) }}" method="POST">
+                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
+                    <form action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
                         @csrf
-                        <div class="relative mb-3">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-slate-400 text-sm font-bold">CFA</span>
-                            </div>
-                            <input type="number" name="amount_fcfa" class="block w-full pl-12 pr-3 py-3 border border-slate-200 rounded-xl text-sm focus:ring-orange-500 focus:border-orange-500 transition bg-white shadow-inner" placeholder="Montant (ex: 50000)" required>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Montant à investir (FCFA)</label>
+                            <input type="number" name="amount_fcfa" min="1000" max="{{ $project->remaining_amount }}" step="1000" value="{{ min(50000, $project->remaining_amount) }}" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-bold" required>
                         </div>
                         <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Simuler un paiement Lightning pour cet investissement ? (Calcule 2% de frais via routage intelligent)')">
-                            <i class="fa-brands fa-bitcoin text-orange-400"></i> Financer via Lightning
+                            <i class="fa-solid fa-bolt"></i> Investir
                         </button>
                     </form>
-                    @elseif(Auth::user()->role === 'investor' && !in_array($project->status, ['active', 'verified']))
-                    <button class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                    @elseif(Auth::user()->role === 'investor' && $project->remaining_amount <= 0)
+                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                        Financement Atteint
+                    </button>
+                    @elseif(Auth::user()->role === 'investor')
+                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
                         En attente de validation
                     </button>
                     @endif

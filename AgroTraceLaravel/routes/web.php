@@ -216,9 +216,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (Auth::user()->role !== 'admin') abort(403);
         
         $milestone = Milestone::findOrFail($id);
-        $milestone->update(['status' => 'validated']);
+        
+        // Simuler un enregistrement immuable sur la blockchain
+        $txId = hash('sha256', $milestone->id . $milestone->status . time() . 'AgroTraceBTC');
 
-        return redirect('/dashboard')->with('success', 'Milestone validated and recorded to blockchain!');
+        $milestone->update([
+            'status' => 'validated',
+            'blockchain_tx_id' => $txId
+        ]);
+
+        return redirect('/dashboard')->with('success', 'Jalon validé et ancré sur la blockchain avec succès ! (TX ID: ' . substr($txId, 0, 16) . '...)');
     });
 });
 

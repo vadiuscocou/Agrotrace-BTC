@@ -46,8 +46,8 @@
                     @elseif($project->status == 'funded' || $project->status == 'in_progress')
                         <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold mb-2"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
                         @if($project->status == 'in_progress')
-                        <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}', amount: {{ $project->target_amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
-                            <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
+                        <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}' })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
+                            <i class="fa-solid fa-wheat-awn"></i> Déclarer la Récolte
                         </button>
                         @endif
                     @elseif($project->status == 'completed')
@@ -249,9 +249,9 @@
         </div>
     </div>
 
-    <!-- Repay Project Modal -->
-    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', projectAmount: 0, repayAmount: 0 }" 
-         @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; projectAmount = $event.detail.amount; repayAmount = projectAmount * 1.08;" 
+    <!-- Harvest Declaration Modal -->
+    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', quantity: 0, price: 0, get revenue() { return this.quantity * this.price; } }" 
+         @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; quantity = 0; price = 0;" 
          x-show="repayModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="repayModalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-75" @click="repayModalOpen = false"></div>
@@ -260,41 +260,47 @@
                 <div class="bg-white px-6 pt-6 pb-6">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100">
-                            <i class="fa-solid fa-hand-holding-dollar text-orange-500 text-xl"></i>
+                            <i class="fa-solid fa-wheat-awn text-orange-500 text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-black text-slate-900">Rembourser les Investisseurs</h3>
+                        <h3 class="text-xl font-black text-slate-900">Déclaration de Récolte</h3>
                     </div>
                     
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 text-center">
-                        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1" x-text="projectTitle"></p>
-                        <p class="text-xs text-slate-400 mb-4">Distribution automatique via Lightning Network</p>
-                        
-                        <div class="flex justify-between items-center border-t border-slate-200 pt-3">
-                            <span class="text-sm text-slate-600 font-medium">Capital levé :</span>
-                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount) + ' FCFA'"></span>
-                        </div>
-                        <div class="flex justify-between items-center pt-2">
-                            <span class="text-sm text-slate-600 font-medium">Intérêts (8%) :</span>
-                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount * 0.08) + ' FCFA'"></span>
-                        </div>
-                        <div class="flex justify-between items-center pt-3 border-t border-slate-200 mt-2">
-                            <span class="text-sm font-black text-slate-900">Total à reverser :</span>
-                            <span class="text-xl font-black text-orange-500" x-text="new Intl.NumberFormat('fr-FR').format(repayAmount) + ' FCFA'"></span>
-                        </div>
-                    </div>
+                    <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4" x-text="projectTitle"></p>
 
                     <form :action="'{{ url('/projects') }}/' + projectId + '/repay'" method="POST" id="repayProjectForm">
                         @csrf
-                        <div class="mt-4 border-t border-slate-200 pt-4">
-                            <label class="block text-slate-700 text-sm font-bold mb-2" for="bolt11">Votre Facture Lightning (BOLT11)</label>
-                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" id="bolt11" name="bolt11" type="text" required placeholder="lnbc...">
-                            <p class="text-xs text-slate-500 mt-2">Générez une facture de réception (Receive) depuis votre portefeuille Lightning pour le montant exact, et collez-la ici.</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2">Quantité récoltée (kg)</label>
+                                <input x-model="quantity" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 text-sm font-bold mb-2">Prix moyen / kg (FCFA)</label>
+                                <input x-model="price" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 text-center mt-6">
+                            <p class="text-xs text-slate-400 mb-4">Répartition automatique (Contrat 70/30)</p>
+                            
+                            <div class="flex justify-between items-center border-t border-slate-200 pt-3">
+                                <span class="text-sm text-slate-600 font-medium">Chiffre d'Affaires estimé :</span>
+                                <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(revenue) + ' FCFA'"></span>
+                            </div>
+                            <div class="flex justify-between items-center pt-2">
+                                <span class="text-sm text-slate-600 font-medium">Part Coopérative (70%) :</span>
+                                <span class="font-bold text-green-600" x-text="new Intl.NumberFormat('fr-FR').format(revenue * 0.70) + ' FCFA'"></span>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-slate-200 mt-2">
+                                <span class="text-sm font-black text-slate-900">Part Investisseurs (30%) :</span>
+                                <span class="text-xl font-black text-orange-500" x-text="new Intl.NumberFormat('fr-FR').format(revenue * 0.30) + ' FCFA'"></span>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
                     <button type="button" onclick="document.getElementById('repayProjectForm').submit()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                        <i class="fa-brands fa-bitcoin mr-2 mt-1"></i> Envoyer les fonds
+                        <i class="fa-solid fa-paper-plane mr-2 mt-1"></i> Soumettre & Distribuer
                     </button>
                     <button type="button" @click="repayModalOpen = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler

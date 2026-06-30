@@ -47,9 +47,10 @@
 
     <!-- Preamble -->
     <div class="mb-8 text-justify leading-relaxed text-lg">
-        <p class="mb-4">Le présent contrat numérique est généré automatiquement par la plateforme <strong>AgroTrace</strong> et engage formellement le porteur de projet désigné ci-dessous, suite à sa validation par l'administration.</p>
+        <p class="mb-4">Le présent contrat numérique est généré automatiquement par la plateforme <strong>AgroTrace</strong> et formalise l'accord entre les parties prenantes du projet agricole, suite à sa validation par l'administration.</p>
         
         <p><strong>Fait virtuellement à :</strong> Siège AgroTrace<br>
+        <strong>ID Contrat :</strong> CT-{{ $project->formatted_id }}-{{ date('Y') }}<br>
         <strong>Le :</strong> {{ $project->created_at->format('d/m/Y à H:i') }}</p>
     </div>
 
@@ -58,26 +59,67 @@
         <h3 class="text-xl font-bold mb-4 uppercase underline">Entre les soussignés :</h3>
         <p class="mb-2"><strong>La Coopérative / Le Porteur de Projet :</strong> {{ optional($project->user)->name ?? 'Utilisateur Inconnu' }}</p>
         <p class="mb-2"><strong>Localisation :</strong> {{ $project->region }}</p>
-        <p class="mb-4"><em>Ci-après désigné "Le Bénéficiaire"</em></p>
+        <p class="mb-4"><em>Ci-après désigné "Le Bénéficiaire" ou "Le Porteur de Projet"</em></p>
 
         <p class="mb-2"><strong>ET</strong></p>
 
         <p class="mb-2"><strong>Les Investisseurs de la plateforme AgroTrace</strong> (représentés par l'entité gestionnaire des fonds séquestrés via Lightning Network).</p>
-        <p><em>Ci-après désignés "Les Investisseurs"</em></p>
+        <p class="mb-4"><em>Ci-après désignés "Les Investisseurs"</em></p>
+
+        <p class="mb-2"><strong>EN PRÉSENCE DE :</strong></p>
+        <p class="mb-2"><strong>AgroTrace BTC</strong>, agissant en tant que tiers de confiance, garant technique et financier.</p>
+        <p><em>Ci-après désignée "La Plateforme"</em></p>
     </div>
 
     <!-- Project Details -->
     <div class="mb-10 text-justify leading-relaxed text-lg space-y-6">
-        <h3 class="text-xl font-bold mb-4 uppercase underline">Article 1 : Objet du Financement</h3>
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27]">Article 1 : Objet du Contrat</h3>
         <p>Le Bénéficiaire sollicite et accepte un financement participatif d'un montant cible de <strong>{{ number_format($project->target_amount_fcfa) }} FCFA</strong> pour la réalisation du projet intitulé <em>"{{ $project->title }}"</em>.</p>
-        <p>Ce financement sera débloqué progressivement par AgroTrace sous réserve de la validation stricte des preuves d'avancement (jalons) soumises par le Bénéficiaire.</p>
+        <p>Ce financement sera débloqué progressivement par AgroTrace sous réserve de la validation stricte des preuves d'avancement (jalons) soumises par le Bénéficiaire, garantissant ainsi le bon usage des fonds.</p>
 
-        <h3 class="text-xl font-bold mb-4 uppercase underline mt-8">Article 2 : Engagement Formel de Rendement (8%)</h3>
-        <p>Le Bénéficiaire <strong>s'engage formellement, inconditionnellement et irrévocablement</strong> à reverser la totalité du capital investi, majoré d'une <strong>plus-value nette garantie de 8%</strong> à l'issue du cycle de production ou de la vente des récoltes.</p>
-        <p>Le montant total à restituer aux Investisseurs, via la plateforme AgroTrace, est fixé à : <strong>{{ number_format($project->target_amount_fcfa * 1.08) }} FCFA</strong>.</p>
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 2 : Obligations des Parties</h3>
         
-        <h3 class="text-xl font-bold mb-4 uppercase underline mt-8">Article 3 : Transparence et Sanctions</h3>
-        <p>Le Bénéficiaire s'engage à fournir des preuves tangibles (photos, reçus) pour chaque étape du projet. En cas de fraude avérée, de détournement de fonds ou de rupture abusive de l'engagement de remboursement, AgroTrace se réserve le droit de suspendre immédiatement les décaissements et d'engager des poursuites judiciaires, en s'appuyant sur l'identité vérifiée du Bénéficiaire et les documents justificatifs fournis lors de l'inscription.</p>
+        <h4 class="font-bold mt-4">2.1. Obligations de l'Investisseur</h4>
+        <ul class="list-disc pl-6 space-y-2">
+            <li>S'engage à fournir les fonds via le réseau Bitcoin (Lightning Network) de manière irrévocable.</li>
+            <li>Accepte que les fonds soient bloqués dans un portefeuille séquestre géré par La Plateforme et libérés par jalons.</li>
+            <li>Accepte le risque inhérent à toute activité agricole, tempéré par le mécanisme de validation par jalons.</li>
+        </ul>
+
+        <h4 class="font-bold mt-4">2.2. Obligations du Porteur de Projet (Bénéficiaire)</h4>
+        <ul class="list-disc pl-6 space-y-2">
+            <li>S'engage à utiliser l'intégralité des fonds alloués exclusivement pour le projet <em>"{{ $project->title }}"</em>.</li>
+            <li>S'engage à fournir des preuves tangibles (photos, reçus) pour chaque jalon sur La Plateforme.</li>
+            <li>S'engage à déclarer de manière honnête et transparente la quantité récoltée et le prix de vente à l'issue de la campagne.</li>
+        </ul>
+
+        <h4 class="font-bold mt-4">2.3. Obligations de la Plateforme (AgroTrace)</h4>
+        <ul class="list-disc pl-6 space-y-2">
+            <li>Garantir la sécurité des fonds et leur déblocage exclusif sur validation des jalons.</li>
+            <li>Assurer la transparence et la traçabilité des investissements sur la Blockchain.</li>
+            <li>Calculer automatiquement la répartition des revenus et procéder à la distribution via Lightning Network.</li>
+        </ul>
+
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 3 : Répartition des Revenus (Modèle 70/30)</h3>
+        <p>Contrairement à un prêt à taux fixe, le modèle AgroTrace est basé sur le partage de la création de valeur.</p>
+        <p>À l'issue de la vente des récoltes, le chiffre d'affaires généré sera automatiquement réparti par La Plateforme selon la clé de répartition suivante :</p>
+        <ul class="list-disc pl-6 space-y-2 font-bold">
+            <li>70 % du chiffre d'affaires total brut revient au Bénéficiaire (Agriculteur/Coopérative).</li>
+            <li>30 % du chiffre d'affaires total brut revient aux Investisseurs (proportionnellement à leur apport initial).</li>
+        </ul>
+
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 4 : Modalités de Remboursement</h3>
+        <p>Le Bénéficiaire procède au remboursement du capital et des dividendes via la création d'une facture Lightning sur AgroTrace. La Plateforme se charge ensuite de router automatiquement la part de chaque investisseur (les 30%) directement vers leur portefeuille Lightning personnel, sans frais de transaction bancaire.</p>
+        
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 5 : Gestion des Risques et Force Majeure</h3>
+        <p>Sont considérés comme cas de force majeure les événements climatiques extrêmes (sécheresse prolongée, inondations), les catastrophes naturelles ou les épidémies dévastatrices de cultures, dûment constatés par l'administration locale.</p>
+        <p>En cas de force majeure avérée entraînant la perte de la récolte :</p>
+        <ul class="list-disc pl-6 space-y-2">
+            <li>Les fonds non encore décaissés pour les jalons futurs sont restitués aux Investisseurs.</li>
+            <li>Le Bénéficiaire est dispensé de rembourser les fonds déjà dépensés pour les jalons validés.</li>
+            <li>Les Investisseurs acceptent la perte du capital correspondant aux jalons validés (risque mutualisé).</li>
+        </ul>
+        <p>En dehors des cas de force majeure, toute défaillance ou tentative de fraude entraînera des poursuites judiciaires, le gel du compte, et la dégradation définitive du <em>Score de Confiance</em> du Bénéficiaire.</p>
     </div>
 
     <!-- Signatures -->
