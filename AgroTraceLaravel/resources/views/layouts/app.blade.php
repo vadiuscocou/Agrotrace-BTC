@@ -81,7 +81,7 @@
         <!-- User Profile Area -->
         @auth
         <div class="p-4 border-t border-white/10 bg-black/10 overflow-hidden shrink-0">
-            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition min-w-max">
+            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition w-full">
                 <div class="h-10 w-10 rounded-full bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white font-bold shadow-lg shrink-0">
                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                 </div>
@@ -99,7 +99,7 @@
                         @endif
                     </p>
                 </div>
-                <form method="POST" action="{{ route('logout') }}" class="ml-auto" x-show="sidebarOpen">
+                <form method="POST" action="{{ route('logout') }}" class="ml-auto shrink-0" x-show="sidebarOpen">
                     @csrf
                     <button type="submit" class="text-white/50 hover:text-white transition px-2" title="Déconnexion">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
