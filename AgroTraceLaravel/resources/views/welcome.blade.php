@@ -343,108 +343,153 @@
         </div>
     </div>
 
-    <!-- FAQ (Bulles de discussion) -->
-    <div class="bg-white py-24 border-t border-slate-100" id="faq">
-        <div class="max-w-4xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase mb-2">Questions Fréquentes</h2>
-                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Vous avez des questions ?</p>
+    <!-- Chat Widget (Floating) -->
+    <div x-data="chatWidget()" class="fixed bottom-6 right-6 z-50 font-sans">
+        <!-- Chat Button -->
+        <button @click="toggleChat" :class="isOpen ? 'bg-orange-500 hover:bg-orange-600' : 'bg-[#063b27] hover:bg-[#0a4b33]'" class="w-14 h-14 rounded-full text-white shadow-2xl flex items-center justify-center text-2xl transition-all duration-300 border-2 border-white">
+            <i class="fa-solid fa-xmark" x-show="isOpen" style="display: none;"></i>
+            <i class="fa-solid fa-comments" x-show="!isOpen"></i>
+        </button>
+
+        <!-- Chat Window -->
+        <div x-show="isOpen" x-transition.opacity.duration.300ms style="display: none;" class="absolute bottom-20 right-0 w-[350px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col h-[500px]">
+            <!-- Header -->
+            <div class="bg-[#063b27] text-white p-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <i class="fa-solid fa-headset text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm">Support AgroTrace</h3>
+                    <p class="text-[10px] text-green-200"><i class="fa-solid fa-circle text-[8px] text-green-400 mr-1"></i>En ligne</p>
+                </div>
             </div>
 
-            <div class="space-y-8">
-                <!-- Q1 -->
-                <div class="flex gap-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
-                        <i class="fa-solid fa-user text-slate-500"></i>
+            <!-- Messages Area -->
+            <div class="flex-1 p-4 overflow-y-auto bg-slate-50 flex flex-col gap-4" id="chatMessages">
+                
+                <!-- Initial Bot Message -->
+                <div class="flex gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#063b27] flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-robot text-white text-xs"></i>
                     </div>
-                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
-                        <p class="text-slate-800 font-semibold">En tant qu'agriculteur, dois-je avoir des fonds pour lancer mon projet sur AgroTrace ?</p>
-                    </div>
-                </div>
-                <div class="flex gap-4 flex-row-reverse">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
-                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
-                    </div>
-                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
-                        <p class="font-medium text-slate-100">Non, absolument pas ! L'inscription est gratuite. Ce sont les investisseurs qui financent votre projet. L'argent vous est ensuite versé étape par étape, au fur et à mesure que vous validez les jalons de votre projet agricole.</p>
+                    <div class="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm border border-slate-100 text-sm text-slate-700">
+                        Bonjour ! 👋 Comment puis-je vous aider aujourd'hui ? Cliquez sur l'une des questions ci-dessous.
                     </div>
                 </div>
 
-                <!-- Q2 -->
-                <div class="flex gap-4 pt-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
-                        <i class="fa-solid fa-user text-slate-500"></i>
-                    </div>
-                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
-                        <p class="text-slate-800 font-semibold">Comment se rémunèrent les investisseurs et la plateforme ?</p>
-                    </div>
+                <!-- Questions Menu -->
+                <div x-show="!selectedQuestion" x-transition class="flex flex-col gap-2 ml-10">
+                    <template x-for="(faq, index) in faqs" :key="index">
+                        <button @click="selectQuestion(index)" class="text-left text-xs bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 text-slate-600 rounded-xl p-2.5 transition shadow-sm font-semibold">
+                            <span x-text="faq.q"></span>
+                        </button>
+                    </template>
                 </div>
-                <div class="flex gap-4 flex-row-reverse">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
-                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
+
+                <!-- User Selected Question -->
+                <template x-if="selectedQuestion !== null">
+                    <div class="flex gap-2 flex-row-reverse">
+                        <div class="bg-slate-200 text-slate-800 rounded-2xl rounded-tr-sm p-3 shadow-sm text-sm font-medium">
+                            <span x-text="faqs[selectedQuestion].q"></span>
+                        </div>
                     </div>
-                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
-                        <p class="font-medium text-slate-100">AgroTrace se rémunère via une commission transparente (environ 2%) sur les levées de fonds. Quant aux investisseurs, ils reçoivent leur capital initial plus un taux d'intérêt (par exemple 8%) une fois que la récolte a été vendue avec succès !</p>
+                </template>
+
+                <!-- Bot Typing Indicator -->
+                <div x-show="isTyping" class="flex gap-2" style="display: none;">
+                    <div class="w-8 h-8 rounded-full bg-[#063b27] flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="fa-solid fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm border border-slate-100 text-slate-400 text-sm flex gap-1 items-center">
+                        <span class="animate-bounce">.</span><span class="animate-bounce" style="animation-delay: 0.1s">.</span><span class="animate-bounce" style="animation-delay: 0.2s">.</span>
                     </div>
                 </div>
 
-                <!-- Q3 -->
-                <div class="flex gap-4 pt-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
-                        <i class="fa-solid fa-user text-slate-500"></i>
+                <!-- Bot Answer -->
+                <template x-if="showAnswer && selectedQuestion !== null">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex gap-2">
+                            <div class="w-8 h-8 rounded-full bg-[#063b27] flex-shrink-0 flex items-center justify-center mt-1">
+                                <i class="fa-solid fa-headset text-white text-xs"></i>
+                            </div>
+                            <div class="bg-[#063b27] text-white rounded-2xl rounded-tl-sm p-3 shadow-sm text-sm" x-html="faqs[selectedQuestion].a">
+                            </div>
+                        </div>
+                        
+                        <!-- Reset Button -->
+                        <div class="text-center mt-2 mb-2">
+                            <button @click="resetChat" class="text-[11px] text-slate-400 hover:text-orange-600 bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm transition font-bold uppercase tracking-wider">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Poser une autre question
+                            </button>
+                        </div>
                     </div>
-                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
-                        <p class="text-slate-800 font-semibold">Comment l'agriculteur reçoit-il l'argent si c'est du Bitcoin ?</p>
-                    </div>
-                </div>
-                <div class="flex gap-4 flex-row-reverse">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
-                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
-                    </div>
-                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
-                        <p class="font-medium text-slate-100">La plateforme s'occupe de la conversion ! Dès qu'une preuve est validée, le contrat libère le Bitcoin vers une passerelle partenaire qui le convertit instantanément en FCFA et l'envoie sur le compte Mobile Money (MTN, Moov, etc.) de l'agriculteur.</p>
-                    </div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="flex gap-4 pt-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
-                        <i class="fa-solid fa-user text-slate-500"></i>
-                    </div>
-                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
-                        <p class="text-slate-800 font-semibold">Dois-je m'y connaître en cryptomonnaie ou en Bitcoin pour utiliser la plateforme ?</p>
-                    </div>
-                </div>
-                <div class="flex gap-4 flex-row-reverse">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
-                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
-                    </div>
-                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
-                        <p class="font-medium text-slate-100">Pas du tout ! L'interface masque toute la complexité technique. Si vous êtes agriculteur, vous ne verrez que des montants en monnaie locale (FCFA). Si vous êtes investisseur, vous scannez simplement un QR Code depuis votre application pour envoyer les fonds de manière instantanée.</p>
-                    </div>
-                </div>
-
-                <!-- Q5 -->
-                <div class="flex gap-4 pt-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center mt-1">
-                        <i class="fa-solid fa-user text-slate-500"></i>
-                    </div>
-                    <div class="bg-slate-100 rounded-3xl rounded-tl-sm p-5 md:p-6 max-w-2xl shadow-sm border border-slate-200">
-                        <p class="text-slate-800 font-semibold">Le risque de perte (sécheresse, mauvaise récolte) est-il couvert ?</p>
-                    </div>
-                </div>
-                <div class="flex gap-4 flex-row-reverse">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex-shrink-0 flex items-center justify-center mt-1 border border-orange-200">
-                        <i class="fa-solid fa-headset text-orange-500 text-sm"></i>
-                    </div>
-                    <div class="bg-[#063b27] text-white rounded-3xl rounded-tr-sm p-5 md:p-6 max-w-2xl shadow-md">
-                        <p class="font-medium text-slate-100">Investir dans l'économie réelle comporte toujours des risques. Cependant, grâce à notre système de paiement par "tranches" (Jalons), le risque est drastiquement réduit. Si le projet s'arrête à l'étape 2 (ex: catastrophe naturelle), les fonds des étapes 3 et 4 ne sont pas débloqués et restent sécurisés pour les investisseurs.</p>
-                    </div>
-                </div>
+                </template>
 
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('chatWidget', () => ({
+                isOpen: false,
+                selectedQuestion: null,
+                isTyping: false,
+                showAnswer: false,
+                faqs: [
+                    {
+                        q: "Dois-je avoir des fonds pour lancer un projet ?",
+                        a: "<strong>Non, absolument pas !</strong><br><br>L'inscription est gratuite. Ce sont les investisseurs qui financent votre projet. L'argent vous est ensuite versé étape par étape (jalons)."
+                    },
+                    {
+                        q: "Comment se rémunèrent les investisseurs ?",
+                        a: "AgroTrace se rémunère via une commission transparente d'environ 2% sur la levée de fonds.<br><br>Quant aux investisseurs, ils reçoivent leur capital initial plus un taux d'intérêt garanti de <strong>8%</strong> à la fin du projet !"
+                    },
+                    {
+                        q: "Comment recevoir l'argent sans compte Bitcoin ?",
+                        a: "La plateforme masque toute la complexité technique !<br><br>Dès qu'une de vos preuves d'avancement est validée, le paiement Bitcoin est converti instantanément par nos partenaires et envoyé directement sur votre compte <strong>Mobile Money</strong> (FCFA)."
+                    },
+                    {
+                        q: "Le risque de perte (sécheresse) est-il couvert ?",
+                        a: "Grâce à notre système de paiement par tranches, le risque est drastiquement réduit !<br><br>Si le projet est interrompu à l'étape 2 à cause d'une catastrophe, les fonds des étapes suivantes ne sont pas décaissés et restent en sécurité."
+                    }
+                ],
+                toggleChat() {
+                    this.isOpen = !this.isOpen;
+                    if(this.isOpen && this.selectedQuestion === null) {
+                        this.scrollToBottom();
+                    }
+                },
+                selectQuestion(index) {
+                    this.selectedQuestion = index;
+                    this.isTyping = true;
+                    this.scrollToBottom();
+                    
+                    // Simulate typing delay for realistic bot feel
+                    setTimeout(() => {
+                        this.isTyping = false;
+                        this.showAnswer = true;
+                        this.scrollToBottom();
+                    }, 1200);
+                },
+                resetChat() {
+                    this.selectedQuestion = null;
+                    this.showAnswer = false;
+                },
+                scrollToBottom() {
+                    setTimeout(() => {
+                        const chatArea = document.getElementById('chatMessages');
+                        if(chatArea) {
+                            chatArea.scrollTo({
+                                top: chatArea.scrollHeight,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 100);
+                }
+            }));
+        });
+    </script>
     
     <!-- Footer -->
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-slate-400 text-sm font-medium">
