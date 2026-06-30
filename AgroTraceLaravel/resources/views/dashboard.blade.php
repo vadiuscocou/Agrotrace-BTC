@@ -120,6 +120,10 @@
                         <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50 group-hover:opacity-100"></i>
                     </a>
                 </div>
+
+                <a href="{{ route('projects.contract', $inv->project->id) }}" target="_blank" class="w-full mt-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-signature"></i> Voir le contrat
+                </a>
             </div>
         </div>
         @endforeach

@@ -167,7 +167,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/projects/{id}/contract', function ($id) {
         $project = Project::findOrFail($id);
-        if (Auth::user()->role !== 'admin' && $project->user_id !== Auth::id()) {
+        
+        $hasInvested = false;
+        if (Auth::user()->role === 'investor') {
+            $hasInvested = Auth::user()->investments()->where('project_id', $project->id)->exists();
+        }
+
+        if (Auth::user()->role !== 'admin' && $project->user_id !== Auth::id() && !$hasInvested) {
             abort(403, 'Accès non autorisé au contrat.');
         }
         return view('owner.contract', ['project' => $project]);
