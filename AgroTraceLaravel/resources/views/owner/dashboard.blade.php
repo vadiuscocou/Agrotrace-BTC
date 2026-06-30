@@ -50,7 +50,7 @@
                             <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
                         </button>
                         @endif
-                    @if($project->status == 'completed')
+                    @elseif($project->status == 'completed')
                         <span class="inline-block px-2 py-1 bg-slate-800 text-white rounded text-xs font-bold">
                             <i class="fa-solid fa-check-double"></i> Terminé
                         </span>
