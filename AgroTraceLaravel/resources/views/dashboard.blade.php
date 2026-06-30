@@ -12,7 +12,7 @@
         <div class="hidden sm:block text-right bg-orange-50 border border-orange-100 px-6 py-3 rounded-2xl">
             <p class="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">Total Routé</p>
             <p class="text-2xl font-black text-orange-600 flex items-center gap-2">
-                <i class="fa-brands fa-bitcoin"></i> {{ number_format($investments->sum('amount_sats')) }} <span class="text-sm font-bold opacity-50">SATS</span>
+                <i class="fa-brands fa-bitcoin"></i> {{ number_format($investments->where('status', 'paid')->sum('amount_sats')) }} <span class="text-sm font-bold opacity-50">SATS</span>
             </p>
         </div>
     </div>
@@ -27,7 +27,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Investi</p>
-                <p class="text-xl font-black text-slate-900">{{ number_format($investments->sum('amount_fcfa')) }} <span class="text-xs text-slate-400">FCFA</span></p>
+                <p class="text-xl font-black text-slate-900">{{ number_format($investments->where('status', 'paid')->sum('amount_fcfa')) }} <span class="text-xs text-slate-400">FCFA</span></p>
             </div>
         </div>
         
@@ -37,7 +37,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Projets</p>
-                <p class="text-xl font-black text-slate-900">{{ $investments->unique('project_id')->count() }} <span class="text-xs text-slate-400">Soutenus</span></p>
+                <p class="text-xl font-black text-slate-900">{{ $investments->where('status', 'paid')->unique('project_id')->count() }} <span class="text-xs text-slate-400">Soutenus</span></p>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Bénéfices Attendus</p>
-                <p class="text-xl font-black text-slate-900">+{{ number_format($investments->sum('amount_fcfa') * 0.30) }} <span class="text-xs text-slate-400">FCFA (30%)</span></p>
+                <p class="text-xl font-black text-slate-900">+{{ number_format($investments->where('status', 'paid')->sum('amount_fcfa') * 0.30) }} <span class="text-xs text-slate-400">FCFA (30%)</span></p>
             </div>
         </div>
     </div>
