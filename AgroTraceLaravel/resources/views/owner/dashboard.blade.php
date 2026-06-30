@@ -272,11 +272,11 @@
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label class="block text-slate-700 text-sm font-bold mb-2">Quantité récoltée (kg)</label>
-                                <input x-model="quantity" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
+                                <input name="quantity" x-model="quantity" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
                             </div>
                             <div>
                                 <label class="block text-slate-700 text-sm font-bold mb-2">Prix moyen / kg (FCFA)</label>
-                                <input x-model="price" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
+                                <input name="price" x-model="price" type="number" min="0" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" required>
                             </div>
                         </div>
 

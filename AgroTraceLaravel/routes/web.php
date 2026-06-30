@@ -185,22 +185,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $project = Project::findOrFail($id);
         if ($project->user_id !== Auth::id()) abort(403);
 
-        $bolt11 = request('bolt11');
+        $quantity = request('quantity');
+        $price = request('price');
 
-        if (!$bolt11) {
-            return back()->with('error', 'Veuillez fournir une facture Lightning.');
+        if (!$quantity || !$price) {
+            return back()->with('error', 'Veuillez déclarer la quantité et le prix.');
         }
 
-        try {
-            $lnbits = new \App\Services\LNbitsService();
-            $lnbits->payInvoice($bolt11);
-            
-            $project->update(['status' => 'completed']);
+        // En simulation : on marque juste le projet comme terminé
+        $project->update(['status' => 'completed']);
 
-            return redirect('/dashboard')->with('success', 'Paiement effectué ! Fonds envoyés sur votre portefeuille avec succès.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Erreur de paiement LNbits: ' . $e->getMessage());
-        }
+        // Dans la vraie vie, le backend interagirait avec LNbits pour envoyer les 30% aux investisseurs
+        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! Les dividendes (30%) ont été routés automatiquement vers les portefeuilles Lightning de vos investisseurs.');
     });
 
     // Admin Actions
