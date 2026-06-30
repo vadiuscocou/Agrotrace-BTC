@@ -200,6 +200,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('owner.contract', ['project' => $project]);
     })->name('projects.contract');
 
+    Route::get('/investments/{id}/contract', function ($id) {
+        $investment = Investment::with(['project.user', 'user'])->findOrFail($id);
+        
+        if (Auth::user()->role !== 'admin' && $investment->user_id !== Auth::id()) {
+            abort(403, 'Accès non autorisé à ce contrat nominatif.');
+        }
+        
+        return view('investor.contract', ['investment' => $investment]);
+    })->name('investments.contract');
+
     Route::post('/projects/{id}/repay', function ($id) {
         if (Auth::user()->role !== 'project_owner') abort(403);
         
