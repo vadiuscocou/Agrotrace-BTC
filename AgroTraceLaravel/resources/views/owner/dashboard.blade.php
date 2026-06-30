@@ -25,7 +25,7 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
         @foreach($projects as $project)
-        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+        <div class="bg-white rounded-[2rem] shadow-md border border-slate-200 overflow-hidden">
             <!-- Project Header -->
             <div class="bg-slate-50 border-b border-slate-100 p-6 flex justify-between items-center">
                 <div>

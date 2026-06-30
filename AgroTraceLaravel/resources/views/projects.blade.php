@@ -31,7 +31,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($projects as $project)
-        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
+        <div class="bg-white rounded-[2rem] shadow-md border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
             
             <!-- Card Header -->
             <div class="p-6 border-b border-slate-50 bg-slate-50/50 flex justify-between items-start">
