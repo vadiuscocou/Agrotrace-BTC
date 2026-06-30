@@ -1,111 +1,271 @@
 @extends('layouts.app')
-@section('title', 'Impact Map')
-
+@section('title', 'Carte d\'Impact Interactive')
 @section('content')
+
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
-<style>
-    #impact-map {
-        height: 70vh;
-        width: 100%;
-        border-radius: 1.5rem;
-        z-index: 10;
-    }
-    .custom-popup .leaflet-popup-content-wrapper {
-        border-radius: 1rem;
-        padding: 0;
-        overflow: hidden;
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    }
-    .custom-popup .leaflet-popup-content {
-        margin: 0;
-        width: 250px !important;
-    }
-    .custom-popup .leaflet-popup-tip-container {
-        display: none;
-    }
-</style>
-
-<div class="bg-white border-b border-slate-200 px-8 py-10">
-    <div class="max-w-7xl mx-auto">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-3">
-            <i class="fa-solid fa-earth-africa"></i> Traceabilité Globale
-        </div>
-        <h1 class="text-4xl font-black tracking-tight text-slate-900 mb-4">Impact Map</h1>
-        <p class="text-slate-500 text-lg max-w-2xl font-medium">
-            Découvrez en temps réel où vos investissements Bitcoin se transforment en projets agricoles concrets à travers l'Afrique. Transparence totale, de la blockchain à la graine.
-        </p>
-    </div>
-</div>
-
-<div class="max-w-7xl mx-auto px-8 py-10">
-    <div class="bg-white p-4 rounded-[2rem] shadow-sm border border-slate-100">
-        <div id="impact-map"></div>
-    </div>
-</div>
-
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+<div x-data="impactMap()" class="relative h-[calc(100vh-4rem)] bg-slate-100 flex flex-col md:flex-row overflow-hidden">
+    
+    <!-- Sidebar / Stats Panel -->
+    <div class="w-full md:w-96 bg-white shadow-2xl z-[1000] flex flex-col h-1/2 md:h-full overflow-y-auto shrink-0 transition-all duration-300">
+        <div class="p-6 bg-[#063b27] text-white">
+            <h1 class="text-2xl font-black mb-2"><i class="fa-solid fa-earth-africa text-green-400 mr-2"></i> Impact AgroTrace</h1>
+            <p class="text-green-50 text-sm opacity-90">Visualisez l'impact géographique et financier des investissements sur le territoire béninois.</p>
+        </div>
+        
+        <div class="p-6 flex-1">
+            <!-- Global Stats -->
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-blue-50 rounded-xl p-4 border border-blue-100 transition-all hover:shadow-md">
+                    <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Projets Filtrés</p>
+                    <p class="text-2xl font-black text-slate-900" x-text="filteredProjects.length"></p>
+                </div>
+                <div class="bg-green-50 rounded-xl p-4 border border-green-100 transition-all hover:shadow-md">
+                    <p class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-1">Familles Impactées</p>
+                    <p class="text-2xl font-black text-slate-900" x-text="(filteredProjects.length * 25) + '+'"></p>
+                </div>
+                <div class="col-span-2 bg-orange-50 rounded-xl p-4 border border-orange-100 transition-all hover:shadow-md">
+                    <p class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-1">Volume Financé (Sélection)</p>
+                    <p class="text-3xl font-black text-slate-900"><span x-text="new Intl.NumberFormat('fr-FR').format(totalInvested)"></span> <span class="text-sm text-slate-500 font-medium">FCFA</span></p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-slate-800 mb-2">Filtrer par Région</label>
+                <div class="relative">
+                    <select x-model="selectedRegion" @change="filterMap()" class="block appearance-none w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-[#063b27] focus:ring-1 focus:ring-[#063b27] transition-all cursor-pointer font-medium shadow-sm">
+                        <option value="all">Toutes les régions (Bénin)</option>
+                        <template x-for="region in regions" :key="region">
+                            <option :value="region" x-text="region"></option>
+                        </template>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-slate-800 mb-2">Statut du Projet</label>
+                <div class="flex flex-wrap gap-2">
+                    <button @click="selectedStatus = 'all'; filterMap()" :class="selectedStatus == 'all' ? 'bg-slate-800 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'" class="px-3 py-2 rounded-lg text-xs font-bold transition-all">Tous</button>
+                    <button @click="selectedStatus = 'funded'; filterMap()" :class="selectedStatus == 'funded' ? 'bg-green-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-green-50 hover:text-green-600'" class="px-3 py-2 rounded-lg text-xs font-bold transition-all">Financés</button>
+                    <button @click="selectedStatus = 'in_progress'; filterMap()" :class="selectedStatus == 'in_progress' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600'" class="px-3 py-2 rounded-lg text-xs font-bold transition-all">En cours</button>
+                    <button @click="selectedStatus = 'completed'; filterMap()" :class="selectedStatus == 'completed' ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-purple-50 hover:text-purple-600'" class="px-3 py-2 rounded-lg text-xs font-bold transition-all">Terminés</button>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-xl text-xs text-blue-700 mt-auto border border-blue-100 flex gap-3 items-start">
+                <i class="fa-solid fa-circle-info mt-0.5"></i> 
+                <p>Les cercles sur la carte représentent la zone d'impact géographique estimée de chaque projet. Le rayon est proportionnel au budget alloué.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map" class="flex-1 h-1/2 md:h-full z-0"></div>
+</div>
+
+<!-- Inline data for Alpine/JS -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize the map, centered on West Africa roughly
-        var map = L.map('impact-map').setView([10.0, -0.0], 5);
+    const projectsData = @json($projects);
+</script>
 
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            className: 'map-tiles'
-        }).addTo(map);
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('impactMap', () => ({
+            map: null,
+            markersLayer: null,
+            projects: projectsData,
+            filteredProjects: [],
+            regions: [],
+            selectedRegion: 'all',
+            selectedStatus: 'all',
+            totalInvested: 0,
+            
+            init() {
+                // Initialize Leaflet map centered on Benin
+                this.map = L.map('map', {
+                    zoomControl: false 
+                }).setView([9.3077, 2.3158], 7);
+                
+                L.control.zoom({
+                    position: 'bottomright'
+                }).addTo(this.map);
 
-        // Custom icon for projects
-        var tractorIcon = L.divIcon({
-            html: '<div class="h-10 w-10 bg-[#063b27] text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white"><i class="fa-solid fa-tractor"></i></div>',
-            className: 'custom-div-icon',
-            iconSize: [40, 40],
-            iconAnchor: [20, 20],
-            popupAnchor: [0, -20]
-        });
+                // Add OpenStreetMap tiles (CartoDB Positron variant for cleaner look if possible, but OSM standard is fine)
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                }).addTo(this.map);
 
-        // Pass PHP data to JS
-        var projects = @json($projects);
+                this.markersLayer = L.layerGroup().addTo(this.map);
 
-        // Add markers for each project
-        projects.forEach(function(project) {
-            if (project.latitude && project.longitude) {
-                var statusBadge = project.status === 'active' 
-                    ? '<span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-black uppercase rounded-md mb-2 inline-block">Actif</span>'
-                    : '<span class="px-2 py-1 bg-orange-100 text-orange-700 text-[10px] font-black uppercase rounded-md mb-2 inline-block">En attente</span>';
+                // Extract unique regions
+                const regionsSet = new Set();
+                this.projects.forEach(p => {
+                    if (p.region) regionsSet.add(p.region);
+                });
+                this.regions = Array.from(regionsSet).sort();
 
-                var formatter = new Intl.NumberFormat('fr-FR');
-                var budget = formatter.format(project.target_amount_fcfa) + ' FCFA';
+                this.filteredProjects = this.projects;
+                this.calculateStats();
+                
+                // Small delay to ensure map container has its final size
+                setTimeout(() => {
+                    this.map.invalidateSize();
+                    this.renderMarkers();
+                }, 100);
+            },
 
-                var popupContent = `
-                    <div class="p-0">
-                        <div class="h-24 bg-slate-200 relative overflow-hidden">
-                            <img src="${project.image || 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&q=80&w=400'}" class="w-full h-full object-cover" alt="Project Image">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        </div>
-                        <div class="p-4 bg-white">
-                            ${statusBadge}
-                            <h3 class="font-bold text-slate-900 text-sm mb-1 leading-tight">${project.title}</h3>
-                            <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${project.region}</p>
+            filterMap() {
+                this.filteredProjects = this.projects.filter(p => {
+                    const matchRegion = this.selectedRegion === 'all' || p.region === this.selectedRegion;
+                    const matchStatus = this.selectedStatus === 'all' || p.status === this.selectedStatus;
+                    return matchRegion && matchStatus;
+                });
+                this.calculateStats();
+                this.renderMarkers();
+            },
+
+            calculateStats() {
+                this.totalInvested = this.filteredProjects.reduce((sum, p) => {
+                    // Total investment 'paid'
+                    let invested = 0;
+                    if (p.investments && p.investments.length > 0) {
+                        invested = p.investments.filter(i => i.status === 'paid').reduce((acc, curr) => acc + parseFloat(curr.amount_fcfa), 0);
+                    }
+                    // Fallback to target amount if no real investments yet but status is funded (just for demo purposes if needed, but we stick to real investments if available)
+                    if (invested === 0 && (p.status === 'funded' || p.status === 'in_progress' || p.status === 'completed')) {
+                        invested = parseFloat(p.target_amount_fcfa);
+                    }
+                    return sum + invested;
+                }, 0);
+            },
+
+            renderMarkers() {
+                this.markersLayer.clearLayers();
+                
+                if (this.filteredProjects.length === 0) return;
+
+                const bounds = [];
+
+                this.filteredProjects.forEach(p => {
+                    if (!p.latitude || !p.longitude) return;
+                    
+                    const lat = parseFloat(p.latitude);
+                    const lng = parseFloat(p.longitude);
+                    bounds.push([lat, lng]);
+
+                    // Color based on status
+                    let color = '#16a34a'; // green (funded)
+                    let statusLabel = 'Financé';
+                    if (p.status === 'in_progress') { color = '#2563eb'; statusLabel = 'En cours de réalisation'; } // blue
+                    if (p.status === 'completed') { color = '#9333ea'; statusLabel = 'Récolté & Remboursé'; } // purple
+
+                    // 1. Impact Circle (Radius based on budget, bounded)
+                    let radius = Math.min(Math.max(p.target_amount_fcfa / 100, 5000), 40000); // 5km to 40km
+                    L.circle([lat, lng], {
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: 0.15,
+                        radius: radius,
+                        weight: 2,
+                        dashArray: '5, 5'
+                    }).addTo(this.markersLayer);
+
+                    // 2. Custom Marker HTML
+                    const customIcon = L.divIcon({
+                        className: 'custom-div-icon',
+                        html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"></div>`,
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10]
+                    });
+
+                    // 3. Marker & Popup
+                    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(this.markersLayer);
+                    
+                    const popupContent = `
+                        <div class="font-sans min-w-[220px]">
+                            <div class="border-b border-slate-100 pb-2 mb-2">
+                                <h3 class="font-black text-slate-800 text-sm leading-tight">${p.title}</h3>
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mt-1"><i class="fa-solid fa-location-dot text-slate-300"></i> ${p.region}</p>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3"><i class="fa-solid fa-users text-slate-400 w-4"></i> Resp: <span class="font-bold">${p.user ? p.user.name : 'Coopérative'}</span></p>
                             
-                            <div class="flex justify-between items-end border-t border-slate-100 pt-3">
-                                <div>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Objectif</p>
-                                    <p class="font-black text-[#063b27] text-sm">${budget}</p>
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 mb-3">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase">Financement</span>
+                                    <span class="text-xs font-black text-slate-800">${new Intl.NumberFormat('fr-FR').format(p.target_amount_fcfa)} FCFA</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase">Statut</span>
+                                    <span style="color:${color}" class="text-[10px] font-black uppercase tracking-wider bg-white px-1.5 py-0.5 rounded border border-slate-200">${statusLabel}</span>
                                 </div>
                             </div>
+                            <a href="/projects" class="block w-full text-center text-xs font-bold text-white bg-[#063b27] hover:bg-[#0a4b33] py-2 rounded-lg transition-colors">Découvrir ce projet</a>
                         </div>
-                    </div>
-                `;
+                    `;
+                    marker.bindPopup(popupContent, {
+                        closeButton: true,
+                        className: 'custom-impact-popup'
+                    });
+                });
 
-                var marker = L.marker([project.latitude, project.longitude], {icon: tractorIcon}).addTo(map);
-                marker.bindPopup(popupContent, {className: 'custom-popup'});
+                // Adjust bounds if filtering by region
+                if (bounds.length > 0 && this.selectedRegion !== 'all') {
+                    this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 9 });
+                } else if (this.selectedRegion === 'all') {
+                    if (bounds.length > 0) {
+                        this.map.fitBounds(bounds, { padding: [20, 20], maxZoom: 8 });
+                    } else {
+                        this.map.setView([9.3077, 2.3158], 7);
+                    }
+                }
             }
-        });
+        }));
     });
 </script>
+
+<style>
+    /* Custom Leaflet styling */
+    .custom-impact-popup .leaflet-popup-content-wrapper {
+        border-radius: 1rem;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        padding: 0;
+        border: 1px solid #f1f5f9;
+    }
+    .custom-impact-popup .leaflet-popup-content {
+        margin: 16px;
+    }
+    .custom-impact-popup .leaflet-popup-tip-container {
+        display: none; /* Hide the tip for a cleaner floating box look */
+    }
+    .custom-impact-popup .leaflet-popup-close-button {
+        color: #cbd5e1 !important;
+        padding: 8px 8px 0 0 !important;
+    }
+    .custom-impact-popup .leaflet-popup-close-button:hover {
+        color: #64748b !important;
+    }
+    .leaflet-container {
+        font-family: inherit;
+        background-color: #f8fafc;
+    }
+    .leaflet-control-zoom a {
+        color: #334155 !important;
+        border-radius: 0.5rem !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    .leaflet-control-zoom {
+        border: none !important;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
+        margin-right: 20px !important;
+        margin-bottom: 20px !important;
+    }
+</style>
 @endsection

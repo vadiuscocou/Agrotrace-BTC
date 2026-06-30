@@ -50,12 +50,18 @@
                             <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
                         </button>
                         @endif
-                    @elseif($project->status == 'completed')
+                    @if($project->status == 'completed')
                         <span class="inline-block px-2 py-1 bg-slate-800 text-white rounded text-xs font-bold">
                             <i class="fa-solid fa-check-double"></i> Terminé
                         </span>
                     @endif
                 </div>
+            </div>
+            
+            <div class="bg-slate-50 px-6 py-3 border-b border-slate-100 flex justify-end">
+                <a href="{{ route('projects.contract', $project->id) }}" target="_blank" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 px-3 py-1.5 rounded-lg transition inline-flex items-center gap-2">
+                    <i class="fa-solid fa-file-contract"></i> Voir le Contrat d'Engagement
+                </a>
             </div>
 
             <!-- Milestones Section -->
@@ -279,6 +285,11 @@
 
                     <form :action="'{{ url('/projects') }}/' + projectId + '/repay'" method="POST" id="repayProjectForm">
                         @csrf
+                        <div class="mt-4 border-t border-slate-200 pt-4">
+                            <label class="block text-slate-700 text-sm font-bold mb-2" for="bolt11">Votre Facture Lightning (BOLT11)</label>
+                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" id="bolt11" name="bolt11" type="text" required placeholder="lnbc...">
+                            <p class="text-xs text-slate-500 mt-2">Générez une facture de réception (Receive) depuis votre portefeuille Lightning pour le montant exact, et collez-la ici.</p>
+                        </div>
                     </form>
                 </div>
                 <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">

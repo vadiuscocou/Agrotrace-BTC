@@ -20,7 +20,13 @@ Route::get('/verification', function () {
     return view('verification', ['milestones' => Milestone::with('project')->where('status', 'validated')->get()]);
 });
 Route::get('/impact-map', function () {
-    return view('impact-map', ['projects' => Project::whereIn('status', ['active', 'verified'])->get()]);
+    return view('impact-map', [
+        'projects' => Project::with(['user', 'investments'])
+            ->whereIn('status', ['funded', 'in_progress', 'completed'])
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->get()
+    ]);
 });
 Route::get('/terms', function () {
     return view('terms');
@@ -48,17 +54,59 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::post('/invest/{project_id}', function ($project_id) {
-        $amount = request('amount_fcfa', 50000);
-        Investment::create([
-            'project_id' => $project_id,
-            'user_id' => Auth::id(),
-            'amount_fcfa' => $amount,
-            'amount_sats' => $amount * 6, // fake rate
-            'fee_sats' => ($amount * 6) * 0.02,
-            'payment_hash' => 'fake_hash_' . time(),
-            'status' => 'paid'
-        ]);
-        return redirect('/dashboard')->with('success', 'Investment confirmed via Lightning!');
+        $amountFcfa = request('amount_fcfa', 50000);
+        $amountSats = $amountFcfa * 6; // Taux fictif: 1 FCFA ≈ 6 SATS
+        $feeSats = $amountSats * 0.02; // Frais de 2%
+
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $invoice = $lnbits->createInvoice($amountSats + $feeSats, "AgroTrace Inv. Projet #{$project_id}");
+            
+            $investment = Investment::create([
+                'project_id' => $project_id,
+                'user_id' => Auth::id(),
+                'amount_fcfa' => $amountFcfa,
+                'amount_sats' => $amountSats,
+                'fee_sats' => $feeSats,
+                'payment_request' => $invoice['payment_request'],
+                'payment_hash' => $invoice['payment_hash'],
+                'status' => 'pending'
+            ]);
+
+            return view('invest.pay', ['investment' => $investment]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur API LNbits: ' . $e->getMessage());
+        }
+    });
+
+    Route::get('/invest/{hash}/status', function ($hash) {
+        $investment = Investment::where('payment_hash', $hash)->firstOrFail();
+        
+        if ($investment->status === 'paid') {
+            return response()->json(['paid' => true]);
+        }
+
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $isPaid = $lnbits->checkPaymentStatus($hash);
+            
+            if ($isPaid) {
+                $investment->update(['status' => 'paid']);
+                
+                // Mettre à jour le statut du projet si nécessaire (ex: financé)
+                $project = $investment->project;
+                $totalInvested = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
+                if ($totalInvested >= $project->target_amount_fcfa) {
+                    $project->update(['status' => 'funded']);
+                }
+
+                return response()->json(['paid' => true]);
+            }
+        } catch (\Exception $e) {
+            // Fail silently during polling
+        }
+
+        return response()->json(['paid' => false]);
     });
 
     // Project Owner Actions
@@ -113,15 +161,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return redirect('/dashboard')->with('success', 'Preuve soumise avec succès.');
     });
 
+    Route::get('/projects/{id}/contract', function ($id) {
+        $project = Project::findOrFail($id);
+        if (Auth::user()->role !== 'admin' && $project->user_id !== Auth::id()) {
+            abort(403, 'Accès non autorisé au contrat.');
+        }
+        return view('owner.contract', ['project' => $project]);
+    })->name('projects.contract');
+
     Route::post('/projects/{id}/repay', function ($id) {
         if (Auth::user()->role !== 'project_owner') abort(403);
         
         $project = Project::findOrFail($id);
         if ($project->user_id !== Auth::id()) abort(403);
 
-        $project->update(['status' => 'completed']);
+        $bolt11 = request('bolt11');
 
-        return redirect('/dashboard')->with('success', 'Fonds distribués aux investisseurs avec succès via Lightning !');
+        if (!$bolt11) {
+            return back()->with('error', 'Veuillez fournir une facture Lightning.');
+        }
+
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $lnbits->payInvoice($bolt11);
+            
+            $project->update(['status' => 'completed']);
+
+            return redirect('/dashboard')->with('success', 'Paiement effectué ! Fonds envoyés sur votre portefeuille avec succès.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur de paiement LNbits: ' . $e->getMessage());
+        }
     });
 
     // Admin Actions
