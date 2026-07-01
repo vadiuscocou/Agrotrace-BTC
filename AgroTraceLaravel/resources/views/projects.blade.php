@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Explorer | AgroTrace BTC')
+@section('title', 'Explorer | AgroTrace-BTC')
 @section('content')
 
 <!-- Explorer Header -->

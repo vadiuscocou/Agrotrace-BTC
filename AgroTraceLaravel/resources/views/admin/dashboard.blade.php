@@ -35,7 +35,7 @@
                 <i class="fa-solid fa-sack-dollar"></i>
             </div>
             <div class="relative z-10">
-                <p class="text-sm font-bold text-orange-400 uppercase tracking-widest mb-1">Commissions AgroTrace</p>
+                <p class="text-sm font-bold text-orange-400 uppercase tracking-widest mb-1">Commissions AgroTrace-BTC</p>
                 <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalFeesSats) }} <span class="text-lg text-slate-400">SATS</span></h3>
                 <p class="text-xs text-slate-500 font-medium">≈ {{ number_format($totalFeesSats / 6) }} FCFA collectés en frais (2%)</p>
             </div>

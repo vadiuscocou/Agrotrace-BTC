@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Login - AgroTrace')
+@section('title', 'Login - AgroTrace-BTC')
 @section('content')
 <div class="container py-5 text-center">
     <h2>Hackathon MVP Login</h2>

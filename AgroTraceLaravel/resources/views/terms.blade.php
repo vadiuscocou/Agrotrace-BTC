@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Conditions d\'utilisation - AgroTrace')
+@section('title', 'Conditions d\'utilisation - AgroTrace-BTC')
 
 @section('content')
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 max-w-4xl mx-auto my-10">
@@ -10,10 +10,10 @@
     </div>
 
     <div class="prose prose-slate max-w-none space-y-6 text-slate-700">
-        <p>Bienvenue sur AgroTrace. En créant un compte (Investisseur ou Coopérative), vous acceptez les présentes conditions d'utilisation.</p>
+        <p>Bienvenue sur AgroTrace-BTC. En créant un compte (Investisseur ou Coopérative), vous acceptez les présentes conditions d'utilisation.</p>
         
         <h2 class="text-xl font-bold text-slate-900 mt-6 border-b pb-2">1. Objet de la plateforme</h2>
-        <p>AgroTrace est une plateforme de mise en relation entre des coopératives agricoles africaines et des investisseurs (notamment la diaspora) permettant le financement de projets agricoles via le réseau Bitcoin (Lightning Network).</p>
+        <p>AgroTrace-BTC est une plateforme de mise en relation entre des coopératives agricoles africaines et des investisseurs (notamment la diaspora) permettant le financement de projets agricoles via le réseau Bitcoin (Lightning Network).</p>
         
         <h2 class="text-xl font-bold text-slate-900 mt-6 border-b pb-2">2. Engagements des Coopératives</h2>
         <ul class="list-disc pl-5 space-y-2">
@@ -27,14 +27,14 @@
         <ul class="list-disc pl-5 space-y-2">
             <li>Comprendre que l'investissement agricole comporte des risques naturels (climat, ravageurs).</li>
             <li>Les fonds envoyés via Bitcoin/Lightning sont convertis et alloués au projet. Les transactions blockchain sont irréversibles.</li>
-            <li>AgroTrace agit comme tiers de confiance technologique mais ne peut garantir le rendement absolu des récoltes.</li>
+            <li>AgroTrace-BTC agit comme tiers de confiance technologique mais ne peut garantir le rendement absolu des récoltes.</li>
         </ul>
 
         <h2 class="text-xl font-bold text-slate-900 mt-6 border-b pb-2">4. Frais de plateforme</h2>
-        <p>AgroTrace prélève des frais minimes de fonctionnement (2%) sur chaque transaction d'investissement pour assurer la maintenance de la plateforme et la validation des projets.</p>
+        <p>AgroTrace-BTC prélève des frais minimes de fonctionnement (2%) sur chaque transaction d'investissement pour assurer la maintenance de la plateforme et la validation des projets.</p>
 
         <h2 class="text-xl font-bold text-slate-900 mt-6 border-b pb-2">5. Résolution des litiges</h2>
-        <p>En cas de non-respect des engagements, le compte de la coopérative pourra être suspendu, et AgroTrace se réserve le droit de mener des audits sur le terrain.</p>
+        <p>En cas de non-respect des engagements, le compte de la coopérative pourra être suspendu, et AgroTrace-BTC se réserve le droit de mener des audits sur le terrain.</p>
     </div>
 
     <div class="mt-10 text-center">

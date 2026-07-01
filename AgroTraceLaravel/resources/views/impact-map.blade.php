@@ -12,7 +12,7 @@
     <!-- Sidebar / Stats Panel -->
     <div class="w-full md:w-96 bg-white shadow-2xl z-[1000] flex flex-col h-1/2 md:h-full overflow-y-auto shrink-0 transition-all duration-300">
         <div class="p-6 bg-[#063b27] text-white">
-            <h1 class="text-2xl font-black mb-2"><i class="fa-solid fa-earth-africa text-green-400 mr-2"></i> Impact AgroTrace</h1>
+            <h1 class="text-2xl font-black mb-2"><i class="fa-solid fa-earth-africa text-green-400 mr-2"></i> Impact AgroTrace-BTC</h1>
             <p class="text-green-50 text-sm opacity-90">Visualisez l'impact géographique et financier des investissements sur le territoire béninois.</p>
         </div>
         
