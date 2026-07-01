@@ -8,7 +8,9 @@ use App\Models\Project;
 use App\Models\Milestone;
 use App\Models\Investment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\InvestmentController;
 
+Route::post('/invest/{project_id}', [InvestmentController::class, 'store'])->name('investments.store');
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -124,9 +126,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 return response()->json(['paid' => true]);
             }
         } catch (\Exception $e) {
-        }
-        return response()->json(['paid' => false]);
-    });
+            return back()->withErrors($e->getMessage());
+        });
 
     /* --- Actions Porteur de Projet (Coopérative) --- */
 
@@ -215,6 +216,9 @@ Route::get('/projects/{id}/contract', function ($id) {
     return view('owner.contract', ['project' => $project]);
 })->name('projects.contract'); // <--- Vérifie bien cette ligne
 
+Route::get('/investments/{investment}/contract', [App\Http\Controllers\InvestmentController::class, 'contract'])
+    ->name('investments.contract')
+    ->middleware(['auth', 'verified']);
 /* --- Profil Utilisateur --- */
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
