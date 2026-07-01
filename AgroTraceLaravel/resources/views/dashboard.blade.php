@@ -121,6 +121,11 @@
                 <a href="{{ route('investments.contract', $inv->id) }}" target="_blank" class="w-full mt-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-signature"></i> Voir le contrat nominatif
                 </a>
+                @if($inv->status == 'paid')
+                <a href="{{ route('investments.invoice', $inv->id) }}" target="_blank" class="w-full mt-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-invoice"></i> Télécharger la facture
+                </a>
+                @endif
             </div>
         </div>
         @endforeach

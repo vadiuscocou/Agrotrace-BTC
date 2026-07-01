@@ -99,12 +99,17 @@
                         @endif
                     </p>
                 </div>
-                <form method="POST" action="{{ route('logout') }}" class="ml-auto shrink-0" x-show="sidebarOpen">
-                    @csrf
-                    <button type="submit" class="text-white/50 hover:text-white transition px-2" title="Déconnexion">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </button>
-                </form>
+                <div class="ml-auto flex items-center shrink-0" x-show="sidebarOpen">
+                    <a href="{{ route('profile.edit') }}" class="text-white/50 hover:text-white transition px-2" title="Mon Profil">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="text-white/50 hover:text-white transition px-2" title="Déconnexion">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
             
             <!-- Mobile/Collapsed Logout -->

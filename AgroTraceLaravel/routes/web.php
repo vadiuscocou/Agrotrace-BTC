@@ -210,6 +210,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('investor.contract', ['investment' => $investment]);
     })->name('investments.contract');
 
+    Route::get('/investments/{id}/invoice', function ($id) {
+        $investment = Investment::with(['project.user', 'user'])->findOrFail($id);
+        
+        if (Auth::user()->role !== 'admin' && $investment->user_id !== Auth::id()) {
+            abort(403, 'Accès non autorisé à cette facture.');
+        }
+        
+        if ($investment->status !== 'paid') {
+            abort(403, 'Facture non disponible car le paiement n\'est pas confirmé.');
+        }
+        
+        return view('investor.invoice', ['investment' => $investment]);
+    })->name('investments.invoice');
+
     Route::post('/projects/{id}/repay', function ($id) {
         if (Auth::user()->role !== 'project_owner') abort(403);
         
