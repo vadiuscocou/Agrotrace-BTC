@@ -132,7 +132,8 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-slate-400 text-sm font-medium">
-            &copy; 2026 AgroTrace-BTC - Built for the Bitcoin Mastermind Hackathon.
+            <p>&copy; 2026 AgroTrace-BTC - Built for the Bitcoin Mastermind Hackathon.</p>
+            <p class="mt-4"><a href="{{ route('terms') }}" class="text-orange-500 hover:text-orange-600 transition font-bold">Conditions Générales d'Utilisation</a></p>
         </div>
     </footer>
 </body>
