@@ -67,6 +67,13 @@
                 <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Explorer les Projets</span>
             </a>
             
+            @if(Auth::user()->role === 'investor' || Auth::user()->role === 'admin')
+            <a href="{{ route('invoices.index') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->routeIs('invoices.index') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Mes Factures">
+                <i class="fa-solid fa-file-invoice text-xl w-6 text-center"></i>
+                <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Mes Factures</span>
+            </a>
+            @endif
+
             <a href="{{ url('/impact-map') }}" class="flex items-center gap-4 px-6 py-3 font-medium transition {{ request()->is('impact-map') ? 'bg-white/10 text-white shadow-inner border-l-4 border-orange-500' : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent' }}" title="Impact Map">
                 <i class="fa-solid fa-map-location-dot text-xl w-6 text-center"></i>
                 <span x-show="sidebarOpen" class="whitespace-nowrap transition-opacity duration-300 delay-100">Impact Map</span>

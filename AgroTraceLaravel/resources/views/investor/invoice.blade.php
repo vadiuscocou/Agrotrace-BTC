@@ -117,5 +117,15 @@
     </div>
 </div>
 
+@if(request('auto_print'))
+<script>
+    window.onload = function() {
+        setTimeout(function() {
+            window.print();
+        }, 500); // Petit délai pour s'assurer que le CSS est bien chargé
+    }
+</script>
+@endif
+
 </body>
 </html>

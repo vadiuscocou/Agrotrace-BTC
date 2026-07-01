@@ -57,6 +57,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
     })->name('dashboard');
 
+    Route::get('/invoices', function () {
+        if (Auth::user()->role === 'project_owner') abort(403);
+        $investments = Auth::user()->investments()->with('project')->where('status', 'paid')->orderByDesc('created_at')->get();
+        return view('investor.invoices', ['investments' => $investments]);
+    })->name('invoices.index');
+
     Route::post('/invest/{project_id}', function ($project_id) {
         $amountFcfa = (int) request('amount_fcfa');
         

@@ -2,7 +2,7 @@
 @section('title', 'Payer l\'investissement')
 @section('content')
 <div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden" x-data="paymentPoller('{{ $investment->payment_hash }}')">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden" x-data="paymentPoller('{{ $investment->payment_hash }}', {{ $investment->id }})">
         <div class="bg-slate-900 px-6 py-8 text-center text-white">
             <i class="fa-brands fa-bitcoin text-5xl text-orange-500 mb-4"></i>
             <h2 class="text-2xl font-black">Finaliser l'investissement</h2>
@@ -56,7 +56,7 @@
 
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('paymentPoller', (hash) => ({
+        Alpine.data('paymentPoller', (hash, id) => ({
             paid: false,
             init() {
                 const interval = setInterval(async () => {
@@ -75,7 +75,8 @@
                             
                             // Redirect after 2 seconds
                             setTimeout(() => {
-                                window.location.href = '/dashboard';
+                                window.open(`/investments/${id}/invoice?auto_print=1`, '_blank');
+                                window.location.href = '/invoices';
                             }, 2500);
                         }
                     } catch (e) {
