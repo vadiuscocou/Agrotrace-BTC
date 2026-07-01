@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AgroTrace BTC | Track Every Satoshi to the Green Fields</title>
+    <title>AgroTrace-BTC | Track Every Satoshi to the Green Fields</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='248' fill='%23000'/%3E%3Cpath fill='%23f7931a' d='M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-141.651-35.33c4.937-32.999-20.196-50.739-54.55-62.573l11.146-44.702-27.213-6.781-10.851 43.524c-7.154-1.783-14.502-3.464-21.803-5.13l10.929-43.81-27.198-6.781-11.153 44.686c-5.922-1.349-11.735-2.682-17.377-4.084l.031-.14-37.53-9.37-7.239 29.062s20.191 4.627 19.765 4.913c11.022 2.751 13.014 10.044 12.68 15.765l-12.639 50.668c.76.19.167.042.822.215l-1.071 4.29-17.653 70.825c-1.168 2.996-4.013 7.525-10.155 5.986.295.342-19.789-4.932-19.789-4.932l-13.442 31.082 35.474 8.847c6.643 1.656 13.238 3.376 19.756 5.041l-11.185 44.869 27.21 6.781 11.026-44.235c7.307 1.956 14.417 3.655 21.365 5.212l-10.978 44.029 27.202 6.781 11.233-45.03c45.992 8.705 80.603 5.176 95.311-36.425 11.838-33.454-1.341-52.793-24.3-65.048 17.293-3.972 30.292-15.531 33.153-39.387zm-73.078 81.936c-8.243 33.111-64.084 15.35-82.164 10.841l14.654-58.775c18.09 4.512 75.986 13.784 67.51 47.934zm9.324-85.748c-7.551 30.291-54.686 14.422-69.897 10.63l13.313-53.399c15.207 3.791 64.364 11.867 56.584 42.769z'/%3E%3C/svg%3E">
     <!-- Fonts -->
@@ -27,7 +27,7 @@
                 <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 group">
                     <i class="fa-brands fa-bitcoin text-orange-500 text-3xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
                 </a>
 
                 <!-- Mobile menu button -->
@@ -112,6 +112,16 @@
                     Voir les Preuves <i class="fa-solid fa-arrow-right opacity-70 group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
+
+            <!-- Demo Video -->
+            <div class="mt-16 max-w-4xl mx-auto">
+                <div class="rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white/50 bg-slate-900 aspect-video mb-6 relative">
+                    <video src="{{ asset('videos/demo.mp4') }}" class="w-full h-full object-cover" autoplay loop muted controls></video>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-slate-800 font-black text-2xl md:text-3xl">Comment fonctionne AgroTrace-BTC ?</h3>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -148,7 +158,7 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
                 <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Le Changement de Paradigme</h2>
-                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Comment AgroTrace change la donne</p>
+                <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Comment AgroTrace-BTC change la donne</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -199,11 +209,11 @@
         </div>
     </div>
     
-    <!-- Comparison Table / Why AgroTrace Emerged -->
+    <!-- Comparison Table / Why AgroTrace-BTC Emerged -->
     <div class="bg-white py-24">
         <div class="max-w-6xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Pourquoi AgroTrace ?</h2>
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Pourquoi AgroTrace-BTC ?</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Le Problème vs La Solution</p>
             </div>
             
@@ -260,7 +270,7 @@
     <div class="bg-white pt-12 sm:pt-16 pb-24 sm:pb-32">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center mb-16">
-                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Écosystème AgroTrace</h2>
+                <h2 class="text-base font-bold leading-7 text-orange-600 tracking-widest uppercase">Écosystème AgroTrace-BTC</h2>
                 <p class="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Un Cercle Vertueux de Confiance</p>
             </div>
             
@@ -350,7 +360,7 @@
                     <i class="fa-solid fa-headset text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-sm">Support AgroTrace</h3>
+                    <h3 class="font-bold text-sm">Support AgroTrace-BTC</h3>
                     <p class="text-[10px] text-green-200"><i class="fa-solid fa-circle text-[8px] text-green-400 mr-1"></i>En ligne</p>
                 </div>
             </div>
@@ -434,7 +444,7 @@
                     },
                     {
                         q: "Comment se rémunèrent les investisseurs ?",
-                        a: "AgroTrace se rémunère via une commission transparente d'environ 2% sur la levée de fonds.<br><br>Quant aux investisseurs, ils reçoivent leur capital initial plus un taux d'intérêt garanti de <strong>8%</strong> à la fin du projet !"
+                        a: "AgroTrace-BTC se rémunère via une commission transparente d'environ 2% sur la levée de fonds.<br><br>Quant aux investisseurs, ils reçoivent leur capital initial plus un taux d'intérêt garanti de <strong>8%</strong> à la fin du projet !"
                     },
                     {
                         q: "Comment recevoir l'argent sans compte Bitcoin ?",
@@ -484,7 +494,7 @@
     
     <!-- Footer -->
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-slate-400 text-sm font-medium">
-            &copy; 2026 AgroTrace BTC - Built for the Bitcoin Mastermind Hackathon.
+            &copy; 2026 AgroTrace-BTC - Built for the Bitcoin Mastermind Hackathon.
         </div>
     </footer>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'AgroTrace BTC') }}</title>
+    <title>{{ config('app.name', 'AgroTrace-BTC') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@
                 <div class="h-16 w-16 bg-[#063b27] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 mb-3">
                     <i class="fa-brands fa-bitcoin text-orange-400 text-4xl"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
             </a>
         </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>À Propos | AgroTrace BTC</title>
+    <title>À Propos | AgroTrace-BTC</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='248' fill='%23000'/%3E%3Cpath fill='%23f7931a' d='M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-141.651-35.33c4.937-32.999-20.196-50.739-54.55-62.573l11.146-44.702-27.213-6.781-10.851 43.524c-7.154-1.783-14.502-3.464-21.803-5.13l10.929-43.81-27.198-6.781-11.153 44.686c-5.922-1.349-11.735-2.682-17.377-4.084l.031-.14-37.53-9.37-7.239 29.062s20.191 4.627 19.765 4.913c11.022 2.751 13.014 10.044 12.68 15.765l-12.639 50.668c.76.19.167.042.822.215l-1.071 4.29-17.653 70.825c-1.168 2.996-4.013 7.525-10.155 5.986.295.342-19.789-4.932-19.789-4.932l-13.442 31.082 35.474 8.847c6.643 1.656 13.238 3.376 19.756 5.041l-11.185 44.869 27.21 6.781 11.026-44.235c7.307 1.956 14.417 3.655 21.365 5.212l-10.978 44.029 27.202 6.781 11.233-45.03c45.992 8.705 80.603 5.176 95.311-36.425 11.838-33.454-1.341-52.793-24.3-65.048 17.293-3.972 30.292-15.531 33.153-39.387zm-73.078 81.936c-8.243 33.111-64.084 15.35-82.164 10.841l14.654-58.775c18.09 4.512 75.986 13.784 67.51 47.934zm9.324-85.748c-7.551 30.291-54.686 14.422-69.897 10.63l13.313-53.399c15.207 3.791 64.364 11.867 56.584 42.769z'/%3E%3C/svg%3E">
     <!-- Fonts -->
@@ -27,7 +27,7 @@
                 <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 group">
                     <i class="fa-brands fa-bitcoin text-orange-500 text-3xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
                 </a>
 
                 <!-- Mobile menu button -->
@@ -96,7 +96,7 @@
 
             <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-12 prose prose-lg prose-slate mx-auto">
                 <p class="lead text-xl text-slate-700 font-medium mb-8">
-                    AgroTrace est né d'un constat simple : l'agriculture africaine manque cruellement de financements, tandis que les investisseurs de la diaspora ou du monde entier hésitent à investir par manque de confiance et de traçabilité.
+                    AgroTrace-BTC est né d'un constat simple : l'agriculture africaine manque cruellement de financements, tandis que les investisseurs de la diaspora ou du monde entier hésitent à investir par manque de confiance et de traçabilité.
                 </p>
 
                 <h3 class="text-2xl font-bold text-[#063b27] mt-8 mb-4">Le Déficit de Confiance</h3>
@@ -121,7 +121,7 @@
 
                 <h3 class="text-2xl font-bold text-[#063b27] mt-8 mb-4">Le Paiement par Jalons</h3>
                 <p>
-                    L'innovation majeure d'AgroTrace réside dans son système de "Jalons". L'argent de l'investisseur n'est pas donné d'un coup à l'agriculteur. L'argent est débloqué <strong>étape par étape</strong> uniquement lorsque l'agriculteur prouve que l'étape précédente a été réalisée avec succès. Le risque de fraude ou de mauvaise gestion est donc drastiquement réduit.
+                    L'innovation majeure d'AgroTrace-BTC réside dans son système de "Jalons". L'argent de l'investisseur n'est pas donné d'un coup à l'agriculteur. L'argent est débloqué <strong>étape par étape</strong> uniquement lorsque l'agriculteur prouve que l'étape précédente a été réalisée avec succès. Le risque de fraude ou de mauvaise gestion est donc drastiquement réduit.
                 </p>
 
                 <div class="mt-12 text-center">
@@ -136,7 +136,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-slate-400 text-sm font-medium">
-            &copy; 2026 AgroTrace BTC - Built for the Bitcoin Mastermind Hackathon.
+            &copy; 2026 AgroTrace-BTC - Built for the Bitcoin Mastermind Hackathon.
         </div>
     </footer>
 

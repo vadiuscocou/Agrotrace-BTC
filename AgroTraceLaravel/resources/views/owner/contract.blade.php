@@ -39,7 +39,7 @@
     <div class="text-center mb-12 border-b-2 border-slate-800 pb-8">
         <div class="flex justify-center items-center gap-3 mb-4">
             <i class="fa-solid fa-seedling text-3xl text-[#063b27]"></i>
-            <h1 class="text-3xl font-bold tracking-widest uppercase">AgroTrace</h1>
+            <h1 class="text-3xl font-bold tracking-widest uppercase">AgroTrace-BTC</h1>
         </div>
         <h2 class="text-2xl font-bold uppercase mt-4">Contrat d'Engagement Numérique</h2>
         <p class="text-slate-500 mt-2 italic">Garantie de Financement et de Rendement Agricole</p>
@@ -47,9 +47,9 @@
 
     <!-- Preamble -->
     <div class="mb-8 text-justify leading-relaxed text-lg">
-        <p class="mb-4">Le présent contrat numérique est généré automatiquement par la plateforme <strong>AgroTrace</strong> et formalise l'accord entre les parties prenantes du projet agricole, suite à sa validation par l'administration.</p>
+        <p class="mb-4">Le présent contrat numérique est généré automatiquement par la plateforme <strong>AgroTrace-BTC</strong> et formalise l'accord entre les parties prenantes du projet agricole, suite à sa validation par l'administration.</p>
         
-        <p><strong>Fait virtuellement à :</strong> Siège AgroTrace<br>
+        <p><strong>Fait virtuellement à :</strong> Siège AgroTrace-BTC<br>
         <strong>ID Contrat :</strong> CT-{{ $project->formatted_id }}-{{ date('Y') }}<br>
         <strong>Le :</strong> {{ $project->created_at->format('d/m/Y à H:i') }}</p>
     </div>
@@ -63,11 +63,11 @@
 
         <p class="mb-2"><strong>ET</strong></p>
 
-        <p class="mb-2"><strong>Les Investisseurs de la plateforme AgroTrace</strong> (représentés par l'entité gestionnaire des fonds séquestrés via Lightning Network).</p>
+        <p class="mb-2"><strong>Les Investisseurs de la plateforme AgroTrace-BTC</strong> (représentés par l'entité gestionnaire des fonds séquestrés via Lightning Network).</p>
         <p class="mb-4"><em>Ci-après désignés "Les Investisseurs"</em></p>
 
         <p class="mb-2"><strong>EN PRÉSENCE DE :</strong></p>
-        <p class="mb-2"><strong>AgroTrace BTC</strong>, agissant en tant que tiers de confiance, garant technique et financier.</p>
+        <p class="mb-2"><strong>AgroTrace-BTC</strong>, agissant en tant que tiers de confiance, garant technique et financier.</p>
         <p><em>Ci-après désignée "La Plateforme"</em></p>
     </div>
 
@@ -75,7 +75,7 @@
     <div class="mb-10 text-justify leading-relaxed text-lg space-y-6">
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27]">Article 1 : Objet du Contrat</h3>
         <p>Le Bénéficiaire sollicite et accepte un financement participatif d'un montant cible de <strong>{{ number_format($project->target_amount_fcfa) }} FCFA</strong> pour la réalisation du projet intitulé <em>"{{ $project->title }}"</em>.</p>
-        <p>Ce financement sera débloqué progressivement par AgroTrace sous réserve de la validation stricte des preuves d'avancement (jalons) soumises par le Bénéficiaire, garantissant ainsi le bon usage des fonds.</p>
+        <p>Ce financement sera débloqué progressivement par AgroTrace-BTC sous réserve de la validation stricte des preuves d'avancement (jalons) soumises par le Bénéficiaire, garantissant ainsi le bon usage des fonds.</p>
 
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 2 : Obligations des Parties</h3>
         
@@ -93,7 +93,7 @@
             <li>S'engage à déclarer de manière honnête et transparente la quantité récoltée et le prix de vente à l'issue de la campagne.</li>
         </ul>
 
-        <h4 class="font-bold mt-4">2.3. Obligations de la Plateforme (AgroTrace)</h4>
+        <h4 class="font-bold mt-4">2.3. Obligations de la Plateforme (AgroTrace-BTC)</h4>
         <ul class="list-disc pl-6 space-y-2">
             <li>Garantir la sécurité des fonds et leur déblocage exclusif sur validation des jalons.</li>
             <li>Assurer la transparence et la traçabilité des investissements sur la Blockchain.</li>
@@ -101,7 +101,7 @@
         </ul>
 
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 3 : Répartition des Revenus (Modèle 70/30)</h3>
-        <p>Contrairement à un prêt à taux fixe, le modèle AgroTrace est basé sur le partage de la création de valeur.</p>
+        <p>Contrairement à un prêt à taux fixe, le modèle AgroTrace-BTC est basé sur le partage de la création de valeur.</p>
         <p>À l'issue de la vente des récoltes, le chiffre d'affaires généré sera automatiquement réparti par La Plateforme selon la clé de répartition suivante :</p>
         <ul class="list-disc pl-6 space-y-2 font-bold">
             <li>70 % du chiffre d'affaires total brut revient au Bénéficiaire (Agriculteur/Coopérative).</li>
@@ -109,7 +109,7 @@
         </ul>
 
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 4 : Modalités de Remboursement</h3>
-        <p>Le Bénéficiaire procède au remboursement du capital et des dividendes via la création d'une facture Lightning sur AgroTrace. La Plateforme se charge ensuite de router automatiquement la part de chaque investisseur (les 30%) directement vers leur portefeuille Lightning personnel, sans frais de transaction bancaire.</p>
+        <p>Le Bénéficiaire procède au remboursement du capital et des dividendes via la création d'une facture Lightning sur AgroTrace-BTC. La Plateforme se charge ensuite de router automatiquement la part de chaque investisseur (les 30%) directement vers leur portefeuille Lightning personnel, sans frais de transaction bancaire.</p>
         
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 5 : Gestion des Risques et Force Majeure</h3>
         <p>Sont considérés comme cas de force majeure les événements climatiques extrêmes (sécheresse prolongée, inondations), les catastrophes naturelles ou les épidémies dévastatrices de cultures, dûment constatés par l'administration locale.</p>
@@ -126,7 +126,7 @@
     <div class="mt-16 pt-8 border-t-2 border-slate-800">
         <div class="flex flex-col md:flex-row justify-between items-end gap-8">
             <div>
-                <p class="font-bold mb-4">Pour AgroTrace (La Plateforme) :</p>
+                <p class="font-bold mb-4">Pour AgroTrace-BTC (La Plateforme) :</p>
                 <div class="border-2 border-blue-600 text-blue-600 px-4 py-2 inline-block font-mono text-sm transform -rotate-2">
                     CERTIFIÉ CONFORME<br>
                     ID: AGT-SYS-{{ date('Y') }}
@@ -145,7 +145,7 @@
     
     <!-- Footer info -->
     <div class="mt-12 text-center text-xs text-slate-400 no-print">
-        <p>Document généré sécuritairement sur AgroTrace. Ne pas modifier ce document.</p>
+        <p>Document généré sécuritairement sur AgroTrace-BTC. Ne pas modifier ce document.</p>
     </div>
 </div>
 
