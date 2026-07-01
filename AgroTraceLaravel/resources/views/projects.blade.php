@@ -31,7 +31,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($projects as $project)
-        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
+        <div class="bg-white rounded-[2rem] shadow-md border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
             
             <!-- Card Header -->
             <div class="p-6 border-b border-slate-50 bg-slate-50/50 flex justify-between items-start">
@@ -50,6 +50,9 @@
                 </div>
                 <div class="flex items-center gap-2 text-slate-500 text-sm font-medium mb-4">
                     <i class="fa-solid fa-users"></i> {{ $project->user->name }}
+                    <span class="ml-2 px-2 py-0.5 bg-green-50 border border-green-100 text-green-700 rounded-full text-xs font-bold" title="Trust Score">
+                        <i class="fa-solid fa-shield-halved"></i> Score: {{ $project->user->trust_score }}/100
+                    </span>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
                     {{ $project->description }}
@@ -82,25 +85,40 @@
                     <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
                         <span>Objectif</span>
                     </div>
-                    <p class="font-black text-lg text-slate-900">{{ number_format($project->budget_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
+                    <p class="font-black text-lg text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
                 </div>
                 
                 @auth
-                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['active', 'verified']))
-                    <form action="{{ url('/invest/'.$project->id) }}" method="POST">
+                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
+                    @php
+                        $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
+                        if ($project->remaining_amount < $minInvestment) {
+                            $minInvestment = $project->remaining_amount;
+                        }
+                        $isFixed = ($project->remaining_amount <= $minInvestment);
+                    @endphp
+                    <form action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
                         @csrf
-                        <div class="relative mb-3">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-slate-400 text-sm font-bold">CFA</span>
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest">Montant à investir (FCFA)</label>
+                                <span class="text-[10px] text-slate-400 font-bold">Min: {{ number_format($minInvestment) }}</span>
                             </div>
-                            <input type="number" name="amount_fcfa" class="block w-full pl-12 pr-3 py-3 border border-slate-200 rounded-xl text-sm focus:ring-orange-500 focus:border-orange-500 transition bg-white shadow-inner" placeholder="Montant (ex: 50000)" required>
+                            <input type="number" name="amount_fcfa" min="{{ $minInvestment }}" max="{{ $project->remaining_amount }}" step="1000" value="{{ $isFixed ? $project->remaining_amount : $minInvestment }}" {{ $isFixed ? 'readonly' : '' }} class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-bold {{ $isFixed ? 'opacity-70 cursor-not-allowed' : '' }}" required>
+                            @if($isFixed)
+                                <p class="text-[10px] text-orange-500 mt-1 font-medium"><i class="fa-solid fa-lock text-[8px]"></i> Montant restant verrouillé pour clôturer le projet.</p>
+                            @endif
                         </div>
-                        <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Simuler un paiement Lightning pour cet investissement ? (Calcule 2% de frais via routage intelligent)')">
-                            <i class="fa-brands fa-bitcoin text-orange-400"></i> Financer via Lightning
+                        <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Générer une facture Lightning pour cet investissement ?')">
+                            <i class="fa-solid fa-bolt"></i> Investir
                         </button>
                     </form>
-                    @elseif(Auth::user()->role === 'investor' && !in_array($project->status, ['active', 'verified']))
-                    <button class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                    @elseif(Auth::user()->role === 'investor' && $project->remaining_amount <= 0)
+                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                        Financement Atteint
+                    </button>
+                    @elseif(Auth::user()->role === 'investor')
+                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
                         En attente de validation
                     </button>
                     @endif

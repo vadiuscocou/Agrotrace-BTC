@@ -55,4 +55,18 @@ class User extends Authenticatable
     public function investments() {
         return $this->hasMany(Investment::class);
     }
+
+    public function getTrustScoreAttribute() {
+        if ($this->role !== 'project_owner') return null;
+        
+        $baseScore = 50;
+        
+        $completedProjects = $this->projects()->where('status', 'completed')->count();
+        $baseScore += ($completedProjects * 15);
+        
+        $validatedMilestones = Milestone::whereIn('project_id', $this->projects()->pluck('id'))->where('status', 'validated')->count();
+        $baseScore += ($validatedMilestones * 5);
+        
+        return min(100, max(0, $baseScore));
+    }
 }

@@ -105,12 +105,8 @@
 
                 this.markersLayer = L.layerGroup().addTo(this.map);
 
-                // Extract unique regions
-                const regionsSet = new Set();
-                this.projects.forEach(p => {
-                    if (p.region) regionsSet.add(p.region);
-                });
-                this.regions = Array.from(regionsSet).sort();
+                // Hardcode Benin departments
+                this.regions = ['Alibori', 'Atacora', 'Atlantique', 'Borgou', 'Collines', 'Couffo', 'Donga', 'Littoral', 'Mono', 'Ouémé', 'Plateau', 'Zou'];
 
                 this.filteredProjects = this.projects;
                 this.calculateStats();
@@ -192,7 +188,10 @@
                     const popupContent = `
                         <div class="font-sans min-w-[220px]">
                             <div class="border-b border-slate-100 pb-2 mb-2">
-                                <h3 class="font-black text-slate-800 text-sm leading-tight">${p.title}</h3>
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-black text-slate-800 text-sm leading-tight pr-2">${p.title}</h3>
+                                    <span class="bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px] font-black tracking-widest shrink-0">${p.formatted_id}</span>
+                                </div>
                                 <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mt-1"><i class="fa-solid fa-location-dot text-slate-300"></i> ${p.region}</p>
                             </div>
                             <p class="text-xs text-slate-600 mb-3"><i class="fa-solid fa-users text-slate-400 w-4"></i> Resp: <span class="font-bold">${p.user ? p.user.name : 'Coopérative'}</span></p>
@@ -213,6 +212,14 @@
                     marker.bindPopup(popupContent, {
                         closeButton: true,
                         className: 'custom-impact-popup'
+                    });
+                    
+                    // Add permanent tooltip for status on the map
+                    marker.bindTooltip(statusLabel, {
+                        permanent: true, 
+                        direction: 'right', 
+                        className: 'custom-status-tooltip',
+                        offset: [10, 0]
                     });
                 });
 
@@ -266,6 +273,17 @@
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
         margin-right: 20px !important;
         margin-bottom: 20px !important;
+    }
+    .custom-status-tooltip {
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        font-weight: 800;
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #334155;
+        padding: 4px 8px;
     }
 </style>
 @endsection

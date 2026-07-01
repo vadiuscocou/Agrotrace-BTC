@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contrat d'Engagement - {{ $project->title }}</title>
+    <title>Contrat d'Investissement - {{ $investment->project->title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -41,7 +41,7 @@
             <i class="fa-solid fa-seedling text-3xl text-[#063b27]"></i>
             <h1 class="text-3xl font-bold tracking-widest uppercase">AgroTrace</h1>
         </div>
-        <h2 class="text-2xl font-bold uppercase mt-4">Contrat d'Engagement Numérique</h2>
+        <h2 class="text-2xl font-bold uppercase mt-4">Contrat d'Investissement Nominatif</h2>
         <p class="text-slate-500 mt-2 italic">Garantie de Financement et de Rendement Agricole</p>
     </div>
 
@@ -50,21 +50,21 @@
         <p class="mb-4">Le présent contrat numérique est généré automatiquement par la plateforme <strong>AgroTrace</strong> et formalise l'accord entre les parties prenantes du projet agricole, suite à sa validation par l'administration.</p>
         
         <p><strong>Fait virtuellement à :</strong> Siège AgroTrace<br>
-        <strong>ID Contrat :</strong> CT-{{ $project->formatted_id }}-{{ date('Y') }}<br>
-        <strong>Le :</strong> {{ $project->created_at->format('d/m/Y à H:i') }}</p>
+        <strong>ID Contrat :</strong> CT-INV-{{ $investment->id }}-{{ $investment->project->formatted_id }}-{{ date('Y') }}<br>
+        <strong>Le :</strong> {{ $investment->created_at->format('d/m/Y à H:i') }}</p>
     </div>
 
     <!-- Parties -->
     <div class="mb-10 border border-slate-300 p-6 bg-slate-50">
         <h3 class="text-xl font-bold mb-4 uppercase underline">Entre les soussignés :</h3>
-        <p class="mb-2"><strong>La Coopérative / Le Porteur de Projet :</strong> {{ optional($project->user)->name ?? 'Utilisateur Inconnu' }}</p>
-        <p class="mb-2"><strong>Localisation :</strong> {{ $project->region }}</p>
+        <p class="mb-2"><strong>La Coopérative / Le Porteur de Projet :</strong> {{ optional($investment->project->user)->name ?? 'Utilisateur Inconnu' }}</p>
+        <p class="mb-2"><strong>Localisation :</strong> {{ $investment->project->region }}</p>
         <p class="mb-4"><em>Ci-après désigné "Le Bénéficiaire" ou "Le Porteur de Projet"</em></p>
 
         <p class="mb-2"><strong>ET</strong></p>
 
-        <p class="mb-2"><strong>Les Investisseurs de la plateforme AgroTrace</strong> (représentés par l'entité gestionnaire des fonds séquestrés via Lightning Network).</p>
-        <p class="mb-4"><em>Ci-après désignés "Les Investisseurs"</em></p>
+        <p class="mb-2"><strong>L'Investisseur :</strong> {{ $investment->user->name }}</p>
+        <p class="mb-4"><em>Ci-après désigné "L'Investisseur"</em></p>
 
         <p class="mb-2"><strong>EN PRÉSENCE DE :</strong></p>
         <p class="mb-2"><strong>AgroTrace BTC</strong>, agissant en tant que tiers de confiance, garant technique et financier.</p>
@@ -74,7 +74,11 @@
     <!-- Project Details -->
     <div class="mb-10 text-justify leading-relaxed text-lg space-y-6">
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27]">Article 1 : Objet du Contrat</h3>
-        <p>Le Bénéficiaire sollicite et accepte un financement participatif d'un montant cible de <strong>{{ number_format($project->target_amount_fcfa) }} FCFA</strong> pour la réalisation du projet intitulé <em>"{{ $project->title }}"</em>.</p>
+        <p>L'Investisseur s'engage à financer le projet <em>"{{ $investment->project->title }}"</em> à hauteur de <strong>{{ number_format($investment->amount_fcfa) }} FCFA</strong>.</p>
+        @php
+            $percentage = ($investment->amount_fcfa / $investment->project->target_amount_fcfa) * 100;
+        @endphp
+        <p>Cet apport représente <strong>{{ number_format($percentage, 2) }}%</strong> du budget total du projet ({{ number_format($investment->project->target_amount_fcfa) }} FCFA).</p>
         <p>Ce financement sera débloqué progressivement par AgroTrace sous réserve de la validation stricte des preuves d'avancement (jalons) soumises par le Bénéficiaire, garantissant ainsi le bon usage des fonds.</p>
 
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 2 : Obligations des Parties</h3>
@@ -88,7 +92,7 @@
 
         <h4 class="font-bold mt-4">2.2. Obligations du Porteur de Projet (Bénéficiaire)</h4>
         <ul class="list-disc pl-6 space-y-2">
-            <li>S'engage à utiliser l'intégralité des fonds alloués exclusivement pour le projet <em>"{{ $project->title }}"</em>.</li>
+            <li>S'engage à utiliser l'intégralité des fonds alloués exclusivement pour le projet <em>"{{ $investment->project->title }}"</em>.</li>
             <li>S'engage à fournir des preuves tangibles (photos, reçus) pour chaque jalon sur La Plateforme.</li>
             <li>S'engage à déclarer de manière honnête et transparente la quantité récoltée et le prix de vente à l'issue de la campagne.</li>
         </ul>
@@ -100,13 +104,9 @@
             <li>Calculer automatiquement la répartition des revenus et procéder à la distribution via Lightning Network.</li>
         </ul>
 
-        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 3 : Répartition des Revenus (Modèle 70/30)</h3>
-        <p>Contrairement à un prêt à taux fixe, le modèle AgroTrace est basé sur le partage de la création de valeur.</p>
-        <p>À l'issue de la vente des récoltes, le chiffre d'affaires généré sera automatiquement réparti par La Plateforme selon la clé de répartition suivante :</p>
-        <ul class="list-disc pl-6 space-y-2 font-bold">
-            <li>70 % du chiffre d'affaires total brut revient au Bénéficiaire (Agriculteur/Coopérative).</li>
-            <li>30 % du chiffre d'affaires total brut revient aux Investisseurs (proportionnellement à leur apport initial).</li>
-        </ul>
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 3 : Répartition des Revenus</h3>
+        <p>À l'issue de la vente des récoltes, le chiffre d'affaires généré sera automatiquement réparti par La Plateforme selon la règle de base (70% pour la Coopérative, 30% pour les Investisseurs).</p>
+        <p>L'Investisseur étant titulaire de <strong>{{ number_format($percentage, 2) }}%</strong> du financement, il percevra <strong>{{ number_format($percentage, 2) }}%</strong> de la part globale de dividendes de 30%.</p>
 
         <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 4 : Modalités de Remboursement</h3>
         <p>Le Bénéficiaire procède au remboursement du capital et des dividendes via la création d'une facture Lightning sur AgroTrace. La Plateforme se charge ensuite de router automatiquement la part de chaque investisseur (les 30%) directement vers leur portefeuille Lightning personnel, sans frais de transaction bancaire.</p>
@@ -133,11 +133,11 @@
                 </div>
             </div>
             <div class="text-right">
-                <p class="font-bold mb-4">Le Bénéficiaire (Consentement Numérique) :</p>
+                <p class="font-bold mb-4">L'Investisseur (Consentement Blockchain) :</p>
                 <div class="border border-[#063b27] text-[#063b27] bg-[#063b27]/5 px-6 py-3 inline-block text-sm text-left">
-                    <i class="fa-solid fa-check-circle mr-2"></i><strong>Lu, Approuvé et Signé</strong><br>
-                    <span class="font-mono text-xs text-slate-500 mt-1 block">Hash cryptographique de soumission :<br>
-                    {{ hash('sha256', $project->id . $project->created_at . $project->target_amount_fcfa . $project->user_id) }}</span>
+                    <i class="fa-solid fa-check-circle mr-2"></i><strong>Lu, Approuvé et Payé</strong><br>
+                    <span class="font-mono text-xs text-slate-500 mt-1 block">Hash cryptographique (Lightning) :<br>
+                    {{ substr($investment->payment_hash, 0, 32) }}...</span>
                 </div>
             </div>
         </div>

@@ -32,8 +32,8 @@
                     <span class="text-slate-500 font-medium">Équivalent :</span>
                     <span class="font-bold text-orange-500">{{ number_format($investment->amount_sats) }} SATS</span>
                 </div>
-                <div class="flex justify-between items-center text-sm pt-2 border-t border-slate-200 mt-2">
-                    <span class="text-slate-500 font-medium">Frais réseau (2%) :</span>
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <span class="text-sm font-bold text-slate-500">Frais de réseau & Plateforme (2%)</span>
                     <span class="font-bold text-slate-800">{{ number_format($investment->fee_sats) }} SATS</span>
                 </div>
             </div>
