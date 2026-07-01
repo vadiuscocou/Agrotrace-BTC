@@ -10,7 +10,6 @@ use App\Models\Investment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\InvestmentController;
 
-Route::post('/invest/{project_id}', [InvestmentController::class, 'store'])->name('investments.store');
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -81,53 +80,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     /* --- Actions Investisseur --- */
-
-    Route::post('/invest/{project_id}', function ($project_id) {
-        $amountFcfa = request('amount_fcfa', 50000);
-        $amountSats = $amountFcfa * 6; // Taux 1 FCFA ≈ 6 SATS
-        $feeSats = $amountSats * 0.02;
-
-        try {
-            $lnbits = new \App\Services\LNbitsService();
-            $invoice = $lnbits->createInvoice($amountSats + $feeSats, "AgroTrace Inv. Projet #{$project_id}");
-
-            $investment = Investment::create([
-                'project_id' => $project_id,
-                'user_id' => Auth::id(),
-                'amount_fcfa' => $amountFcfa,
-                'amount_sats' => $amountSats,
-                'fee_sats' => $feeSats,
-                'payment_request' => $invoice['payment_request'],
-                'payment_hash' => $invoice['payment_hash'],
-                'status' => 'pending'
-            ]);
-
-            return view('invest.pay', ['investment' => $investment]);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Erreur API LNbits: ' . $e . getMessage());
-        }
-    });
+// Dans routes/web.php
+Route::post('/invest/{project_id}', [InvestmentController::class, 'store'])->name('investments.store');
+Route::get('/invest/{investment}/pay', [InvestmentController::class, 'pay'])->name('investments.pay');
 
     // Vérification du statut du paiement (Polling)
+
     Route::get('/invest/{hash}/status', function ($hash) {
         $investment = Investment::where('payment_hash', $hash)->firstOrFail();
-        if ($investment->status === 'paid') return response()->json(['paid' => true]);
-
+    
+        if ($investment->status === 'paid') {
+            return response()->json(['paid' => true]);
+        }
+    
         try {
             $lnbits = new \App\Services\LNbitsService();
             if ($lnbits->checkPaymentStatus($hash)) {
                 $investment->update(['status' => 'paid']);
-
+    
                 $project = $investment->project;
                 $totalPaid = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
                 if ($totalPaid >= $project->target_amount_fcfa) {
                     $project->update(['status' => 'funded']);
                 }
+    
                 return response()->json(['paid' => true]);
             }
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        });
+            return response()->json(['paid' => false, 'error' => $e->getMessage()], 500);
+        }
+    
+        return response()->json(['paid' => false]);
+    });
+    
 
     /* --- Actions Porteur de Projet (Coopérative) --- */
 
@@ -192,6 +177,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return redirect('/dashboard')->with('success', 'Preuve soumise avec succès.');
     });
 
+    Route::get('/test-lnbits', function () {
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $invoice = $lnbits->createInvoice(100, 'Test AgroTrace');
+            return response()->json(['success' => true, 'data' => $invoice]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
     /* --- Actions Administrateur --- */
 
     Route::post('/projects/{id}/status', function ($id) {

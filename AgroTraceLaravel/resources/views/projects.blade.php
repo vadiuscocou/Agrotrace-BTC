@@ -11,8 +11,8 @@
         </div>
         <div class="inline-flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-100">
             <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
             </span>
             <span class="text-xs font-bold text-green-700 uppercase tracking-widest">Réseau En Ligne</span>
         </div>
@@ -32,7 +32,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($projects as $project)
         <div class="bg-white rounded-[2rem] shadow-md border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
-            
+
             <!-- Card Header -->
             <div class="p-6 border-b border-slate-50 bg-slate-50/50 flex justify-between items-start">
                 <div>
@@ -57,7 +57,7 @@
                 <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
                     {{ $project->description }}
                 </p>
-                
+
                 @if($project->milestones->count() > 0)
                 <div class="mt-4 pt-4 border-t border-slate-100">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Jalons du projet</h4>
@@ -65,11 +65,11 @@
                         @foreach($project->milestones as $milestone)
                         <li class="flex items-center gap-2 text-sm">
                             @if(in_array($milestone->status, ['verified', 'validated']))
-                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                            <i class="fa-solid fa-circle-check text-green-500"></i>
                             @elseif($milestone->status == 'submitted')
-                                <i class="fa-solid fa-circle-pause text-orange-400"></i>
+                            <i class="fa-solid fa-circle-pause text-orange-400"></i>
                             @else
-                                <i class="fa-regular fa-circle text-slate-300"></i>
+                            <i class="fa-regular fa-circle text-slate-300"></i>
                             @endif
                             <span class="text-slate-700 font-medium">{{ $milestone->title }}</span>
                         </li>
@@ -87,17 +87,17 @@
                     </div>
                     <p class="font-black text-lg text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
                 </div>
-                
+
                 @auth
-                    @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
-                    @php
-                        $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
-                        if ($project->remaining_amount < $minInvestment) {
-                            $minInvestment = $project->remaining_amount;
-                        }
-                        $isFixed = ($project->remaining_amount <= $minInvestment);
-                    @endphp
-                    <form action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
+                @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
+                @php
+                $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
+                if ($project->remaining_amount < $minInvestment) {
+                    $minInvestment=$project->remaining_amount;
+                    }
+                    $isFixed = ($project->remaining_amount <= $minInvestment);
+                        @endphp
+                        <form id="investForm-{{ $project->id }}" action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
                         @csrf
                         <div>
                             <div class="flex justify-between items-end mb-1">
@@ -106,30 +106,69 @@
                             </div>
                             <input type="number" name="amount_fcfa" min="{{ $minInvestment }}" max="{{ $project->remaining_amount }}" step="1000" value="{{ $isFixed ? $project->remaining_amount : $minInvestment }}" {{ $isFixed ? 'readonly' : '' }} class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-bold {{ $isFixed ? 'opacity-70 cursor-not-allowed' : '' }}" required>
                             @if($isFixed)
-                                <p class="text-[10px] text-orange-500 mt-1 font-medium"><i class="fa-solid fa-lock text-[8px]"></i> Montant restant verrouillé pour clôturer le projet.</p>
+                            <p class="text-[10px] text-orange-500 mt-1 font-medium"><i class="fa-solid fa-lock text-[8px]"></i> Montant restant verrouillé pour clôturer le projet.</p>
                             @endif
                         </div>
-                        <button type="submit" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="return confirm('Générer une facture Lightning pour cet investissement ?')">
+                        <button type="button" class="w-full bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-3 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2" onclick="handleInvest(event, {{ $project->id }})">
                             <i class="fa-solid fa-bolt"></i> Investir
                         </button>
-                    </form>
-                    @elseif(Auth::user()->role === 'investor' && $project->remaining_amount <= 0)
-                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
-                        Financement Atteint
-                    </button>
-                    @elseif(Auth::user()->role === 'investor')
-                    <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
-                        En attente de validation
-                    </button>
-                    @endif
-                @else
-                    <a href="{{ route('login') }}" class="block w-full text-center bg-white border-2 border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 font-bold py-3 px-4 rounded-xl transition">
-                        Se connecter pour investir
-                    </a>
-                @endauth
+                        </form>
+                        @elseif(Auth::user()->role === 'investor' && $project->remaining_amount <= 0)
+                            <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                            Financement Atteint
+                            </button>
+                            @elseif(Auth::user()->role === 'investor')
+                            <button disabled class="w-full bg-slate-200 text-slate-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed">
+                                En attente de validation
+                            </button>
+                            @endif
+                            @else
+                            <a href="{{ route('login') }}" class="block w-full text-center bg-white border-2 border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 font-bold py-3 px-4 rounded-xl transition">
+                                Se connecter pour investir
+                            </a>
+                            @endauth
             </div>
         </div>
         @endforeach
     </div>
 </div>
+<script>
+    function handleInvest(event, projectId) {
+        event.preventDefault();
+
+        if (!confirm('Générer une facture Lightning pour cet investissement ?')) {
+            return;
+        }
+
+        const form = document.getElementById('investForm-' + projectId);
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                }
+            })
+            .then(async response => {
+                const text = await response.text();
+
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (error) {
+                    throw new Error(text);
+                }
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erreur serveur');
+                }
+
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+    }
+</script>
 @endsection

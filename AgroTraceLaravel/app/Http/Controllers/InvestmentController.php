@@ -5,28 +5,53 @@ namespace App\Http\Controllers;
 use App\Models\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\LNbitsService;
 
 class InvestmentController extends Controller
 {
-    /**
-     * Affiche le contrat d'un investissement spécifique.
-     *
-     * @param Investment $investment (Route Model Binding)
-     * @return \Illuminate\View\View
-     */
-    public function contract(Investment $investment)
+    public function store(Request $request, $project_id)
     {
-        // 1. Sécurité : Vérifier que l'utilisateur connecté est bien le propriétaire de l'investissement
-        // On utilise Auth::id() pour plus de clarté
-        if ($investment->user_id !== Auth::id()) {
-            abort(403, 'Accès non autorisé : Cet investissement ne vous appartient pas.');
+        $amountFcfa = (int) $request->input('amount_fcfa', 50000);
+
+        $amountSats  = $amountFcfa * 6;
+        $feeSats     = (int) ($amountSats * 0.02);
+        $totalToPay  = $amountSats + $feeSats;
+
+        try {
+            $lnbits = new LNbitsService();
+            $invoice = $lnbits->createInvoice($totalToPay, "AgroTrace Inv. Projet #{$project_id}");
+
+            $investment = Investment::create([
+                'project_id'      => $project_id,
+                'user_id'         => Auth::id(),
+                'amount_fcfa'     => $amountFcfa,
+                'amount_sats'     => $amountSats,
+                'fee_sats'        => $feeSats,
+                'payment_request' => $invoice['payment_request'],
+                'payment_hash'    => $invoice['payment_hash'],
+                'status'          => 'pending',
+            ]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'redirect' => url('/invest/' . $investment->id . '/pay'),
+                ]);
+            }
+
+            return redirect()->to('/invest/' . $investment->id . '/pay');
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'error' => 'Erreur API LNbits: ' . $e->getMessage(),
+                ], 422);
+            }
+
+            return back()->with('error', 'Erreur API LNbits: ' . $e->getMessage());
         }
+    }
 
-        // 2. Charger le projet lié à l'investissement
-        // Note : Cela suppose que tu as défini la relation project() dans ton modèle Investment
-        $project = $investment->project;
-
-        // 3. Retourner la vue en passant les DEUX variables : l'investissement ET le projet
-        return view('investor.contract', compact('investment', 'project'));
+    public function pay(Investment $investment)
+    {
+        return view('invest.pay', compact('investment'));
     }
 }

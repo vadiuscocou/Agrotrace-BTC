@@ -12,7 +12,7 @@
         <div class="p-8 text-center">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 inline-block mb-6 relative">
                 <!-- QR Code via API QRServer -->
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=lightning:{{ strtolower($investment->payment_request) }}" alt="Lightning Invoice" class="mx-auto rounded-lg">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={{ urlencode('lightning:' . $investment->payment_request) }}" alt="Lightning Invoice" class="mx-auto rounded-lg">
                 
                 <!-- Loading overlay when paid -->
                 <div x-show="paid" x-transition style="display: none;" class="absolute inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center rounded-2xl">

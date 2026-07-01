@@ -28,6 +28,8 @@ class LNbitsService
             throw new Exception("LNBITS_INVOICE_READ_KEY is not set in .env.");
         }
 
+        $amountSats = (int) $amountSats;
+
         $response = Http::withHeaders([
             'X-Api-Key' => $this->invoiceReadKey,
             'Content-Type' => 'application/json'
@@ -35,14 +37,19 @@ class LNbitsService
             'out' => false,
             'amount' => $amountSats,
             'memo' => $memo,
-            'webhook' => '' 
+            'webhook' => ''
         ]);
 
-        if ($response->successful()) {
-            return $response->json();
+        if (!$response->successful()) {
+            throw new Exception("Failed to create LNbits invoice ({$response->status()}): " . $response->body());
         }
 
-        throw new Exception("Failed to create LNbits invoice: " . $response->body());
+        $data = $response->json();
+        if (empty($data['payment_request']) || empty($data['payment_hash'])) {
+            throw new Exception("LNbits response missing payment_request/payment_hash: " . $response->body());
+        }
+
+        return $data;
     }
 
     /**
