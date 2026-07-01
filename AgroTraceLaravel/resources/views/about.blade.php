@@ -27,7 +27,7 @@
                 <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 group">
                     <i class="fa-brands fa-bitcoin text-orange-500 text-3xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
                 </a>
 
                 <!-- Mobile menu button -->

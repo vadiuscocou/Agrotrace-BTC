@@ -27,7 +27,7 @@
                 <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 group">
                     <i class="fa-brands fa-bitcoin text-orange-500 text-3xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                    <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
                 </a>
 
                 <!-- Mobile menu button -->
@@ -111,6 +111,16 @@
                 <a href="{{ url('/verification') }}" class="w-full sm:w-auto bg-white border-2 border-[#063b27] text-[#063b27] px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#063b27] hover:text-white transition-all duration-300 flex items-center justify-center gap-3 group">
                     Voir les Preuves <i class="fa-solid fa-arrow-right opacity-70 group-hover:translate-x-1 transition-transform"></i>
                 </a>
+            </div>
+
+            <!-- Demo Video -->
+            <div class="mt-16 max-w-4xl mx-auto">
+                <div class="rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white/50 bg-slate-900 aspect-video mb-6 relative">
+                    <video src="{{ asset('videos/demo.mp4') }}" class="w-full h-full object-cover" autoplay loop muted controls></video>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-slate-800 font-black text-2xl md:text-3xl">Comment fonctionne AgroTrace-BTC ?</h3>
+                </div>
             </div>
         </div>
     </div>

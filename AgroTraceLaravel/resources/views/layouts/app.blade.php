@@ -49,7 +49,7 @@
         <div class="h-20 flex items-center px-6 border-b border-white/10 overflow-hidden shrink-0">
             <a href="{{ url('/') }}" class="text-2xl font-black tracking-tight text-white flex items-center gap-3 hover:opacity-80 transition min-w-max">
                 <i class="fa-brands fa-bitcoin text-orange-400 text-3xl"></i>
-                <span x-show="sidebarOpen" class="transition-opacity duration-300 delay-100">AGRO<span class="text-orange-400">TRACE</span></span>
+                <span x-show="sidebarOpen" class="transition-opacity duration-300 delay-100">AGRO<span class="text-orange-400">TRACE-BTC</span></span>
             </a>
         </div>
 
@@ -124,7 +124,7 @@
         <!-- Mobile Header -->
         <header class="lg:hidden h-16 bg-[#063b27] text-white flex items-center justify-between px-4 shadow-md shrink-0" style="z-index: 1950;">
             <a href="{{ url('/') }}" class="text-xl font-black tracking-tight flex items-center gap-2">
-                <i class="fa-brands fa-bitcoin text-orange-400"></i> AGRO<span class="text-orange-400">TRACE</span>
+                <i class="fa-brands fa-bitcoin text-orange-400"></i> AGRO<span class="text-orange-400">TRACE-BTC</span>
             </a>
             <button @click="mobileMenuOpen = true" class="text-white/80 hover:text-white text-2xl focus:outline-none">
                 <i class="fa-solid fa-bars"></i>

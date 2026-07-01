@@ -34,7 +34,7 @@
                 <div class="h-16 w-16 bg-[#063b27] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 mb-3">
                     <i class="fa-brands fa-bitcoin text-orange-400 text-4xl"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE</span></span>
+                <span class="text-2xl font-black tracking-tight text-[#063b27]">AGRO<span class="text-orange-500">TRACE-BTC</span></span>
             </a>
         </div>
 
