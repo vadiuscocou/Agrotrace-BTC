@@ -188,11 +188,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $milestone = Milestone::findOrFail($id);
         if ($milestone->project->user_id !== Auth::id()) abort(403);
 
-        $path = request()->file('proof_image') ? request()->file('proof_image')->store('proofs', 'public') : null;
+        $paths = [];
+        if (request()->hasFile('proof_images')) {
+            foreach (request()->file('proof_images') as $file) {
+                $paths[] = $file->store('proofs', 'public');
+            }
+        }
+
+        // Backward compatibility with single upload
+        $singlePath = request()->file('proof_image') ? request()->file('proof_image')->store('proofs', 'public') : null;
+
+        if ($singlePath && count($paths) === 0) {
+            $paths[] = $singlePath;
+        }
 
         $milestone->update([
             'status' => 'submitted',
-            'proof_image' => $path,
+            'proof_image' => $singlePath ?? ($paths[0] ?? null), // keep first image in old column for fallback
+            'proof_images' => count($paths) > 0 ? $paths : null,
             'proof_notes' => request('proof_notes'),
         ]);
 

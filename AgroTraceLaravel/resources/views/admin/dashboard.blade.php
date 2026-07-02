@@ -122,9 +122,23 @@
                         </p>
                         
                         <!-- Actual Image Proof or Placeholder -->
-                        @if($milestone->proof_image)
-                            <div class="mb-4">
-                                <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-full h-auto max-h-48 object-cover rounded-xl border border-slate-200">
+                        @if($milestone->proof_images && count($milestone->proof_images) > 0)
+                            <div class="mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h5 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Preuves jointes</h5>
+                                <div class="grid grid-cols-2 gap-3">
+                                    @foreach($milestone->proof_images as $img)
+                                    <a href="{{ asset('storage/' . $img) }}" target="_blank" class="block hover:opacity-80 transition">
+                                        <img src="{{ asset('storage/' . $img) }}" alt="Preuve" class="w-full h-32 object-cover rounded-xl border border-slate-200 shadow-sm">
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @elseif($milestone->proof_image)
+                            <div class="mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h5 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Preuve jointe</h5>
+                                <a href="{{ asset('storage/' . $milestone->proof_image) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-full h-auto max-h-48 object-cover rounded-xl border border-slate-200 shadow-sm hover:opacity-90 transition">
+                                </a>
                             </div>
                         @else
                             <div class="w-full h-32 bg-slate-100 rounded-xl border border-slate-200 mb-4 flex items-center justify-center text-slate-400">
