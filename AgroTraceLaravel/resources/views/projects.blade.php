@@ -82,10 +82,19 @@
             <!-- Card Footer & Action -->
             <div class="p-6 bg-slate-50/80 border-t border-slate-100 mt-auto">
                 <div class="mb-4">
-                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
-                        <span>Objectif</span>
+                    @php
+                        $funded = $project->target_amount_fcfa - $project->remaining_amount;
+                        $percent = $project->target_amount_fcfa > 0 ? round(($funded / $project->target_amount_fcfa) * 100) : 0;
+                        if($percent > 100) $percent = 100;
+                    @endphp
+                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-2">
+                        <span>Objectif : {{ number_format($project->target_amount_fcfa) }} FCFA</span>
+                        <span class="text-green-600">{{ $percent }}% financé</span>
                     </div>
-                    <p class="font-black text-lg text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-xs text-slate-500">FCFA</span></p>
+                    <div class="w-full bg-slate-200 rounded-full h-2 mb-2 overflow-hidden">
+                        <div class="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full transition-all duration-1000" style="width: {{ $percent }}%"></div>
+                    </div>
+                    <p class="font-bold text-sm text-slate-700">{{ number_format($project->remaining_amount) }} <span class="text-xs text-slate-500">FCFA restants</span></p>
                 </div>
 
                 @auth
