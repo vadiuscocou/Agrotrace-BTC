@@ -108,10 +108,17 @@
             <li>30 % du chiffre d'affaires total brut revient aux Investisseurs (proportionnellement à leur apport initial).</li>
         </ul>
 
-        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 4 : Modalités de Remboursement</h3>
-        <p>Le Bénéficiaire procède au remboursement du capital et des dividendes via la création d'une facture Lightning sur AgroTrace-BTC. La Plateforme se charge ensuite de router automatiquement la part de chaque investisseur (les 30%) directement vers leur portefeuille Lightning personnel, sans frais de transaction bancaire.</p>
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 4 : Frais de Plateforme et Fonds d'Indemnisation</h3>
+        <p>Le financement participatif est soumis à des frais totaux de <strong>5 %</strong> prélevés sur le montant cible lors de la validation, répartis comme suit :</p>
+        <ul class="list-disc pl-6 space-y-2">
+            <li><strong>2 % pour AgroTrace-BTC</strong> : Frais de fonctionnement, d'infrastructure logicielle et d'ancrage sur la blockchain.</li>
+            <li><strong>3 % pour le Fonds d'Indemnisation</strong> : Une réserve de garantie mutualisée. <strong>Cette somme est intégralement remboursable</strong> à la coopérative à la fin du projet si aucun sinistre n'est déclaré et si toutes les échéances sont respectées.</li>
+        </ul>
+
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 5 : Modalités de Remboursement par Tranches</h3>
+        <p>Conformément à l'échéancier généré par le Smart Contract, le Bénéficiaire procède au remboursement du capital et des dividendes en <strong>3 tranches distinctes</strong> via la création de factures Lightning sur AgroTrace-BTC. En cas de non-respect d'une échéance (retard constaté), des pénalités automatiques s'appliqueront et le score de confiance de la coopérative sera dégradé publiquement.</p>
         
-        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 5 : Gestion des Risques et Force Majeure</h3>
+        <h3 class="text-xl font-bold mb-4 uppercase underline text-[#063b27] mt-8">Article 6 : Gestion des Risques et Force Majeure</h3>
         <p>Sont considérés comme cas de force majeure les événements climatiques extrêmes (sécheresse prolongée, inondations), les catastrophes naturelles ou les épidémies dévastatrices de cultures, dûment constatés par l'administration locale.</p>
         <p>En cas de force majeure avérée entraînant la perte de la récolte :</p>
         <ul class="list-disc pl-6 space-y-2">

@@ -130,6 +130,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 if ($totalInvested >= $project->target_amount_fcfa) {
                     $project->update(['status' => 'funded']);
                 }
+                
+                // Send Email to the investor
+                try {
+                    \Illuminate\Support\Facades\Mail::to($investment->user->email)->send(new \App\Mail\InvestmentConfirmed($investment));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error("Mail sending failed: " . $e->getMessage());
+                }
 
                 return response()->json(['paid' => true]);
             }
@@ -230,22 +237,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('investor.invoice', ['investment' => $investment]);
     })->name('investments.invoice');
 
-    Route::post('/projects/{id}/repay', function ($id) {
-        if (Auth::user()->role !== 'project_owner') abort(403);
-        
+    Route::post('/projects/{id}/generate-tranches', function ($id) {
         $project = Project::findOrFail($id);
         if ($project->user_id !== Auth::id()) abort(403);
+        
+        $totalToRepay = $project->target_amount_fcfa * 1.08;
+        $trancheAmount = intval($totalToRepay / 3);
+        
+        for ($i = 1; $i <= 3; $i++) {
+            App\Models\Repayment::create([
+                'project_id' => $project->id,
+                'amount_fcfa' => $trancheAmount,
+                'amount_sats' => 0, // Mock for hackathon
+                'due_date' => now()->addMonths($i),
+                'status' => 'pending'
+            ]);
+        }
+        
+        return back()->with('status', 'Échéancier généré avec succès !');
+    });
 
-        $quantity = request('quantity');
-        $price = request('price');
-
-        if (!$quantity || !$price) {
-            return back()->with('error', 'Veuillez déclarer la quantité et le prix.');
+    Route::post('/repayments/{id}/pay', function (Request $request, $id) {
+        $repayment = App\Models\Repayment::findOrFail($id);
+        if ($repayment->project->user_id !== Auth::id()) abort(403);
+        
+        $bolt11 = $request->input('bolt11');
+        // Hackathon Mock: We assume the lightning payment is processed successfully.
+        
+        $repayment->update(['status' => 'paid']);
+        
+        // If all 3 are paid, mark project as completed
+        if ($repayment->project->repayments()->where('status', 'pending')->count() == 0) {
+            $repayment->project->update(['status' => 'completed']);
         }
 
-        $project->update(['status' => 'completed']);
-
-        return redirect('/dashboard')->with('success', 'Récolte déclarée avec succès ! Les fonds seront routés.');
+        return back()->with('status', 'Tranche remboursée et distribuée avec succès via Lightning !');
     });
 
     // Admin Actions

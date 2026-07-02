@@ -26,6 +26,11 @@ class Project extends Model
         return $this->hasMany(Milestone::class);
     }
 
+    public function repayments()
+    {
+        return $this->hasMany(Repayment::class);
+    }
+
     public function investments() {
         return $this->hasMany(Investment::class);
     }

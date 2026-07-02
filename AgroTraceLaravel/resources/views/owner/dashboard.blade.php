@@ -43,9 +43,7 @@
                 @elseif($project->status == 'funded' || $project->status == 'in_progress')
                 <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold mb-2"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
                 @if($project->status == 'in_progress')
-                <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, title: '{{ addslashes($project->title) }}', amount: {{ $project->target_amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
-                    <i class="fa-solid fa-hand-holding-dollar"></i> Rembourser (8%)
-                </button>
+                <!-- On n'affiche plus de bouton de remboursement global ici -->
                 @endif
                 @endif {{-- <--- C'EST CE @endif QUI MANQUAIT ICI POUR FERMER LA CHAÎNE --}}
 
@@ -62,8 +60,74 @@
                 </a>
             </div>
 
+            <!-- Échéancier de Remboursement (Les 3 Tranches) -->
+            @if($project->status == 'in_progress')
+            <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest"><i class="fa-solid fa-calendar-check text-orange-500 mr-2"></i>Échéancier de Remboursement</h4>
+                    @if($project->repayments->count() == 0)
+                    <form action="{{ url('/projects/'.$project->id.'/generate-tranches') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm">
+                            <i class="fa-solid fa-magic mr-1"></i> Générer l'échéancier
+                        </button>
+                    </form>
+                    @endif
+                </div>
+
+                @if($project->repayments->count() > 0)
+                <div class="space-y-3">
+                    @php
+                        $totalRepayments = $project->repayments->count();
+                        $paidRepayments = $project->repayments->where('status', 'paid')->count();
+                        $progressPercent = $totalRepayments > 0 ? round(($paidRepayments / $totalRepayments) * 100) : 0;
+                    @endphp
+                    
+                    <!-- Barre de progression de remboursement -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                            <span>Progression globale du remboursement</span>
+                            <span class="text-orange-600">{{ $progressPercent }}% remboursé</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-2 rounded-full transition-all duration-1000" style="width: {{ $progressPercent }}%"></div>
+                        </div>
+                    </div>
+
+                    @foreach($project->repayments as $index => $repayment)
+                    @php
+                        $isLate = $repayment->status == 'pending' && \Carbon\Carbon::parse($repayment->due_date)->isPast();
+                    @endphp
+                    <div class="bg-white border {{ $isLate ? 'border-red-200 bg-red-50/30' : 'border-slate-200' }} rounded-xl p-3 flex justify-between items-center transition hover:shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full {{ $repayment->status == 'paid' ? 'bg-green-100 text-green-600' : ($isLate ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-400') }} flex items-center justify-center font-black">
+                                {{ $index + 1 }}
+                            </div>
+                            <div>
+                                <h5 class="font-bold {{ $isLate ? 'text-red-700' : 'text-slate-800' }} text-sm">Tranche {{ $index + 1 }}</h5>
+                                <p class="text-xs {{ $isLate ? 'text-red-500 font-bold' : 'text-slate-500' }}">Échéance : {{ \Carbon\Carbon::parse($repayment->due_date)->format('d/m/Y') }} {{ $isLate ? '(EN RETARD)' : '' }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            <p class="font-black text-slate-900 text-sm mb-1">{{ number_format($repayment->amount_fcfa) }} <span class="text-[10px] text-slate-500">FCFA</span></p>
+                            @if($repayment->status == 'paid')
+                                <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold"><i class="fa-solid fa-check-double"></i> Payée</span>
+                            @else
+                                <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, repayment_id: {{ $repayment->id }}, title: 'Tranche {{ $index + 1 }} - {{ addslashes($project->title) }}', amount: {{ $repayment->amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded text-[10px] transition shadow-sm">
+                                    <i class="fa-solid fa-bolt"></i> Payer
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+            @endif
+
             <!-- Milestones Section -->
-            <div class="p-6">
+            <div class="p-6 border-t border-slate-100">
                 <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Jalons du Projet</h4>
 
                 <div class="space-y-4">
@@ -248,8 +312,8 @@
     </div>
 
     <!-- Repay Project Modal -->
-    <div x-data="{ repayModalOpen: false, projectId: null, projectTitle: '', projectAmount: 0, repayAmount: 0 }"
-        @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; projectTitle = $event.detail.title; projectAmount = $event.detail.amount; repayAmount = projectAmount * 1.08;"
+    <div x-data="{ repayModalOpen: false, projectId: null, repaymentId: null, projectTitle: '', repayAmount: 0 }"
+        @open-repay-modal.window="repayModalOpen = true; projectId = $event.detail.id; repaymentId = $event.detail.repayment_id; projectTitle = $event.detail.title; repayAmount = $event.detail.amount;"
         x-show="repayModalOpen" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="repayModalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-75" @click="repayModalOpen = false"></div>
@@ -260,28 +324,20 @@
                         <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100">
                             <i class="fa-solid fa-hand-holding-dollar text-orange-500 text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-black text-slate-900">Rembourser les Investisseurs</h3>
+                        <h3 class="text-xl font-black text-slate-900">Rembourser une Tranche</h3>
                     </div>
 
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-5 text-center">
                         <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1" x-text="projectTitle"></p>
                         <p class="text-xs text-slate-400 mb-4">Distribution automatique via Lightning Network</p>
 
-                        <div class="flex justify-between items-center border-t border-slate-200 pt-3">
-                            <span class="text-sm text-slate-600 font-medium">Capital levé :</span>
-                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount) + ' FCFA'"></span>
-                        </div>
-                        <div class="flex justify-between items-center pt-2">
-                            <span class="text-sm text-slate-600 font-medium">Intérêts (8%) :</span>
-                            <span class="font-bold text-slate-800" x-text="new Intl.NumberFormat('fr-FR').format(projectAmount * 0.08) + ' FCFA'"></span>
-                        </div>
                         <div class="flex justify-between items-center pt-3 border-t border-slate-200 mt-2">
                             <span class="text-sm font-black text-slate-900">Total à reverser :</span>
                             <span class="text-xl font-black text-orange-500" x-text="new Intl.NumberFormat('fr-FR').format(repayAmount) + ' FCFA'"></span>
                         </div>
                     </div>
 
-                    <form :action="'{{ url('/projects') }}/' + projectId + '/repay'" method="POST" id="repayProjectForm">
+                    <form :action="'{{ url('/repayments') }}/' + repaymentId + '/pay'" method="POST" id="repayProjectForm">
                         @csrf
                         <div class="mt-4 border-t border-slate-200 pt-4">
                             <label class="block text-slate-700 text-sm font-bold mb-2" for="bolt11">Votre Facture Lightning (BOLT11)</label>
