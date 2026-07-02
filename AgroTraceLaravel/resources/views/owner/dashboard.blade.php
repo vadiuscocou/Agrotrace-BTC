@@ -25,7 +25,7 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
         @foreach($projects as $project)
-        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+        <div class="bg-white rounded-[2rem] shadow-md border border-slate-300 overflow-hidden">
             <!-- Project Header -->
             <div class="text-right flex flex-col items-end">
                 <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Budget</p>
@@ -132,7 +132,7 @@
 
                 <div class="space-y-4">
                     @foreach($project->milestones as $milestone)
-                    <div class="bg-white border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-slate-200 transition">
+                    <div class="bg-white border border-slate-300 rounded-2xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-slate-400 transition shadow-sm">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
                                 @if($milestone->status == 'pending')
@@ -171,7 +171,7 @@
 
         @if($projects->count() == 0)
         <div class="col-span-full">
-            <div class="bg-white border border-slate-100 rounded-[2rem] p-12 text-center shadow-sm">
+            <div class="bg-white border border-slate-300 rounded-[2rem] p-12 text-center shadow-md">
                 <div class="h-16 w-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 text-2xl mx-auto mb-4">
                     <i class="fa-solid fa-clipboard-list"></i>
                 </div>

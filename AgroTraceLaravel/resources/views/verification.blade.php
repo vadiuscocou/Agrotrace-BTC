@@ -22,55 +22,52 @@
 </div>
 
 <div class="p-8">
-    <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+    <div class="bg-white rounded-[2rem] shadow-md border border-slate-300 overflow-hidden flex flex-col hover:border-slate-400 transition-colors">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-black tracking-widest">
+                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-black tracking-widest border-b border-slate-200">
                     <tr>
-                        <th class="p-6">Date de Vérification</th>
-                        <th class="p-6">Coopérative / Projet</th>
-                        <th class="p-6">Jalon Atteint</th>
-                        <th class="p-6">Preuve Visuelle</th>
-                        <th class="p-6 text-right">Ancrage Bitcoin (OP_RETURN)</th>
+                        <th class="py-4 px-6">Date</th>
+                        <th class="py-4 px-6">Coopérative / Projet</th>
+                        <th class="py-4 px-6">Jalon Atteint</th>
+                        <th class="py-4 px-6">Preuve Visuelle</th>
+                        <th class="py-4 px-6 text-right">Ancrage (OP_RETURN)</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm divide-y divide-slate-100">
                     @foreach($milestones as $milestone)
                     <tr class="hover:bg-slate-50/50 transition">
-                        <td class="p-6 text-slate-500 font-medium">
+                        <td class="py-4 px-6 text-slate-500 font-medium text-xs">
                             {{ $milestone->updated_at->diffForHumans() }}
                         </td>
-                        <td class="p-6">
-                            <p class="font-bold text-slate-900">{{ $milestone->project->user->name }}</p>
-                            <p class="text-xs text-slate-500">{{ $milestone->project->title }}</p>
+                        <td class="py-4 px-6">
+                            <p class="font-bold text-slate-800 text-sm">{{ $milestone->project->user->name }}</p>
+                            <p class="text-[11px] text-slate-400">{{ $milestone->project->title }}</p>
                         </td>
-                        <td class="p-6">
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-bold block mb-2 w-fit">
+                        <td class="py-4 px-6">
+                            <span class="inline-block bg-green-50 text-green-600 px-2 py-0.5 rounded border border-green-100 text-[10px] font-bold mb-1">
                                 {{ $milestone->title }}
                             </span>
-                            <p class="text-xs text-slate-500 line-clamp-2 max-w-xs">{{ $milestone->description }}</p>
+                            <p class="text-[11px] text-slate-500 line-clamp-1 max-w-[200px]">{{ $milestone->description }}</p>
                         </td>
-                        <td class="p-6">
+                        <td class="py-4 px-6">
                             @if($milestone->proof_image)
                                 <div class="flex items-center gap-3">
                                     <a href="{{ asset('storage/' . $milestone->proof_image) }}" target="_blank" class="block shrink-0">
-                                        <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-12 h-12 rounded-lg object-cover border border-slate-200 shadow-sm hover:scale-105 transition">
+                                        <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-8 h-8 rounded-md object-cover border border-slate-200 shadow-sm hover:scale-110 transition">
                                     </a>
-                                    @if($milestone->proof_notes)
-                                        <p class="text-[11px] text-slate-500 italic max-w-xs line-clamp-2">"{{ $milestone->proof_notes }}"</p>
-                                    @endif
                                 </div>
                             @else
-                                <span class="text-xs text-slate-400 italic">Preuve textuelle uniquement</span>
+                                <span class="text-[10px] text-slate-400 font-medium italic">Aucune photo</span>
                             @endif
                         </td>
-                        <td class="p-6 text-right">
+                        <td class="py-4 px-6 text-right">
                             @if($milestone->blockchain_tx_id)
-                            <a href="#" class="inline-flex items-center gap-2 font-mono text-orange-500 hover:text-orange-600 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-xl transition" title="{{ $milestone->blockchain_tx_id }}">
-                                {{ substr($milestone->blockchain_tx_id, 0, 4) }}...{{ substr($milestone->blockchain_tx_id, -4) }} <i class="fa-solid fa-link text-[10px]"></i>
+                            <a href="#" class="inline-flex items-center gap-1 font-mono text-[11px] text-orange-500 hover:text-orange-600 bg-orange-50 px-2 py-1 rounded transition" title="{{ $milestone->blockchain_tx_id }}">
+                                {{ substr($milestone->blockchain_tx_id, 0, 8) }}... <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                             </a>
                             @else
-                            <span class="text-xs text-slate-400">Non ancré</span>
+                            <span class="text-[11px] text-slate-400">Non ancré</span>
                             @endif
                         </td>
                     </tr>

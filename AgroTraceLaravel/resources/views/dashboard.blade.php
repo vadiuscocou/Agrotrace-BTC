@@ -21,7 +21,7 @@
 <div class="p-8">
     <!-- Stats Overview -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
+        <div class="bg-white p-6 rounded-[2rem] shadow-md border border-slate-300 flex items-center gap-6">
             <div class="h-14 w-14 rounded-full bg-green-50 flex items-center justify-center text-green-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-money-bill-wave"></i>
             </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
         
-        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
+        <div class="bg-white p-6 rounded-[2rem] shadow-md border border-slate-300 flex items-center gap-6">
             <div class="h-14 w-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-leaf"></i>
             </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-6">
+        <div class="bg-white p-6 rounded-[2rem] shadow-md border border-slate-300 flex items-center gap-6">
             <div class="h-14 w-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-2xl flex-shrink-0">
                 <i class="fa-solid fa-arrow-trend-up"></i>
             </div>
@@ -56,7 +56,7 @@
     <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3 mt-12">
         <i class="fa-solid fa-arrow-trend-up text-orange-500"></i> Rendements & Dividendes
     </h2>
-    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-16">
+    <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-300 mb-16">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex-1">
                 <p class="text-slate-400 font-bold mb-2 uppercase tracking-widest text-xs">Gains redistribués</p>
@@ -88,7 +88,7 @@
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($investments as $inv)
-        <div class="bg-white rounded-[2rem] shadow-md border border-slate-200 p-6 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+        <div class="bg-white rounded-[2rem] shadow-md border border-slate-300 p-6 flex flex-col hover:border-slate-400 transition-colors group relative overflow-hidden">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <div class="flex items-center gap-2 mb-2">
@@ -110,7 +110,7 @@
                     <span class="font-black text-slate-900">{{ number_format($inv->amount_fcfa) }} FCFA</span>
                 </div>
                 
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-300">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Reçu Blockchain (OP_RETURN)</p>
                     <a href="https://mempool.space/tx/{{ $inv->payment_hash }}" target="_blank" class="flex items-center justify-between text-sm font-mono text-orange-500 hover:text-orange-600 transition group-hover:bg-orange-50 p-2 rounded-lg -mx-2">
                         <span>{{ substr($inv->payment_hash, 0, 16) }}...</span>
@@ -132,7 +132,7 @@
         
         @if($investments->count() == 0)
         <div class="col-span-full">
-            <div class="bg-orange-50 border-2 border-dashed border-orange-200 rounded-[2rem] p-12 text-center">
+            <div class="bg-white border border-slate-300 rounded-[2rem] p-12 text-center shadow-md">
                 <div class="h-16 w-16 bg-white rounded-full flex items-center justify-center text-orange-300 text-2xl mx-auto mb-4 shadow-sm">
                     <i class="fa-solid fa-seedling"></i>
                 </div>
