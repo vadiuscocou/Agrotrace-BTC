@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <!-- Identité Numérique (DID) -->
-            <div class="p-6 sm:p-8 bg-gradient-to-r from-slate-900 to-[#063b27] shadow sm:rounded-2xl flex items-center justify-between text-white relative overflow-hidden border border-slate-800">
+            <div class="p-6 sm:p-8 bg-gradient-to-r from-slate-900 to-[#063b27] shadow-md sm:rounded-2xl flex items-center justify-between text-white relative overflow-hidden border border-slate-800">
                 <div class="absolute -right-4 -top-10 opacity-10">
                     <i class="fa-brands fa-bitcoin text-9xl"></i>
                 </div>
