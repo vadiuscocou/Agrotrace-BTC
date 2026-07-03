@@ -136,7 +136,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         } else {
             // Investor
             return view('dashboard', [
-                'investments' => $user->investments()->with('project')->get()
+                'investments' => $user->investments()->with('project')->latest()->paginate(5)
             ]);
         }
     })->name('dashboard');
@@ -246,7 +246,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'longitude' => request('longitude'),
             'target_amount_fcfa' => request('budget_fcfa'),
             'supporting_documents' => $docPath,
-            'status' => 'submitted'
+            'status' => 'submitted',
+            'start_date' => request('start_date'),
+            'end_date' => request('end_date')
         ]);
 
         $milestones = request('milestones', []);

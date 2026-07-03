@@ -9,6 +9,11 @@ class Project extends Model
     protected $guarded = [];
     protected $appends = ['formatted_id', 'remaining_amount'];
 
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
+
     public function getFormattedIdAttribute() {
         return 'PRJ-' . str_pad($this->id, 4, '0', STR_PAD_LEFT);
     }

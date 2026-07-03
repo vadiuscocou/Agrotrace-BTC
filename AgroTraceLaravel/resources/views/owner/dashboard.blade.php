@@ -223,6 +223,16 @@
                                         <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label class="block text-slate-700 text-sm font-bold mb-1" for="start_date">Date de lancement</label>
+                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="start_date" name="start_date" type="date" required>
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label class="block text-slate-700 text-sm font-bold mb-1" for="end_date">Date de fin estimée</label>
+                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="end_date" name="end_date" type="date" required>
+                                    </div>
+                                </div>
                                 <div class="mb-4">
                                     <label class="block text-slate-700 text-sm font-bold mb-1" for="description">Description</label>
                                     <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Impact et objectifs..."></textarea>
