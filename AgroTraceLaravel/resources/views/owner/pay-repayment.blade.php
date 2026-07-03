@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Rembourser la Tranche')
 @section('content')
-<div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+<div class="min-h-[calc(100vh-120px)] flex flex-col items-center justify-center py-4 px-4 sm:px-6 lg:px-8 bg-slate-50">
     <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden" x-data="paymentPoller('{{ $repayment->payment_hash }}', {{ $repayment->id }})">
         <div class="bg-slate-900 px-6 py-8 text-center text-white">
             <i class="fa-brands fa-bitcoin text-5xl text-orange-500 mb-4"></i>

@@ -461,4 +461,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/admin/withdraw', function (Illuminate\Http\Request $request) {
+    if (Auth::user()->role !== 'admin') abort(403);
+    
+    $request->validate(['bolt11' => 'required|string']);
+    
+    try {
+        $lnbits = new \App\Services\LNbitsService();
+        $lnbits->payInvoice($request->bolt11);
+        return back()->with('success', 'Bénéfices retirés avec succès vers votre portefeuille !');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Échec du retrait: ' . $e->getMessage());
+    }
+});
+
 require __DIR__.'/auth.php';
