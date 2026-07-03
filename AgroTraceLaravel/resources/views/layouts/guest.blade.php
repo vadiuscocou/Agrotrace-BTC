@@ -26,7 +26,7 @@
         <div class="absolute bottom-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-t from-orange-50/50 to-transparent blur-3xl"></div>
     </div>
 
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative z-10">
+    <div class="min-h-[100vh] flex flex-col justify-center items-center py-6 relative z-10">
         
         <!-- Logo -->
         <div class="mb-8">
