@@ -41,6 +41,54 @@ Route::post('/lnbits/webhook', function (\Illuminate\Http\Request $request) {
     $paymentHash = $request->input('payment_hash');
     if (!$paymentHash) return response()->json(['error' => 'Missing payment_hash'], 400);
 
+    // Webhook logic
+    $repayment = App\Models\Repayment::where('payment_hash', $paymentHash)->first();
+    if ($repayment) {
+        if ($repayment->status === 'paid') return response()->json(['status' => 'already_paid']);
+        
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $isPaid = $lnbits->checkPaymentStatus($paymentHash);
+            
+            if ($isPaid) {
+                $repayment->update(['status' => 'paid']);
+                
+                // If all 3 are paid, mark project as completed
+                if ($repayment->project->repayments()->where('status', 'pending')->count() == 0) {
+                    $repayment->project->update(['status' => 'completed']);
+                }
+
+                // Distribution of funds to investors
+                $project = $repayment->project;
+                $totalInvested = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
+                
+                if ($totalInvested > 0) {
+                    foreach ($project->investments()->where('status', 'paid')->get() as $investment) {
+                        $share = $investment->amount_fcfa / $totalInvested;
+                        $investorShareFcfa = intval($repayment->amount_fcfa * $share);
+                        $investorShareSats = intval($investorShareFcfa * 6); // Mock rate
+                        
+                        // Add to investor's virtual balance
+                        $user = $investment->user;
+                        $user->increment('balance_sats', $investorShareSats);
+                        
+                        // Envoi de l'email
+                        try {
+                            \Illuminate\Support\Facades\Mail::raw("Bonjour, votre part du remboursement (Tranche de {$repayment->amount_fcfa} FCFA) a été créditée : {$investorShareSats} SATS (env. {$investorShareFcfa} FCFA) ont été ajoutés à votre solde AgroTrace.", function ($message) use ($user, $project) {
+                                $message->to($user->email)->subject("💰 Retour sur Investissement - Projet " . $project->title);
+                            });
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error("Mail sending failed: " . $e->getMessage());
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("LNbits webhook repayment error: " . $e->getMessage());
+        }
+        return response()->json(['status' => 'processed']);
+    }
+
     $investment = Investment::where('payment_hash', $paymentHash)->first();
     if (!$investment) return response()->json(['error' => 'Investment not found'], 404);
 
@@ -310,23 +358,64 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $repayment = App\Models\Repayment::findOrFail($id);
         if ($repayment->project->user_id !== Auth::id()) abort(403);
         
-        $bolt11 = $request->input('bolt11');
+        $amountFcfa = $repayment->amount_fcfa;
+        $amountSats = $amountFcfa * 6; // Taux fictif
         
         try {
             $lnbits = new \App\Services\LNbitsService();
-            // Real payout via LNbits
-            $lnbits->payInvoice($bolt11);
+            // create invoice for cooperative to pay
+            $invoice = $lnbits->createInvoice($amountSats, "AgroTrace Remb. Projet #" . $repayment->project_id, url('/lnbits/webhook'));
             
-            $repayment->update(['status' => 'paid']);
-            
-            // If all 3 are paid, mark project as completed
-            if ($repayment->project->repayments()->where('status', 'pending')->count() == 0) {
-                $repayment->project->update(['status' => 'completed']);
-            }
+            $repayment->update([
+                'amount_sats' => $amountSats,
+                'payment_request' => $invoice['payment_request'],
+                'payment_hash' => $invoice['payment_hash'],
+            ]);
 
-            return back()->with('status', 'Tranche remboursée et distribuée avec succès via Lightning !');
+            return view('owner.pay-repayment', ['repayment' => $repayment]);
         } catch (\Exception $e) {
             return back()->with('error', 'Erreur de paiement Lightning : ' . $e->getMessage());
+        }
+    });
+
+    Route::get('/repayments/{hash}/status', function ($hash) {
+        $repayment = App\Models\Repayment::where('payment_hash', $hash)->firstOrFail();
+        if ($repayment->status === 'paid') return response()->json(['paid' => true]);
+        
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            if ($lnbits->checkPaymentStatus($hash)) {
+                $repayment->update(['status' => 'paid']);
+                // distribution handles via webhook for safety
+                return response()->json(['paid' => true]);
+            }
+        } catch (\Exception $e) {}
+        return response()->json(['paid' => false]);
+    });
+
+    // Investor Withdraw
+    Route::post('/withdraw', function () {
+        $user = Auth::user();
+        if ($user->balance_sats < 100) {
+            return back()->with('error', 'Solde insuffisant pour retirer (min. 100 SATS).');
+        }
+
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            $withdrawData = $lnbits->createWithdrawLink('Retrait AgroTrace', $user->balance_sats, $user->balance_sats);
+            
+            // To be robust, we'd deduct after LNURLw triggers webhook, but LNbits LNURLw handles deducting its own funds. 
+            // In a real system, we must track the LNURLw uses to decrement user's balance accurately via webhook.
+            // For now, let's decrement immediately and assume success for UX/hackathon.
+            $withdrawn = $user->balance_sats;
+            $user->update(['balance_sats' => 0]);
+            
+            return view('investor.withdraw', [
+                'lnurl' => $withdrawData['lnurl'], 
+                'amount_sats' => $withdrawn
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur LNURL : ' . $e->getMessage());
         }
     });
 

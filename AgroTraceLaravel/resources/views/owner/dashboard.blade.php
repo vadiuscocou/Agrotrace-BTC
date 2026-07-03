@@ -332,16 +332,14 @@
 
                     <form :action="'{{ url('/repayments') }}/' + repaymentId + '/pay'" method="POST" id="repayProjectForm">
                         @csrf
-                        <div class="mt-4 border-t border-slate-200 pt-4">
-                            <label class="block text-slate-700 text-sm font-bold mb-2" for="bolt11">Votre Facture Lightning (BOLT11)</label>
-                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" id="bolt11" name="bolt11" type="text" required placeholder="lnbc...">
-                            <p class="text-xs text-slate-500 mt-2">Générez une facture de réception (Receive) depuis votre portefeuille Lightning pour le montant exact, et collez-la ici.</p>
+                        <div class="mt-4 border-t border-slate-200 pt-4 text-center">
+                            <p class="text-slate-600 mb-2">Cliquez ci-dessous pour générer le QR Code de paiement de cette tranche.</p>
                         </div>
                     </form>
                 </div>
                 <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
                     <button type="button" onclick="document.getElementById('repayProjectForm').submit()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                        <i class="fa-brands fa-bitcoin mr-2 mt-1"></i> Envoyer les fonds
+                        <i class="fa-solid fa-qrcode mr-2 mt-1"></i> Générer le QR Code
                     </button>
                     <button type="button" @click="repayModalOpen = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
