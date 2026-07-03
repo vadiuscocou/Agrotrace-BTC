@@ -8,6 +8,10 @@ class Milestone extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'proof_images' => 'array',
+    ];
+
     public function project() {
         return $this->belongsTo(Project::class);
     }

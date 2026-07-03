@@ -70,13 +70,18 @@
             </div>
             <div class="w-full md:w-auto bg-slate-50 border border-slate-100 p-5 rounded-2xl">
                 <div class="flex items-center justify-between gap-6 mb-3 border-b border-slate-200 pb-3">
-                    <span class="text-slate-500 text-xs font-medium">Dernier paiement</span>
-                    <span class="text-slate-900 text-sm font-bold">+ 4,200 SATS</span>
+                    <span class="text-slate-500 text-xs font-medium">Solde Disponible</span>
+                    <span class="text-slate-900 text-lg font-black text-orange-500">{{ number_format(Auth::user()->balance_sats) }} SATS</span>
                 </div>
-                <div class="flex items-center justify-between gap-6">
-                    <span class="text-slate-500 text-xs font-medium">Prochain estimé</span>
-                    <span class="text-orange-500 text-sm font-bold">~ 8,300 SATS</span>
-                </div>
+                <form action="{{ url('/withdraw') }}" method="POST" class="mt-4">
+                    @csrf
+                    <button type="submit" class="w-full bg-slate-900 text-white text-sm font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition shadow-md flex items-center justify-center gap-2 {{ Auth::user()->balance_sats < 100 ? 'opacity-50 cursor-not-allowed' : '' }}" {{ Auth::user()->balance_sats < 100 ? 'disabled' : '' }}>
+                        <i class="fa-solid fa-bolt text-yellow-400"></i> Retirer mes gains (LNURL)
+                    </button>
+                    @if(Auth::user()->balance_sats < 100)
+                        <p class="text-[10px] text-slate-400 mt-2 text-center">Minimum de retrait : 100 SATS</p>
+                    @endif
+                </form>
             </div>
         </div>
     </div>

@@ -22,7 +22,7 @@ class LNbitsService
      * Create a Lightning invoice.
      * Returns array with 'payment_request' and 'payment_hash'.
      */
-    public function createInvoice($amountSats, $memo = 'AgroTrace Investment')
+    public function createInvoice($amountSats, $memo = 'AgroTrace Investment', $webhook = '')
     {
         if (!$this->invoiceReadKey) {
             throw new Exception("LNBITS_INVOICE_READ_KEY is not set in .env.");
@@ -37,7 +37,7 @@ class LNbitsService
             'out' => false,
             'amount' => $amountSats,
             'memo' => $memo,
-            'webhook' => ''
+            'webhook' => $webhook
         ]);
 
         if (!$response->successful()) {
@@ -94,5 +94,33 @@ class LNbitsService
         }
 
         throw new Exception("Failed to pay LNbits invoice: " . $response->body());
+    }
+
+    /**
+     * Create a LNURL-withdraw link.
+     */
+    public function createWithdrawLink($title, $minSats, $maxSats)
+    {
+        if (!$this->adminKey) {
+            throw new Exception("LNBITS_ADMIN_KEY is not set in .env.");
+        }
+
+        $response = Http::withHeaders([
+            'X-Api-Key' => $this->adminKey,
+            'Content-Type' => 'application/json'
+        ])->post($this->url . '/lnurlw/api/v1/links', [
+            'title' => $title,
+            'min_withdrawable' => $minSats,
+            'max_withdrawable' => $maxSats,
+            'uses' => 1,
+            'wait_time' => 1,
+            'is_unique' => true
+        ]);
+
+        if (!$response->successful()) {
+            throw new Exception("Failed to create LNURLw link: " . $response->body());
+        }
+
+        return $response->json();
     }
 }

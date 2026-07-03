@@ -51,7 +51,15 @@
                             <p class="text-[11px] text-slate-500 line-clamp-1 max-w-[200px]">{{ $milestone->description }}</p>
                         </td>
                         <td class="py-4 px-6">
-                            @if($milestone->proof_image)
+                            @if($milestone->proof_images && count($milestone->proof_images) > 0)
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    @foreach($milestone->proof_images as $img)
+                                    <a href="{{ asset('storage/' . $img) }}" target="_blank" class="block shrink-0">
+                                        <img src="{{ asset('storage/' . $img) }}" alt="Preuve" class="w-8 h-8 rounded-md object-cover border border-slate-200 shadow-sm hover:scale-110 transition">
+                                    </a>
+                                    @endforeach
+                                </div>
+                            @elseif($milestone->proof_image)
                                 <div class="flex items-center gap-3">
                                     <a href="{{ asset('storage/' . $milestone->proof_image) }}" target="_blank" class="block shrink-0">
                                         <img src="{{ asset('storage/' . $milestone->proof_image) }}" alt="Preuve" class="w-8 h-8 rounded-md object-cover border border-slate-200 shadow-sm hover:scale-110 transition">
