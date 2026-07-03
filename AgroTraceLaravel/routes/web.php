@@ -36,6 +36,42 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
+// LNbits Webhook Route
+Route::post('/lnbits/webhook', function (\Illuminate\Http\Request $request) {
+    $paymentHash = $request->input('payment_hash');
+    if (!$paymentHash) return response()->json(['error' => 'Missing payment_hash'], 400);
+
+    $investment = Investment::where('payment_hash', $paymentHash)->first();
+    if (!$investment) return response()->json(['error' => 'Investment not found'], 404);
+
+    if ($investment->status === 'paid') return response()->json(['status' => 'already_paid']);
+
+    try {
+        $lnbits = new \App\Services\LNbitsService();
+        $isPaid = $lnbits->checkPaymentStatus($paymentHash);
+        
+        if ($isPaid) {
+            $investment->update(['status' => 'paid']);
+            
+            $project = $investment->project;
+            $totalInvested = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
+            if ($totalInvested >= $project->target_amount_fcfa) {
+                $project->update(['status' => 'funded']);
+            }
+            
+            try {
+                \Illuminate\Support\Facades\Mail::to($investment->user->email)->send(new \App\Mail\InvestmentConfirmed($investment));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Mail sending failed: " . $e->getMessage());
+            }
+        }
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error("LNbits webhook error: " . $e->getMessage());
+    }
+
+    return response()->json(['status' => 'processed']);
+});
+
 // Dashboard Route (Dynamic)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -91,7 +127,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         try {
             $lnbits = new \App\Services\LNbitsService();
-            $invoice = $lnbits->createInvoice($amountSats + $feeSats, "AgroTrace Inv. Projet #{$project_id}");
+            $invoice = $lnbits->createInvoice($amountSats + $feeSats, "AgroTrace Inv. Projet #{$project_id}", url('/lnbits/webhook'));
             
             $investment = Investment::create([
                 'project_id' => $project_id,
@@ -270,21 +306,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return back()->with('status', 'Échéancier généré avec succès !');
     });
 
-    Route::post('/repayments/{id}/pay', function (Request $request, $id) {
+    Route::post('/repayments/{id}/pay', function (\Illuminate\Http\Request $request, $id) {
         $repayment = App\Models\Repayment::findOrFail($id);
         if ($repayment->project->user_id !== Auth::id()) abort(403);
         
         $bolt11 = $request->input('bolt11');
-        // Hackathon Mock: We assume the lightning payment is processed successfully.
         
-        $repayment->update(['status' => 'paid']);
-        
-        // If all 3 are paid, mark project as completed
-        if ($repayment->project->repayments()->where('status', 'pending')->count() == 0) {
-            $repayment->project->update(['status' => 'completed']);
-        }
+        try {
+            $lnbits = new \App\Services\LNbitsService();
+            // Real payout via LNbits
+            $lnbits->payInvoice($bolt11);
+            
+            $repayment->update(['status' => 'paid']);
+            
+            // If all 3 are paid, mark project as completed
+            if ($repayment->project->repayments()->where('status', 'pending')->count() == 0) {
+                $repayment->project->update(['status' => 'completed']);
+            }
 
-        return back()->with('status', 'Tranche remboursée et distribuée avec succès via Lightning !');
+            return back()->with('status', 'Tranche remboursée et distribuée avec succès via Lightning !');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur de paiement Lightning : ' . $e->getMessage());
+        }
     });
 
     // Admin Actions

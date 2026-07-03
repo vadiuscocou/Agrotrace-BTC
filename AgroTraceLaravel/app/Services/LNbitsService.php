@@ -22,7 +22,7 @@ class LNbitsService
      * Create a Lightning invoice.
      * Returns array with 'payment_request' and 'payment_hash'.
      */
-    public function createInvoice($amountSats, $memo = 'AgroTrace Investment')
+    public function createInvoice($amountSats, $memo = 'AgroTrace Investment', $webhook = '')
     {
         if (!$this->invoiceReadKey) {
             throw new Exception("LNBITS_INVOICE_READ_KEY is not set in .env.");
@@ -37,7 +37,7 @@ class LNbitsService
             'out' => false,
             'amount' => $amountSats,
             'memo' => $memo,
-            'webhook' => ''
+            'webhook' => $webhook
         ]);
 
         if (!$response->successful()) {
