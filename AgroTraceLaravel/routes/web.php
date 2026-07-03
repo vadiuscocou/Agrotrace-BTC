@@ -26,7 +26,7 @@ Route::get('/verification', function () {
 Route::get('/impact-map', function () {
     return view('impact-map', [
         'projects' => Project::with(['user', 'investments'])
-            ->whereIn('status', ['funded', 'in_progress', 'completed'])
+            ->whereIn('status', ['approved', 'funded', 'in_progress', 'completed'])
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get()

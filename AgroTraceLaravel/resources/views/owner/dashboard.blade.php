@@ -186,7 +186,7 @@
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="createModalOpen" x-transition.opacity class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity" @click="createModalOpen = false" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div x-show="createModalOpen" x-transition.opacity.duration.300ms class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+            <div x-show="createModalOpen" x-transition.opacity.duration.300ms class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl w-full">
                 <div class="bg-white px-6 pt-6 pb-6">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-[#063b27]/10">
@@ -196,51 +196,58 @@
                     </div>
                     <form action="{{ url('/projects') }}" method="POST" id="createProjectForm" enctype="multipart/form-data">
                         @csrf
-                        <div class="mb-5">
-                            <label class="block text-slate-700 text-sm font-bold mb-2" for="title">Titre du Projet</label>
-                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="title" name="title" type="text" required placeholder="ex: Coopérative Maïs Koudougou">
-                        </div>
-                        <div class="grid grid-cols-2 gap-5 mb-5">
-                            <div class="col-span-2 sm:col-span-1">
-                                <label class="block text-slate-700 text-sm font-bold mb-2" for="location">Localisation précise</label>
-                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="location" name="location" type="text" required placeholder="ex: Koudougou, Centre-Ouest, Burkina Faso">
-                            </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label class="block text-slate-700 text-sm font-bold mb-2" for="budget">Budget Cible (FCFA)</label>
-                                <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <label class="block text-slate-700 text-sm font-bold mb-2" for="description">Description détaillée</label>
-                            <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Décrivez l'impact et les objectifs de votre projet..."></textarea>
-                        </div>
-
-                        <div class="mb-5">
-                            <label class="block text-slate-700 text-sm font-bold mb-2" for="document">Document justificatif (PDF, Image)</label>
-                            <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="document" name="document" type="file" accept=".pdf,image/*">
-                        </div>
-
-                        <div class="mb-5 border-t border-slate-200 pt-5">
-                            <div class="flex justify-between items-center mb-4">
-                                <label class="block text-slate-700 text-sm font-bold">Jalons du Projet</label>
-                                <button type="button" @click="milestones.push({title: '', amount: '', desc: ''})" class="text-xs bg-orange-100 text-orange-600 font-bold py-1 px-3 rounded-lg hover:bg-orange-200 transition"><i class="fa-solid fa-plus"></i> Ajouter un jalon</button>
-                            </div>
-
-                            <template x-for="(milestone, index) in milestones" :key="index">
-                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3 relative">
-                                    <button type="button" @click="milestones.splice(index, 1)" x-show="milestones.length > 1" class="absolute top-2 right-2 text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
-
-                                    <div class="grid grid-cols-2 gap-3 mb-3 pr-6">
-                                        <div>
-                                            <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][title]'" x-model="milestone.title" type="text" required placeholder="Titre du jalon">
-                                        </div>
-                                        <div>
-                                            <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][amount]'" x-model="milestone.amount" type="number" required placeholder="Budget FCFA">
-                                        </div>
-                                    </div>
-                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-lg w-full py-2 px-3 text-sm text-slate-700" :name="'milestones['+index+'][desc]'" x-model="milestone.desc" type="text" required placeholder="Description détaillée">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Colonne Gauche : Informations de base -->
+                            <div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 text-sm font-bold mb-1" for="title">Titre du Projet</label>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="title" name="title" type="text" required placeholder="ex: Coopérative Maïs Koudougou">
                                 </div>
-                            </template>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label class="block text-slate-700 text-sm font-bold mb-1" for="location">Localisation</label>
+                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="location" name="location" type="text" required placeholder="ex: Koudougou, BF">
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label class="block text-slate-700 text-sm font-bold mb-1" for="budget">Budget (FCFA)</label>
+                                        <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="budget" name="budget_fcfa" type="number" required placeholder="ex: 5000000">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 text-sm font-bold mb-1" for="description">Description</label>
+                                    <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Impact et objectifs..."></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 text-sm font-bold mb-1" for="document">Document (PDF, Image)</label>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-1.5 px-3 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="document" name="document" type="file" accept=".pdf,image/*">
+                                </div>
+                            </div>
+                            
+                            <!-- Colonne Droite : Jalons -->
+                            <div class="bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <div class="flex justify-between items-center mb-3">
+                                    <label class="block text-slate-700 text-sm font-bold">Découpage en Jalons</label>
+                                    <button type="button" @click="milestones.push({title: '', amount: '', desc: ''})" class="text-xs bg-orange-100 text-orange-600 font-bold py-1 px-3 rounded-lg hover:bg-orange-200 transition"><i class="fa-solid fa-plus"></i> Ajouter</button>
+                                </div>
+
+                                <div class="max-h-[350px] overflow-y-auto pr-1">
+                                    <template x-for="(milestone, index) in milestones" :key="index">
+                                        <div class="bg-white p-3 rounded-xl border border-slate-200 mb-3 relative shadow-sm">
+                                            <button type="button" @click="milestones.splice(index, 1)" x-show="milestones.length > 1" class="absolute top-1 right-2 text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+
+                                            <div class="grid grid-cols-2 gap-2 mb-2 pr-5">
+                                                <div>
+                                                    <input class="appearance-none border border-slate-200 rounded-lg w-full py-1.5 px-2 text-xs text-slate-700" :name="'milestones['+index+'][title]'" x-model="milestone.title" type="text" required placeholder="Titre (ex: Semis)">
+                                                </div>
+                                                <div>
+                                                    <input class="appearance-none border border-slate-200 rounded-lg w-full py-1.5 px-2 text-xs text-slate-700" :name="'milestones['+index+'][amount]'" x-model="milestone.amount" type="number" required placeholder="Budget FCFA">
+                                                </div>
+                                            </div>
+                                            <input class="appearance-none border border-slate-200 rounded-lg w-full py-1.5 px-2 text-xs text-slate-700" :name="'milestones['+index+'][desc]'" x-model="milestone.desc" type="text" required placeholder="Description de l'étape">
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -33,6 +33,15 @@
     </div>
     @endif
 
+    @if(session('error'))
+    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-8 rounded-r-xl shadow-sm">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-circle-exclamation text-red-500 text-xl"></i>
+            <p class="text-red-700 font-bold m-0">{{ session('error') }}</p>
+        </div>
+    </div>
+    @endif
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($projects as $project)
         <div class="bg-white rounded-3xl shadow-lg border border-slate-200 hover:border-orange-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col overflow-hidden group">
@@ -163,34 +172,7 @@
         }
 
         const form = document.getElementById('investForm-' + projectId);
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json',
-                }
-            })
-            .then(async response => {
-                const text = await response.text();
-
-                let data;
-                try {
-                    data = JSON.parse(text);
-                } catch (error) {
-                    throw new Error(text);
-                }
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Erreur serveur');
-                }
-
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(error => console.error('Erreur:', error));
+        form.submit();
     }
 </script>
 @endsection
