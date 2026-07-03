@@ -25,56 +25,61 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
         @foreach($projects as $project)
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-300 overflow-hidden flex flex-col hover:border-slate-400 hover:shadow-md transition-all">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col hover:-translate-y-2 hover:shadow-2xl hover:border-orange-300 transition-all duration-300 group relative">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-400/5 to-transparent rounded-bl-full pointer-events-none"></div>
+            
             <!-- Project Header -->
-            <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="p-6 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h3 class="text-sm font-black text-[#063b27] mb-1">{{ $project->title }}</h3>
-                    <div class="flex flex-wrap gap-1.5">
+                    <h3 class="text-lg font-black text-slate-800 mb-2 group-hover:text-[#063b27] transition-colors">{{ $project->title }}</h3>
+                    <div class="flex flex-wrap gap-2">
                         @if($project->status == 'submitted')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 border border-slate-200 text-slate-600 rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
                         @elseif($project->status == 'under_review')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-50 border border-orange-200 text-orange-700 rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-200 text-orange-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
                         @elseif($project->status == 'validated')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 border border-blue-200 text-blue-700 rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-check"></i> Validé</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check"></i> Validé</span>
                         @elseif($project->status == 'awaiting_funding')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-hourglass-half"></i> En attente</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-hourglass-half text-yellow-500"></i> En attente de fonds</span>
                         @elseif($project->status == 'funded' || $project->status == 'in_progress')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 border border-green-200 text-green-700 rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-seedling"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 border border-green-200 text-green-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-seedling text-green-500"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
                         @elseif($project->status == 'completed')
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-800 border border-slate-900 text-white rounded text-[9px] font-bold uppercase"><i class="fa-solid fa-check-double"></i> Terminé</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-800 border border-slate-700 text-white rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check-double text-green-400"></i> Terminé</span>
                         @endif
                     </div>
                 </div>
-                <div class="text-left sm:text-right shrink-0">
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Budget Total</p>
-                    <p class="text-base font-black text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-[9px] text-slate-600 font-bold">FCFA</span></p>
+                <div class="text-left sm:text-right shrink-0 bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Budget Total</p>
+                    <p class="text-xl font-black text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-[10px] text-slate-500 font-bold">FCFA</span></p>
                 </div>
             </div>
 
-            <div class="bg-white px-4 py-2 border-b border-slate-100 flex justify-end">
-                <a href="{{ url('/projects/' . $project->id . '/contract') }}" target="_blank" class="text-[10px] font-bold text-slate-600 hover:text-slate-900 transition inline-flex items-center gap-1">
-                    <i class="fa-solid fa-file-contract text-orange-500"></i> Voir le contrat
+            <div class="bg-slate-50/50 px-6 py-3 border-b border-slate-100 flex justify-end">
+                <a href="{{ url('/projects/' . $project->id . '/contract') }}" target="_blank" class="text-xs font-bold text-slate-500 hover:text-orange-600 transition inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-contract"></i> Consulter le contrat
                 </a>
             </div>
 
             <!-- Échéancier de Remboursement -->
             @if($project->status == 'in_progress')
-            <div class="p-4 bg-slate-50/50">
-                <div class="flex justify-between items-center mb-3">
-                    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-widest"><i class="fa-solid fa-calendar-check text-orange-500 mr-1.5"></i>Échéancier</h4>
+            <div class="p-6 bg-white">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center"><i class="fa-solid fa-calendar-check text-orange-600 text-[10px]"></i></span>
+                        Échéancier de Remboursement
+                    </h4>
                     @if($project->repayments->count() == 0)
                     <form action="{{ url('/projects/'.$project->id.'/generate-tranches') }}" method="POST">
                         @csrf
-                        <button type="submit" class="bg-[#063b27] hover:bg-[#0a4b33] text-white font-bold py-1 px-2.5 rounded text-[10px] transition shadow-sm">
-                            Générer
+                        <button type="submit" class="bg-gradient-to-r from-[#063b27] to-[#0a4b33] hover:from-[#084b32] hover:to-[#0c5c3e] text-white font-bold py-1.5 px-4 rounded-xl text-xs transition shadow-md hover:shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-400"></i> Générer
                         </button>
                     </form>
                     @endif
                 </div>
 
                 @if($project->repayments->count() > 0)
-                <div class="space-y-2">
+                <div class="space-y-4">
                     @php
                         $totalRepayments = $project->repayments->count();
                         $paidRepayments = $project->repayments->where('status', 'paid')->count();
@@ -82,36 +87,38 @@
                     @endphp
                     
                     <!-- Barre de progression -->
-                    <div class="mb-3">
-                        <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-                            <span>Progression</span>
+                    <div class="mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">
+                            <span>Progression des paiements</span>
                             <span class="text-orange-600">{{ $progressPercent }}%</span>
                         </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
-                            <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-1.5 rounded-full transition-all duration-1000" style="width: {{ $progressPercent }}%"></div>
+                        <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden shadow-inner">
+                            <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-full rounded-full transition-all duration-1000" style="width: {{ $progressPercent }}%"></div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         @foreach($project->repayments as $index => $repayment)
                         @php
                             $isLate = $repayment->status == 'pending' && \Carbon\Carbon::parse($repayment->due_date)->isPast();
                         @endphp
-                        <div class="bg-white border {{ $isLate ? 'border-red-200 bg-red-50/30' : 'border-slate-200' }} rounded-lg p-2 flex flex-col justify-between transition hover:shadow-sm">
-                            <div class="flex justify-between items-start mb-2">
+                        <div class="bg-white border {{ $isLate ? 'border-red-300 shadow-red-100' : 'border-slate-200 hover:border-slate-300' }} rounded-xl p-3 flex flex-col justify-between transition-all shadow-sm">
+                            <div class="flex justify-between items-start mb-3">
                                 <div>
-                                    <h5 class="font-bold {{ $isLate ? 'text-red-700' : 'text-slate-800' }} text-[10px]">T{{ $index + 1 }}</h5>
-                                    <p class="text-[9px] {{ $isLate ? 'text-red-500 font-bold' : 'text-slate-500' }}">{{ \Carbon\Carbon::parse($repayment->due_date)->format('d/m/Y') }}</p>
+                                    <h5 class="font-black {{ $isLate ? 'text-red-700' : 'text-slate-800' }} text-xs">Tranche {{ $index + 1 }}</h5>
+                                    <p class="text-[10px] {{ $isLate ? 'text-red-500 font-bold' : 'text-slate-400 font-medium' }}"><i class="fa-regular fa-clock"></i> {{ \Carbon\Carbon::parse($repayment->due_date)->format('d/m/Y') }}</p>
                                 </div>
                                 @if($repayment->status == 'paid')
-                                    <span class="text-green-500 text-[10px]"><i class="fa-solid fa-check-circle"></i></span>
+                                    <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shadow-inner">
+                                        <i class="fa-solid fa-check text-green-500 text-[10px]"></i>
+                                    </div>
                                 @endif
                             </div>
                             
                             <div class="flex justify-between items-end">
-                                <p class="font-black text-slate-900 text-xs">{{ number_format($repayment->amount_fcfa) }} <span class="text-[8px] text-slate-500">FCFA</span></p>
+                                <p class="font-black text-slate-900 text-sm">{{ number_format($repayment->amount_fcfa) }} <span class="text-[9px] text-slate-400">FCFA</span></p>
                                 @if($repayment->status == 'pending')
-                                    <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, repayment_id: {{ $repayment->id }}, title: 'Tranche {{ $index + 1 }} - {{ addslashes($project->title) }}', amount: {{ $repayment->amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-0.5 px-2 rounded text-[9px] transition">
+                                    <button @click="$dispatch('open-repay-modal', { id: {{ $project->id }}, repayment_id: {{ $repayment->id }}, title: 'Tranche {{ $index + 1 }} - {{ addslashes($project->title) }}', amount: {{ $repayment->amount_fcfa }} })" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 px-3 rounded-lg text-xs transition shadow-sm hover:shadow">
                                         Payer
                                     </button>
                                 @endif
@@ -125,38 +132,41 @@
             @endif
 
             <!-- Milestones Section -->
-            <div class="p-4 border-t border-slate-100 flex-1">
-                <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Jalons</h4>
+            <div class="p-6 border-t border-slate-100 bg-slate-50/30 flex-1">
+                <h4 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center"><i class="fa-solid fa-list-check text-blue-600 text-[10px]"></i></span>
+                    Validation des Jalons
+                </h4>
 
-                <div class="space-y-2">
+                <div class="space-y-3">
                     @foreach($project->milestones as $milestone)
-                    <div class="bg-white border border-slate-200 rounded-lg p-3 flex flex-col sm:flex-row justify-between sm:items-center gap-2 hover:border-slate-300 transition">
-                        <div>
-                            <div class="flex items-center gap-1.5 mb-0.5">
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-3 hover:shadow-md hover:border-slate-300 transition-all group/milestone">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
                                 @if($milestone->status == 'pending')
-                                <span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+                                <span class="h-2 w-2 rounded-full bg-slate-300 ring-4 ring-slate-100"></span>
                                 @elseif($milestone->status == 'submitted')
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse"></span>
+                                <span class="h-2 w-2 rounded-full bg-orange-500 animate-pulse ring-4 ring-orange-100"></span>
                                 @else
-                                <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                                <span class="h-2 w-2 rounded-full bg-green-500 ring-4 ring-green-100"></span>
                                 @endif
-                                <h5 class="font-bold text-slate-700 text-xs">{{ $milestone->title }}</h5>
+                                <h5 class="font-bold text-slate-800 text-sm group-hover/milestone:text-[#063b27] transition-colors">{{ $milestone->title }}</h5>
                             </div>
-                            <p class="text-[10px] text-slate-500 line-clamp-1 ml-3">{{ $milestone->description }}</p>
+                            <p class="text-[11px] text-slate-500 line-clamp-1 ml-4">{{ $milestone->description }}</p>
                         </div>
 
-                        <div class="flex-shrink-0 ml-3 sm:ml-0">
+                        <div class="flex-shrink-0 ml-4 sm:ml-0">
                             @if($milestone->status == 'pending')
-                            <button @click="currentMilestoneId = {{ $milestone->id }}; proofModalOpen = true" class="bg-slate-50 border border-slate-200 text-slate-600 hover:bg-[#063b27] hover:text-white hover:border-[#063b27] font-bold text-[10px] px-2.5 py-1 rounded transition">
-                                <i class="fa-solid fa-camera mr-1"></i> Preuve
+                            <button @click="currentMilestoneId = {{ $milestone->id }}; proofModalOpen = true" class="bg-white border-2 border-slate-200 text-slate-600 hover:bg-[#063b27] hover:text-white hover:border-[#063b27] font-bold text-xs px-4 py-1.5 rounded-xl transition shadow-sm flex items-center gap-2">
+                                <i class="fa-solid fa-camera"></i> Soumettre
                             </button>
                             @elseif($milestone->status == 'submitted')
-                            <span class="inline-block px-2 py-1 bg-orange-50 text-orange-600 rounded text-[9px] font-bold">
-                                En révision
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-200 text-orange-700 rounded-full text-xs font-bold shadow-sm">
+                                <i class="fa-solid fa-spinner fa-spin text-orange-500"></i> En révision
                             </span>
                             @else
-                            <span class="inline-block px-2 py-1 bg-green-50 text-green-700 rounded text-[9px] font-bold">
-                                Validé
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 border border-green-200 text-green-700 rounded-full text-xs font-bold shadow-sm">
+                                <i class="fa-solid fa-check-double text-green-500"></i> Validé
                             </span>
                             @endif
                         </div>
