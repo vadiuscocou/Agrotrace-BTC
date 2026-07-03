@@ -33,6 +33,15 @@
     </div>
     @endif
 
+    @if(session('error'))
+    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-8 rounded-r-xl shadow-sm">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-circle-exclamation text-red-500 text-xl"></i>
+            <p class="text-red-700 font-bold m-0">{{ session('error') }}</p>
+        </div>
+    </div>
+    @endif
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($projects as $project)
         <div class="bg-white rounded-3xl shadow-lg border border-slate-200 hover:border-orange-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col overflow-hidden group">
@@ -43,9 +52,14 @@
                     <i class="fa-solid fa-seedling text-8xl text-white"></i>
                 </div>
                 <div class="relative z-10 flex justify-between items-start">
-                    <span class="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm {{ in_array($project->status, ['active', 'verified']) ? 'bg-green-500 text-white' : 'bg-orange-500 text-white' }}">
-                        {{ in_array($project->status, ['active', 'verified']) ? 'Actif' : 'En attente' }}
-                    </span>
+                    <div class="px-3 py-1.5 rounded-full font-bold text-[10px] uppercase tracking-widest border shadow-sm
+                        {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'bg-green-50 text-green-700 border-green-200' : 'bg-orange-50 text-orange-700 border-orange-200' }}">
+                        @if(in_array($project->status, ['funded', 'in_progress', 'completed']))
+                            <i class="fa-solid fa-check"></i> Actif
+                        @else
+                            <i class="fa-solid fa-hourglass-half"></i> En attente
+                        @endif
+                    </div>
                     <div class="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-white text-xs font-bold flex items-center gap-1 border border-white/10">
                         <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i> {{ $project->user->trust_score }}
                     </div>
@@ -163,34 +177,7 @@
         }
 
         const form = document.getElementById('investForm-' + projectId);
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json',
-                }
-            })
-            .then(async response => {
-                const text = await response.text();
-
-                let data;
-                try {
-                    data = JSON.parse(text);
-                } catch (error) {
-                    throw new Error(text);
-                }
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Erreur serveur');
-                }
-
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(error => console.error('Erreur:', error));
+        form.submit();
     }
 </script>
 @endsection

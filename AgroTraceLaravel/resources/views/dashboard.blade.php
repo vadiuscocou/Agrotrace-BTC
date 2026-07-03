@@ -90,61 +90,78 @@
     <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
         <i class="fa-solid fa-list-check text-slate-400"></i> Historique d'Investissement
     </h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($investments as $inv)
-        <div class="bg-white rounded-[2rem] shadow-md border border-slate-300 p-6 flex flex-col hover:border-slate-400 transition-colors group relative overflow-hidden">
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-black uppercase tracking-widest">{{ $inv->project->formatted_id }}</span>
-                        @if($inv->status == 'paid')
-                            <span class="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-black uppercase tracking-widest">Actif</span>
-                        @else
-                            <span class="inline-block px-2 py-1 bg-orange-100 text-orange-700 rounded text-[10px] font-black uppercase tracking-widest">En attente</span>
-                        @endif
-                    </div>
-                    <h4 class="font-bold text-lg text-slate-900 leading-tight">{{ $inv->project->title }}</h4>
-                    <p class="text-xs text-slate-500 font-medium mt-1"><i class="fa-solid fa-location-dot"></i> {{ $inv->project->region }}</p>
-                </div>
-            </div>
-            
-            <div class="mt-auto pt-6 border-t border-slate-50 space-y-4">
-                <div class="flex justify-between items-end">
-                    <span class="text-xs font-bold text-slate-400 uppercase">Montant</span>
-                    <span class="font-black text-slate-900">{{ number_format($inv->amount_fcfa) }} FCFA</span>
-                </div>
-                
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-300">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Reçu Blockchain (OP_RETURN)</p>
-                    <a href="https://mempool.space/tx/{{ $inv->payment_hash }}" target="_blank" class="flex items-center justify-between text-sm font-mono text-orange-500 hover:text-orange-600 transition group-hover:bg-orange-50 p-2 rounded-lg -mx-2">
-                        <span>{{ substr($inv->payment_hash, 0, 16) }}...</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50 group-hover:opacity-100"></i>
-                    </a>
-                </div>
-
-                <a href="{{ route('investments.contract', $inv->id) }}" target="_blank" class="w-full mt-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-signature"></i> Voir le contrat nominatif
-                </a>
-                @if($inv->status == 'paid')
-                <a href="{{ route('investments.invoice', $inv->id) }}" target="_blank" class="w-full mt-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-invoice"></i> Télécharger la facture
-                </a>
-                @endif
-            </div>
+      <div class="bg-white rounded-[2rem] shadow-md border border-slate-300 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-widest text-slate-500">
+                        <th class="px-6 py-4 font-bold">Date & Heure</th>
+                        <th class="px-6 py-4 font-bold">Projet</th>
+                        <th class="px-6 py-4 font-bold">Statut</th>
+                        <th class="px-6 py-4 font-bold">Montant</th>
+                        <th class="px-6 py-4 font-bold">Preuve (OP_RETURN)</th>
+                        <th class="px-6 py-4 font-bold text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($investments as $inv)
+                    <tr class="hover:bg-slate-50/50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="font-bold text-slate-800">{{ $inv->created_at->format('d/m/Y') }}</div>
+                            <div class="text-[10px] text-slate-400 font-medium">{{ $inv->created_at->format('H:i') }}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-slate-900">{{ $inv->project->title }}</div>
+                            <div class="text-[10px] text-slate-500">{{ $inv->project->region }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($inv->status == 'paid')
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 border border-green-200 rounded-full text-[10px] font-black uppercase"><i class="fa-solid fa-check"></i> Actif</span>
+                            @else
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 text-orange-700 border border-orange-200 rounded-full text-[10px] font-black uppercase"><i class="fa-solid fa-hourglass-half"></i> En attente</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="font-black text-slate-900">{{ number_format($inv->amount_fcfa) }} FCFA</div>
+                            <div class="text-[10px] text-orange-500 font-bold">{{ number_format($inv->amount_sats) }} SATS</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://mempool.space/tx/{{ $inv->payment_hash }}" target="_blank" class="inline-flex items-center gap-1 text-xs font-mono bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-600 px-3 py-1.5 rounded-lg transition-colors">
+                                {{ substr($inv->payment_hash, 0, 8) }}... <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{{ route('investments.contract', $inv->id) }}" target="_blank" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#063b27] hover:text-white text-slate-600 flex items-center justify-center transition-colors" title="Voir le contrat">
+                                    <i class="fa-solid fa-file-contract text-sm"></i>
+                                </a>
+                                @if($inv->status == 'paid')
+                                <a href="{{ route('investments.invoice', $inv->id) }}" target="_blank" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-600 flex items-center justify-center transition-colors" title="Télécharger la facture">
+                                    <i class="fa-solid fa-file-invoice text-sm"></i>
+                                </a>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center">
+                            <div class="h-16 w-16 bg-orange-50 rounded-full flex items-center justify-center text-orange-300 text-2xl mx-auto mb-4 shadow-sm">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800 mb-2">Votre portfolio est vide</h3>
+                            <p class="text-slate-500 text-sm max-w-sm mx-auto">Commencez à investir dans des projets agricoles et regardez votre impact grandir sur la blockchain.</p>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-        @endforeach
         
-        @if($investments->count() == 0)
-        <div class="col-span-full">
-            <div class="bg-white border border-slate-300 rounded-[2rem] p-12 text-center shadow-md">
-                <div class="h-16 w-16 bg-white rounded-full flex items-center justify-center text-orange-300 text-2xl mx-auto mb-4 shadow-sm">
-                    <i class="fa-solid fa-seedling"></i>
-                </div>
-                <h3 class="text-lg font-bold text-orange-800 mb-2">Votre portfolio est vide</h3>
-                <p class="text-orange-600/70 mb-6 max-w-sm mx-auto">Commencez à investir dans des projets agricoles et regardez votre impact grandir sur la blockchain.</p>
-                <a href="{{ url('/projects') }}" class="inline-block bg-orange-500 text-white font-bold px-8 py-3 rounded-full hover:bg-orange-600 shadow-md transition-all hover:-translate-y-0.5">Parcourir les Projets</a>
-            </div>
+        <!-- Pagination -->
+        @if($investments->hasPages())
+        <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
+            {{ $investments->links() }}
         </div>
         @endif
     </div>

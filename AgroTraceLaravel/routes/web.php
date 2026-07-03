@@ -26,7 +26,7 @@ Route::get('/verification', function () {
 Route::get('/impact-map', function () {
     return view('impact-map', [
         'projects' => Project::with(['user', 'investments'])
-            ->whereIn('status', ['funded', 'in_progress', 'completed'])
+            ->whereIn('status', ['approved', 'funded', 'in_progress', 'completed'])
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get()
@@ -100,6 +100,7 @@ Route::post('/lnbits/webhook', function (\Illuminate\Http\Request $request) {
         
         if ($isPaid) {
             $investment->update(['status' => 'paid']);
+            \Illuminate\Support\Facades\Mail::to($investment->user->email)->queue(new \App\Mail\InvestmentSuccessMail($investment));
             
             $project = $investment->project;
             $totalInvested = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
@@ -136,7 +137,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         } else {
             // Investor
             return view('dashboard', [
-                'investments' => $user->investments()->with('project')->get()
+                'investments' => $user->investments()->with('project')->latest()->paginate(5)
             ]);
         }
     })->name('dashboard');
@@ -207,6 +208,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             
             if ($isPaid) {
                 $investment->update(['status' => 'paid']);
+                \Illuminate\Support\Facades\Mail::to($investment->user->email)->queue(new \App\Mail\InvestmentSuccessMail($investment));
                 
                 // Mettre à jour le statut du projet si nécessaire (ex: financé)
                 $project = $investment->project;
@@ -246,7 +248,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'longitude' => request('longitude'),
             'target_amount_fcfa' => request('budget_fcfa'),
             'supporting_documents' => $docPath,
-            'status' => 'submitted'
+            'status' => 'submitted',
+            'start_date' => request('start_date'),
+            'end_date' => request('end_date')
         ]);
 
         $milestones = request('milestones', []);
