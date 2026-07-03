@@ -100,6 +100,7 @@ Route::post('/lnbits/webhook', function (\Illuminate\Http\Request $request) {
         
         if ($isPaid) {
             $investment->update(['status' => 'paid']);
+            \Illuminate\Support\Facades\Mail::to($investment->user->email)->queue(new \App\Mail\InvestmentSuccessMail($investment));
             
             $project = $investment->project;
             $totalInvested = $project->investments()->where('status', 'paid')->sum('amount_fcfa');
@@ -207,6 +208,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             
             if ($isPaid) {
                 $investment->update(['status' => 'paid']);
+                \Illuminate\Support\Facades\Mail::to($investment->user->email)->queue(new \App\Mail\InvestmentSuccessMail($investment));
                 
                 // Mettre à jour le statut du projet si nécessaire (ex: financé)
                 $project = $investment->project;
