@@ -2,6 +2,7 @@
 @section('title', 'Retirer mes gains')
 @section('content')
 <div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
         <div class="bg-slate-900 px-6 py-8 text-center text-white">
             <i class="fa-solid fa-bolt text-5xl text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]"></i>
@@ -11,7 +12,18 @@
         
         <div class="p-8 text-center">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 inline-block mb-6">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={{ urlencode('lightning:' . $lnurl) }}" alt="LNURL Withdraw" class="mx-auto rounded-lg">
+                <!-- QR Code rendered via local JS -->
+                <div id="qrcode" class="mx-auto flex justify-center p-2"></div>
+                <script>
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: "lightning:{{ $lnurl }}",
+                        width: 250,
+                        height: 250,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.L
+                    });
+                </script>
             </div>
 
             <div class="space-y-3 mb-8 text-left bg-green-50 p-4 rounded-xl border border-green-100">
