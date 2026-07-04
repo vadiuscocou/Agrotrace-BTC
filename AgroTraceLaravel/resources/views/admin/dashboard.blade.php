@@ -149,7 +149,19 @@
                             <tr class="border-b border-slate-200 hover:bg-slate-50 transition-colors">
                                 <td class="py-5 px-6">
                                     <p class="font-black text-slate-900 text-base mb-1">{{ $project->title }}</p>
-                                    <p class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-location-dot text-slate-400 mr-1"></i> {{ $project->region }}</p>
+                                    <p class="text-xs text-slate-500 font-bold mb-2"><i class="fa-solid fa-location-dot text-slate-400 mr-1"></i> {{ $project->region }}</p>
+                                    <div class="flex flex-col gap-1 mt-2 border-t border-slate-200 pt-2">
+                                        <p class="text-[10px] uppercase font-black text-slate-400 mb-1 tracking-widest">Dossier Coopérative</p>
+                                        @if($project->registration_certificate)
+                                            <a href="{{ asset('storage/' . $project->registration_certificate) }}" target="_blank" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"><i class="fa-solid fa-file-pdf"></i> Immatriculation</a>
+                                        @endif
+                                        @if($project->signatories_id)
+                                            <a href="{{ asset('storage/' . $project->signatories_id) }}" target="_blank" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"><i class="fa-solid fa-id-card"></i> Pièce d'identité</a>
+                                        @endif
+                                        @if($project->bank_account_proof)
+                                            <a href="{{ asset('storage/' . $project->bank_account_proof) }}" target="_blank" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1"><i class="fa-solid fa-building-columns"></i> Preuve Bancaire</a>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="py-5 px-6">
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-300 text-slate-700 rounded-lg text-xs font-bold">

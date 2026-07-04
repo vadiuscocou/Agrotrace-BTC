@@ -238,8 +238,16 @@
                                     <textarea class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="description" name="description" rows="3" required placeholder="Impact et objectifs..."></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="block text-slate-700 text-sm font-bold mb-1" for="document">Document (PDF, Image)</label>
-                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-1.5 px-3 text-slate-700 leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="document" name="document" type="file" accept=".pdf,image/*">
+                                    <label class="block text-slate-700 text-xs font-bold mb-1" for="registration_certificate">1. Attestation d'immatriculation *</label>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-1.5 px-3 text-slate-700 text-xs leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="registration_certificate" name="registration_certificate" type="file" accept=".pdf,image/*" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 text-xs font-bold mb-1" for="signatories_id">2. Pièce d'identité des signataires *</label>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-1.5 px-3 text-slate-700 text-xs leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="signatories_id" name="signatories_id" type="file" accept=".pdf,image/*" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 text-xs font-bold mb-1" for="bank_account_proof">3. Preuve de compte bancaire/mobile *</label>
+                                    <input class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-1.5 px-3 text-slate-700 text-xs leading-tight focus:outline-none focus:border-[#063b27] focus:ring-2 focus:ring-[#063b27]/20 transition-all" id="bank_account_proof" name="bank_account_proof" type="file" accept=".pdf,image/*" required>
                                 </div>
                             </div>
                             

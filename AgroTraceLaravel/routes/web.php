@@ -237,7 +237,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/projects', function () {
         if (Auth::user()->role !== 'project_owner') abort(403);
         
-        $docPath = request()->file('document') ? request()->file('document')->store('documents', 'public') : null;
+        $regCertPath = request()->file('registration_certificate') ? request()->file('registration_certificate')->store('documents', 'public') : null;
+        $sigIdPath = request()->file('signatories_id') ? request()->file('signatories_id')->store('documents', 'public') : null;
+        $bankProofPath = request()->file('bank_account_proof') ? request()->file('bank_account_proof')->store('documents', 'public') : null;
 
         $project = Project::create([
             'user_id' => Auth::id(),
@@ -247,7 +249,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'latitude' => request('latitude'),
             'longitude' => request('longitude'),
             'target_amount_fcfa' => request('budget_fcfa'),
-            'supporting_documents' => $docPath,
+            'registration_certificate' => $regCertPath,
+            'signatories_id' => $sigIdPath,
+            'bank_account_proof' => $bankProofPath,
             'status' => 'submitted',
             'start_date' => request('start_date'),
             'end_date' => request('end_date')
