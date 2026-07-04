@@ -19,37 +19,39 @@
     <div class="max-w-7xl mx-auto px-8 py-8">
         <!-- Financial KPIs -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-            <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-md flex items-center justify-between hover:border-blue-300 hover:shadow-lg transition-all">
-                <div>
-                    <p class="text-[11px] font-black text-slate-600 uppercase tracking-widest mb-1">Volume Total Financé</p>
-                    <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalInvested) }} <span class="text-[12px] text-slate-500 font-bold">FCFA</span></h3>
+            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 border-2 border-blue-400 shadow-md flex items-center justify-between hover:shadow-lg transition-all text-white relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 opacity-10">
+                    <i class="fa-solid fa-wallet text-8xl"></i>
                 </div>
-                <div class="h-16 w-16 bg-blue-500 text-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
-                    <i class="fa-solid fa-wallet"></i>
+                <div class="relative z-10">
+                    <p class="text-[11px] font-black text-blue-100 uppercase tracking-widest mb-1">Volume Total Financé</p>
+                    <h3 class="text-3xl font-black text-white">{{ number_format($totalInvested) }} <span class="text-[12px] text-blue-200 font-bold">FCFA</span></h3>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-md flex items-center justify-between hover:border-orange-300 hover:shadow-lg transition-all">
-                <div class="flex-1">
-                    <p class="text-[11px] font-black text-slate-600 uppercase tracking-widest mb-1">Commissions (2%)</p>
-                    <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalFeesSats) }} <span class="text-[12px] text-slate-500 font-bold">SATS</span></h3>
-                    <form action="{{ url('/admin/withdraw') }}" method="POST" class="mt-2">
+            
+            <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 border-2 border-orange-400 shadow-md flex items-center justify-between hover:shadow-lg transition-all text-white relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 opacity-10">
+                    <i class="fa-solid fa-coins text-8xl"></i>
+                </div>
+                <div class="flex-1 relative z-10">
+                    <p class="text-[11px] font-black text-orange-100 uppercase tracking-widest mb-1">Commissions Disponibles</p>
+                    <h3 class="text-3xl font-black text-white mb-4">{{ number_format($totalFeesSats) }} <span class="text-[12px] text-orange-200 font-bold">SATS</span></h3>
+                    <form action="{{ url('/admin/withdraw') }}" method="POST">
                         @csrf
-                        <button type="submit" class="text-[10px] font-bold bg-orange-100 text-orange-700 px-3 py-1 rounded hover:bg-orange-200 transition-colors">
-                            <i class="fa-solid fa-bolt text-orange-500 mr-1"></i> Retirer
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-xs font-black bg-white text-orange-600 px-4 py-2.5 rounded-lg hover:bg-orange-50 transition-colors shadow-sm ring-4 ring-white/20">
+                            <i class="fa-solid fa-bolt text-orange-500"></i> Retirer les bénéfices
                         </button>
                     </form>
                 </div>
-                <div class="h-16 w-16 bg-orange-500 text-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
-                    <i class="fa-solid fa-coins"></i>
-                </div>
             </div>
-            <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-md flex items-center justify-between hover:border-emerald-300 hover:shadow-lg transition-all">
-                <div>
-                    <p class="text-[11px] font-black text-slate-600 uppercase tracking-widest mb-1">Projets sur la plateforme</p>
-                    <h3 class="text-3xl font-black text-slate-900">{{ $projects->count() }} <span class="text-[12px] text-slate-500 font-bold">PROJETS</span></h3>
+            
+            <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-6 border-2 border-emerald-400 shadow-md flex items-center justify-between hover:shadow-lg transition-all text-white relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 opacity-10">
+                    <i class="fa-solid fa-folder-tree text-8xl"></i>
                 </div>
-                <div class="h-16 w-16 bg-emerald-500 text-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
-                    <i class="fa-solid fa-folder-tree"></i>
+                <div class="relative z-10">
+                    <p class="text-[11px] font-black text-emerald-100 uppercase tracking-widest mb-1">Projets sur la plateforme</p>
+                    <h3 class="text-3xl font-black text-white">{{ $projects->count() }} <span class="text-[12px] text-emerald-200 font-bold">PROJETS</span></h3>
                 </div>
             </div>
         </div>
