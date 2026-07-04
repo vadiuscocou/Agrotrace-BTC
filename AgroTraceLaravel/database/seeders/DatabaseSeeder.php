@@ -30,7 +30,9 @@ class DatabaseSeeder extends Seeder
             'status' => 'in_progress',
             'latitude' => 11.8667,
             'longitude' => 3.3833,
-            'image' => 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800'
+            'image' => 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800',
+            'start_date' => now(),
+            'end_date' => now()->addMonths(6)
         ]);
 
         // Milestones
@@ -57,7 +59,9 @@ class DatabaseSeeder extends Seeder
             'status' => 'funded',
             'latitude' => 6.3573,
             'longitude' => 2.0862,
-            'image' => 'https://images.unsplash.com/photo-1548550023-2bf3c49b338c?auto=format&fit=crop&q=80&w=800'
+            'image' => 'https://images.unsplash.com/photo-1548550023-2bf3c49b338c?auto=format&fit=crop&q=80&w=800',
+            'start_date' => now(),
+            'end_date' => now()->addMonths(6)
         ]);
 
         \App\Models\Milestone::create(['project_id' => $project2->id, 'title' => 'Achat des poussins et aliments', 'amount_fcfa' => 1000000, 'status' => 'pending']);
@@ -83,7 +87,9 @@ class DatabaseSeeder extends Seeder
             'status' => 'awaiting_funding',
             'latitude' => 6.4973,
             'longitude' => 2.6051,
-            'image' => 'https://images.unsplash.com/photo-1586771107445-d3af9e152003?auto=format&fit=crop&q=80&w=800'
+            'image' => 'https://images.unsplash.com/photo-1586771107445-d3af9e152003?auto=format&fit=crop&q=80&w=800',
+            'start_date' => now(),
+            'end_date' => now()->addMonths(6)
         ]);
 
         \App\Models\Milestone::create(['project_id' => $project3->id, 'title' => 'Aménagement du terrain', 'amount_fcfa' => 3000000, 'status' => 'pending']);
@@ -109,7 +115,9 @@ class DatabaseSeeder extends Seeder
             'status' => 'awaiting_funding',
             'latitude' => 7.1828,
             'longitude' => 1.9912,
-            'image' => 'https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&q=80&w=800'
+            'image' => 'https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&q=80&w=800',
+            'start_date' => now(),
+            'end_date' => now()->addMonths(6)
         ]);
         
         \App\Models\Milestone::create(['project_id' => $project4->id, 'title' => 'Achat des plants de manguiers', 'amount_fcfa' => 2000000, 'status' => 'pending']);

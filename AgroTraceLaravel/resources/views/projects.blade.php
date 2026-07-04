@@ -52,14 +52,9 @@
                     <i class="fa-solid fa-seedling text-8xl text-white"></i>
                 </div>
                 <div class="relative z-10 flex justify-between items-start">
-                    <div class="px-3 py-1.5 rounded-full font-bold text-[10px] uppercase tracking-widest border shadow-sm
-                        {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'bg-green-50 text-green-700 border-green-200' : 'bg-orange-50 text-orange-700 border-orange-200' }}">
-                        @if(in_array($project->status, ['funded', 'in_progress', 'completed']))
-                            <i class="fa-solid fa-check"></i> Actif
-                        @else
-                            <i class="fa-solid fa-hourglass-half"></i> En attente
-                        @endif
-                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'bg-green-500 text-white' : 'bg-orange-500 text-white' }}">
+                        {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'Actif' : 'En attente' }}
+                    </span>
                     <div class="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-white text-xs font-bold flex items-center gap-1 border border-white/10">
                         <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i> {{ $project->user->trust_score }}
                     </div>
@@ -77,7 +72,13 @@
                         <i class="fa-solid fa-users text-slate-400"></i> {{ explode(' ', trim($project->user->name))[0] }}
                     </div>
                 </div>
-                
+
+                <div class="flex items-center gap-4 text-xs font-bold text-slate-500 mb-6 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-calendar text-[#063b27]"></i> {{ \Carbon\Carbon::parse($project->start_date)->translatedFormat('d M Y') }}</div>
+                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-arrow-right text-slate-300"></i></div>
+                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-flag-checkered text-[#063b27]"></i> {{ \Carbon\Carbon::parse($project->end_date)->translatedFormat('d M Y') }}</div>
+                </div>
+
                 <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-6">
                     {{ $project->description }}
                 </p>
@@ -119,19 +120,20 @@
                         <span class="text-green-600 bg-green-100 px-2 py-0.5 rounded">{{ $percent }}%</span>
                     </div>
                     <div class="w-full bg-slate-200 rounded-full h-2 mb-2 overflow-hidden shadow-inner">
-                        <div class="bg-gradient-to-r from-orange-400 via-green-400 to-green-500 h-2 rounded-full transition-all duration-1000" style="width: {{ $percent }}%"></div>
+                        <div class="bg-green-500 h-2 rounded-full transition-all duration-1000" style="width: {{ $percent }}%"></div>
                     </div>
                     <p class="font-black text-sm text-slate-800">{{ number_format($project->remaining_amount) }} <span class="text-xs text-slate-500 font-medium">FCFA restants</span></p>
                 </div>
 
                 @auth
-                @if(Auth::user()->role === 'investor' && in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
-                @php
-                $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
-                if ($project->remaining_amount < $minInvestment) {
-                    $minInvestment=$project->remaining_amount;
-                    }
-                    $isFixed = ($project->remaining_amount <= $minInvestment);
+                @if(in_array($project->status, ['validated', 'awaiting_funding', 'funded', 'in_progress']) && $project->remaining_amount > 0)
+                    @if(Auth::user()->role === 'investor')
+                        @php
+                        $minInvestment = max(1, intval($project->target_amount_fcfa / 4));
+                        if ($project->remaining_amount < $minInvestment) {
+                            $minInvestment=$project->remaining_amount;
+                        }
+                        $isFixed = ($project->remaining_amount <= $minInvestment);
                         @endphp
                         <form id="investForm-{{ $project->id }}" action="{{ url('/invest/'.$project->id) }}" method="POST" class="space-y-3">
                         @csrf
@@ -149,20 +151,25 @@
                             <i class="fa-solid fa-bolt text-yellow-400"></i> Investir
                         </button>
                         </form>
-                        @elseif(Auth::user()->role === 'investor' && $project->remaining_amount <= 0)
-                            <button disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-check-double"></i> Financement Atteint
-                            </button>
-                            @elseif(Auth::user()->role === 'investor')
-                            <button disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-hourglass-half"></i> En attente de validation
-                            </button>
-                            @endif
-                            @else
-                            <a href="{{ route('login') }}" class="block w-full text-center bg-white border-2 border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 font-bold py-3 px-4 rounded-xl transition shadow-sm">
-                                Se connecter pour investir
-                            </a>
-                            @endauth
+                    @else
+                        <button disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2" title="Mode aperçu pour administrateur">
+                            <i class="fa-solid fa-eye"></i> Bouton d'investissement (Vue Investisseur)
+                        </button>
+                    @endif
+                @elseif($project->remaining_amount <= 0)
+                    <button disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check-double"></i> Financement Atteint
+                    </button>
+                @else
+                    <button disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hourglass-half"></i> En attente de validation
+                    </button>
+                @endif
+                @else
+                <a href="{{ route('login') }}" class="block w-full text-center bg-white border-2 border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 font-bold py-3 px-4 rounded-xl transition shadow-sm">
+                    Se connecter pour investir
+                </a>
+                @endauth
             </div>
         </div>
         @endforeach

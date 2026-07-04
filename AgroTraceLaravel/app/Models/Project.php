@@ -10,6 +10,7 @@ class Project extends Model
     protected $appends = ['formatted_id', 'remaining_amount'];
 
     protected $casts = [
+
         'start_date' => 'date',
         'end_date' => 'date',
     ];

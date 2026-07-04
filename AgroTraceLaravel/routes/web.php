@@ -26,7 +26,7 @@ Route::get('/verification', function () {
 Route::get('/impact-map', function () {
     return view('impact-map', [
         'projects' => Project::with(['user', 'investments'])
-            ->whereIn('status', ['approved', 'funded', 'in_progress', 'completed'])
+            ->whereIn('status', ['validated', 'awaiting_funding', 'funded', 'in_progress', 'completed'])
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get()
@@ -237,17 +237,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/projects', function () {
         if (Auth::user()->role !== 'project_owner') abort(403);
         
-        $docPath = request()->file('document') ? request()->file('document')->store('documents', 'public') : null;
+        $regCertPath = request()->file('registration_certificate') ? request()->file('registration_certificate')->store('documents', 'public') : null;
+        $sigIdPath = request()->file('signatories_id') ? request()->file('signatories_id')->store('documents', 'public') : null;
+        $bankProofPath = request()->file('bank_account_proof') ? request()->file('bank_account_proof')->store('documents', 'public') : null;
 
         $project = Project::create([
             'user_id' => Auth::id(),
             'title' => request('title'),
             'description' => request('description'),
             'region' => request('location'),
-            'latitude' => request('latitude'),
-            'longitude' => request('longitude'),
+            'latitude' => request('latitude') ?: round(6.5 + (mt_rand() / mt_getrandmax()) * 5.0, 6),
+            'longitude' => request('longitude') ?: round(1.5 + (mt_rand() / mt_getrandmax()) * 2.0, 6),
             'target_amount_fcfa' => request('budget_fcfa'),
-            'supporting_documents' => $docPath,
+            'registration_certificate' => $regCertPath,
+            'signatories_id' => $sigIdPath,
+            'bank_account_proof' => $bankProofPath,
             'status' => 'submitted',
             'start_date' => request('start_date'),
             'end_date' => request('end_date')
@@ -424,6 +428,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Admin Actions
+    Route::post('/admin/projects/{id}/validate', function ($id) {
+        if (Auth::user()->role !== 'admin') abort(403);
+        
+        $project = \App\Models\Project::findOrFail($id);
+        $project->update(['status' => 'validated']);
+        
+        return back()->with('success', 'Le projet a été approuvé avec succès !');
+    });
+
     Route::post('/projects/{id}/status', function ($id) {
         if (Auth::user()->role !== 'admin') abort(403);
         
@@ -464,14 +477,29 @@ Route::middleware('auth')->group(function () {
 Route::post('/admin/withdraw', function (Illuminate\Http\Request $request) {
     if (Auth::user()->role !== 'admin') abort(403);
     
-    $request->validate(['bolt11' => 'required|string']);
+    // We use the admin's balance_sats to track how much they have ALREADY withdrawn
+    $totalFeesSats = \App\Models\Investment::sum('fee_sats'); // Assuming all fees are earned
+    $admin = Auth::user();
+    $alreadyWithdrawn = $admin->balance_sats;
+    
+    $availableToWithdraw = $totalFeesSats - $alreadyWithdrawn;
+    
+    if ($availableToWithdraw < 100) {
+        return back()->with('error', 'Frais insuffisants pour retirer (min. 100 SATS).');
+    }
     
     try {
         $lnbits = new \App\Services\LNbitsService();
-        $lnbits->payInvoice($request->bolt11);
-        return back()->with('success', 'Bénéfices retirés avec succès vers votre portefeuille !');
+        $withdrawData = $lnbits->createWithdrawLink('Retrait Commissions AgroTrace', $availableToWithdraw, $availableToWithdraw);
+        
+        $admin->update(['balance_sats' => $alreadyWithdrawn + $availableToWithdraw]);
+        
+        return view('investor.withdraw', [
+            'lnurl' => $withdrawData['lnurl'], 
+            'amount_sats' => $availableToWithdraw
+        ]);
     } catch (\Exception $e) {
-        return back()->with('error', 'Échec du retrait: ' . $e->getMessage());
+        return back()->with('error', 'Erreur LNURL: ' . $e->getMessage());
     }
 });
 
