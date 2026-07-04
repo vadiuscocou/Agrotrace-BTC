@@ -26,7 +26,7 @@ Route::get('/verification', function () {
 Route::get('/impact-map', function () {
     return view('impact-map', [
         'projects' => Project::with(['user', 'investments'])
-            ->whereIn('status', ['approved', 'funded', 'in_progress', 'completed'])
+            ->whereIn('status', ['validated', 'awaiting_funding', 'funded', 'in_progress', 'completed'])
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get()
@@ -246,8 +246,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'title' => request('title'),
             'description' => request('description'),
             'region' => request('location'),
-            'latitude' => request('latitude'),
-            'longitude' => request('longitude'),
+            'latitude' => request('latitude') ?: round(6.5 + (mt_rand() / mt_getrandmax()) * 5.0, 6),
+            'longitude' => request('longitude') ?: round(1.5 + (mt_rand() / mt_getrandmax()) * 2.0, 6),
             'target_amount_fcfa' => request('budget_fcfa'),
             'registration_certificate' => $regCertPath,
             'signatories_id' => $sigIdPath,

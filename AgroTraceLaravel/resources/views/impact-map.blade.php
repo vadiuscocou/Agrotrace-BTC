@@ -162,6 +162,8 @@
                     let statusLabel = 'Financé';
                     if (p.status === 'in_progress') { color = '#2563eb'; statusLabel = 'En cours de réalisation'; } // blue
                     if (p.status === 'completed') { color = '#9333ea'; statusLabel = 'Récolté & Remboursé'; } // purple
+                    if (p.status === 'validated') { color = '#64748b'; statusLabel = 'Validé'; } // slate-500
+                    if (p.status === 'awaiting_funding') { color = '#eab308'; statusLabel = 'En attente de fonds'; } // yellow-500
 
                     // 1. Impact Circle (Radius based on budget, bounded)
                     let radius = Math.min(Math.max(p.target_amount_fcfa / 100, 5000), 40000); // 5km to 40km
@@ -208,9 +210,9 @@
                                     <span class="text-[10px] text-slate-500 font-bold uppercase">Financement</span>
                                     <span class="text-xs font-black text-slate-800">${new Intl.NumberFormat('fr-FR').format(p.target_amount_fcfa)} FCFA</span>
                                 </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-[10px] text-slate-500 font-bold uppercase">Statut</span>
-                                    <span style="color:${color}" class="text-[10px] font-black uppercase tracking-wider bg-white px-1.5 py-0.5 rounded border border-slate-200">${statusLabel}</span>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider w-16">Statut</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-black text-white" style="background-color: ${color};">${statusLabel}</span>
                                 </div>
                             </div>
                             <a href="/projects" class="block w-full text-center text-xs font-bold text-white bg-[#063b27] hover:bg-[#0a4b33] py-2 rounded-lg transition-colors">Découvrir ce projet</a>
