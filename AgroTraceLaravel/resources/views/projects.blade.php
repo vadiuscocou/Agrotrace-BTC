@@ -52,14 +52,9 @@
                     <i class="fa-solid fa-seedling text-8xl text-white"></i>
                 </div>
                 <div class="relative z-10 flex justify-between items-start">
-                    <div class="px-3 py-1.5 rounded-full font-bold text-[10px] uppercase tracking-widest border shadow-sm
-                        {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'bg-green-50 text-green-700 border-green-200' : 'bg-orange-50 text-orange-700 border-orange-200' }}">
-                        @if(in_array($project->status, ['funded', 'in_progress', 'completed']))
-                            <i class="fa-solid fa-check"></i> Actif
-                        @else
-                            <i class="fa-solid fa-hourglass-half"></i> En attente
-                        @endif
-                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'bg-green-500 text-white' : 'bg-orange-500 text-white' }}">
+                        {{ in_array($project->status, ['funded', 'in_progress', 'completed']) ? 'Actif' : 'En attente' }}
+                    </span>
                     <div class="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-white text-xs font-bold flex items-center gap-1 border border-white/10">
                         <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i> {{ $project->user->trust_score }}
                     </div>
