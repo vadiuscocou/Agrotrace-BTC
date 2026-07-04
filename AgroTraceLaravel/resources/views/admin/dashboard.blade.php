@@ -77,6 +77,9 @@
                                 <td class="py-5 px-6">
                                     <p class="font-black text-slate-900 text-base mb-1">{{ $milestone->title }}</p>
                                     <p class="text-xs text-slate-600 font-medium mb-1">Projet: <span class="font-black text-blue-700 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded-md">{{ $milestone->project->title }}</span></p>
+                                    @if($milestone->project->start_date && $milestone->project->end_date)
+                                        <p class="text-[10px] text-slate-500 font-bold mb-1"><i class="fa-solid fa-calendar-days text-slate-400"></i> Période : {{ $milestone->project->start_date->format('d/m/Y') }} - {{ $milestone->project->end_date->format('d/m/Y') }}</p>
+                                    @endif
                                     <p class="text-[10px] text-slate-400 font-bold"><i class="fa-regular fa-calendar"></i> Preuve datée du {{ $milestone->proof_date ? \Carbon\Carbon::parse($milestone->proof_date)->format('d/m/Y') : 'N/A' }}</p>
                                     <p class="text-[10px] text-slate-400 font-bold"><i class="fa-regular fa-clock"></i> Soumis le {{ $milestone->updated_at->format('d/m/Y à H:i') }}</p>
                                 </td>
@@ -123,6 +126,9 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Espacement forcé -->
+            <div class="h-10"></div>
 
             <!-- Projects Management Table -->
             <div class="bg-white rounded-2xl shadow-md border-2 border-slate-200 overflow-hidden">
