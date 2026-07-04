@@ -428,6 +428,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Admin Actions
+    Route::post('/admin/projects/{id}/validate', function ($id) {
+        if (Auth::user()->role !== 'admin') abort(403);
+        
+        $project = \App\Models\Project::findOrFail($id);
+        $project->update(['status' => 'validated']);
+        
+        return back()->with('success', 'Le projet a été approuvé avec succès !');
+    });
+
     Route::post('/projects/{id}/status', function ($id) {
         if (Auth::user()->role !== 'admin') abort(403);
         
@@ -468,14 +477,29 @@ Route::middleware('auth')->group(function () {
 Route::post('/admin/withdraw', function (Illuminate\Http\Request $request) {
     if (Auth::user()->role !== 'admin') abort(403);
     
-    $request->validate(['bolt11' => 'required|string']);
+    // We use the admin's balance_sats to track how much they have ALREADY withdrawn
+    $totalFeesSats = \App\Models\Investment::sum('fee_sats'); // Assuming all fees are earned
+    $admin = Auth::user();
+    $alreadyWithdrawn = $admin->balance_sats;
+    
+    $availableToWithdraw = $totalFeesSats - $alreadyWithdrawn;
+    
+    if ($availableToWithdraw < 100) {
+        return back()->with('error', 'Frais insuffisants pour retirer (min. 100 SATS).');
+    }
     
     try {
         $lnbits = new \App\Services\LNbitsService();
-        $lnbits->payInvoice($request->bolt11);
-        return back()->with('success', 'Bénéfices retirés avec succès vers votre portefeuille !');
+        $withdrawData = $lnbits->createWithdrawLink('Retrait Commissions AgroTrace', $availableToWithdraw, $availableToWithdraw);
+        
+        $admin->update(['balance_sats' => $alreadyWithdrawn + $availableToWithdraw]);
+        
+        return view('investor.withdraw', [
+            'lnurl' => $withdrawData['lnurl'], 
+            'amount_sats' => $availableToWithdraw
+        ]);
     } catch (\Exception $e) {
-        return back()->with('error', 'Échec du retrait: ' . $e->getMessage());
+        return back()->with('error', 'Erreur LNURL: ' . $e->getMessage());
     }
 });
 

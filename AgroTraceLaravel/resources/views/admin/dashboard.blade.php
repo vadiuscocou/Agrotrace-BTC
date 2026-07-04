@@ -32,9 +32,12 @@
                 <div class="flex-1">
                     <p class="text-[11px] font-black text-slate-600 uppercase tracking-widest mb-1">Commissions (2%)</p>
                     <h3 class="text-3xl font-black text-slate-900">{{ number_format($totalFeesSats) }} <span class="text-[12px] text-slate-500 font-bold">SATS</span></h3>
-                    <button @click="showWithdrawModal = true" class="mt-2 text-[10px] font-bold bg-orange-100 text-orange-700 px-3 py-1 rounded hover:bg-orange-200 transition-colors">
-                        <i class="fa-solid fa-bolt text-orange-500 mr-1"></i> Retirer
-                    </button>
+                    <form action="{{ url('/admin/withdraw') }}" method="POST" class="mt-2">
+                        @csrf
+                        <button type="submit" class="text-[10px] font-bold bg-orange-100 text-orange-700 px-3 py-1 rounded hover:bg-orange-200 transition-colors">
+                            <i class="fa-solid fa-bolt text-orange-500 mr-1"></i> Retirer
+                        </button>
+                    </form>
                 </div>
                 <div class="h-16 w-16 bg-orange-500 text-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
                     <i class="fa-solid fa-coins"></i>
@@ -234,37 +237,6 @@
             </div>
         </div>
 
-        <!-- Withdraw Modal -->
-        <div x-show="showWithdrawModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div x-show="showWithdrawModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" aria-hidden="true" @click="showWithdrawModal = false"></div>
-                
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                
-                <div x-show="showWithdrawModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md w-full border border-slate-200">
-                    <div class="bg-white px-6 pt-6 pb-6">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-50">
-                                <i class="fa-solid fa-bolt text-orange-500 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-black text-slate-900" id="modal-title">Retirer les Bénéfices</h3>
-                        </div>
-                        <form action="{{ url('/admin/withdraw') }}" method="POST">
-                            @csrf
-                            <div class="mb-4">
-                                <label class="block text-slate-700 text-sm font-bold mb-2">Facture Lightning (BOLT11)</label>
-                                <p class="text-[10px] text-slate-500 mb-2">Créez une facture dans votre portefeuille (ex: Wallet of Satoshi) pour le montant souhaité, et collez-la ici.</p>
-                                <textarea name="bolt11" rows="3" class="shadow-sm appearance-none border border-slate-200 rounded-xl w-full py-2 px-4 text-slate-700 leading-tight focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all font-mono text-xs" required placeholder="lnbc..."></textarea>
-                            </div>
-                            <div class="flex justify-end gap-3 mt-6">
-                                <button type="button" @click="showWithdrawModal = false" class="bg-white hover:bg-slate-50 text-slate-700 font-bold py-2 px-4 rounded-xl border border-slate-200 transition-colors text-sm shadow-sm">Annuler</button>
-                                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-xl shadow-sm transition-colors text-sm flex items-center gap-2"><i class="fa-solid fa-paper-plane"></i> Payer la facture</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- Withdraw functionality is now handled via direct POST and LNURL -->
 </div>
 @endsection

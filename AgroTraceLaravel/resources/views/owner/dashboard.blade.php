@@ -29,32 +29,40 @@
             <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-400/5 to-transparent rounded-bl-full pointer-events-none"></div>
             
             <!-- Project Header -->
-            <div class="p-6 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <h3 class="text-lg font-black text-slate-800 mb-2 group-hover:text-[#063b27] transition-colors">{{ $project->title }}</h3>
+            <div class="p-6 bg-gradient-to-br from-[#063b27] to-slate-900 relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 overflow-hidden">
+                <div class="absolute -right-5 -bottom-5 opacity-20 group-hover:scale-110 transition-transform duration-700">
+                    <i class="fa-solid fa-tractor text-8xl text-white"></i>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-xl font-black text-white mb-2">{{ $project->title }}</h3>
                     <div class="flex flex-wrap gap-2">
                         @if($project->status == 'submitted')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-sm border border-white/10 text-white rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-file-arrow-up"></i> Soumis</span>
                         @elseif($project->status == 'under_review')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-200 text-orange-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/20 backdrop-blur-sm border border-orange-500/30 text-orange-100 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-magnifying-glass"></i> En étude</span>
                         @elseif($project->status == 'validated')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check"></i> Validé</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 text-blue-100 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check"></i> Validé</span>
                         @elseif($project->status == 'awaiting_funding')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-hourglass-half text-yellow-500"></i> En attente de fonds</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-500/20 backdrop-blur-sm border border-yellow-500/30 text-yellow-100 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-hourglass-half text-yellow-300"></i> En attente de fonds</span>
                         @elseif($project->status == 'funded' || $project->status == 'in_progress')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 border border-green-200 text-green-700 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-seedling text-green-500"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 backdrop-blur-sm border border-green-500/30 text-green-100 rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-seedling text-green-300"></i> {{ $project->status == 'funded' ? 'Financé' : 'En cours' }}</span>
                         @elseif($project->status == 'completed')
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-800 border border-slate-700 text-white rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check-double text-green-400"></i> Terminé</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 text-white rounded-full text-[10px] font-black uppercase shadow-sm"><i class="fa-solid fa-check-double text-green-400"></i> Terminé</span>
                         @endif
                     </div>
                 </div>
-                <div class="text-left sm:text-right shrink-0 bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Budget Total</p>
-                    <p class="text-xl font-black text-slate-900">{{ number_format($project->target_amount_fcfa) }} <span class="text-[10px] text-slate-500 font-bold">FCFA</span></p>
+                <div class="relative z-10 text-left sm:text-right shrink-0 bg-white/10 backdrop-blur-md p-3 rounded-2xl shadow-sm border border-white/10">
+                    <p class="text-[9px] font-bold text-white/70 uppercase tracking-widest mb-1">Budget Total</p>
+                    <p class="text-xl font-black text-white">{{ number_format($project->target_amount_fcfa) }} <span class="text-[10px] text-white/70 font-bold">FCFA</span></p>
                 </div>
             </div>
 
-            <div class="bg-slate-50/50 px-6 py-3 border-b border-slate-100 flex justify-end">
+            <div class="bg-slate-50/50 px-6 py-3 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-bold text-slate-500">
+                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-calendar text-[#063b27]"></i> {{ \Carbon\Carbon::parse($project->start_date)->translatedFormat('d M Y') }}</div>
+                    <div class="hidden sm:flex items-center gap-1.5"><i class="fa-solid fa-arrow-right text-slate-300"></i></div>
+                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-flag-checkered text-[#063b27]"></i> {{ \Carbon\Carbon::parse($project->end_date)->translatedFormat('d M Y') }}</div>
+                </div>
                 <a href="{{ url('/projects/' . $project->id . '/contract') }}" target="_blank" class="text-xs font-bold text-slate-500 hover:text-orange-600 transition inline-flex items-center gap-1.5">
                     <i class="fa-solid fa-file-contract"></i> Consulter le contrat
                 </a>
