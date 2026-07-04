@@ -157,6 +157,23 @@
         <!-- Scrollable Content -->
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
             <div class="w-full max-w-7xl mx-auto">
+                <!-- Global Flash Messages -->
+                @if(session('success'))
+                <div class="m-6 mb-0 p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 font-bold flex items-center gap-3 shadow-sm" x-data="{ show: true }" x-show="show">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                    <div class="flex-1">{{ session('success') }}</div>
+                    <button @click="show = false" class="text-green-500 hover:text-green-700"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                @endif
+
+                @if(session('error'))
+                <div class="m-6 mb-0 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 font-bold flex items-center gap-3 shadow-sm" x-data="{ show: true }" x-show="show">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-xl"></i>
+                    <div class="flex-1">{{ session('error') }}</div>
+                    <button @click="show = false" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                @endif
+                
                 @yield('content')
                 {{ $slot ?? '' }}
             </div>
