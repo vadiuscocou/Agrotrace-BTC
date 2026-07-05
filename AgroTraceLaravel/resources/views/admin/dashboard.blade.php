@@ -223,6 +223,22 @@
                                             </button>
                                         </form>
                                         @endif
+
+                                        <form action="{{ url('/projects/' . $project->id . '/status') }}" method="POST" class="mt-2 flex items-center justify-end gap-1 w-full">
+                                            @csrf
+                                            <select name="status" class="text-[10px] font-bold text-slate-600 border border-slate-300 rounded-md py-1 pl-2 pr-6 focus:ring-orange-500 focus:border-orange-500 bg-white shadow-sm appearance-none cursor-pointer">
+                                                <option value="submitted" {{ $project->status == 'submitted' ? 'selected' : '' }}>Soumis</option>
+                                                <option value="under_review" {{ $project->status == 'under_review' ? 'selected' : '' }}>En révision</option>
+                                                <option value="validated" {{ $project->status == 'validated' ? 'selected' : '' }}>Validé</option>
+                                                <option value="awaiting_funding" {{ $project->status == 'awaiting_funding' ? 'selected' : '' }}>Financement</option>
+                                                <option value="funded" {{ $project->status == 'funded' ? 'selected' : '' }}>Financé</option>
+                                                <option value="in_progress" {{ $project->status == 'in_progress' ? 'selected' : '' }}>En cours</option>
+                                                <option value="completed" {{ $project->status == 'completed' ? 'selected' : '' }}>Terminé</option>
+                                            </select>
+                                            <button type="submit" class="bg-slate-800 text-white text-[10px] font-bold px-3 py-1 rounded-md hover:bg-slate-700 transition" title="Appliquer le nouveau statut">
+                                                OK
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
