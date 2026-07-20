@@ -1,10 +1,11 @@
 # AgroTraceBTC
 
-Plateforme web de demo pour financer des projets agricoles avec Bitcoin Lightning et tracer les investissements dans un registre interne de type pseudo-blockchain.
+AgroTrace BTC
+La vérité du champ à la Blockchain.
+AgroTrace BTC est une plateforme web innovante qui réinvente le financement des projets agricoles au Bénin. En utilisant le réseau Bitcoin Lightning pour des flux financiers instantanés et sans frais, et en ancrant chaque étape de production dans un registre immuable, nous supprimons le fossé de méfiance entre les investisseurs et le monde rural.
 
 ## Fonctionnalites
-
-- Paiements Bitcoin Lightning via LNbits si `LNBITS_URL` et `LNBITS_API_KEY` sont configures.
+- Paiements Bitcoin Lightning via LNbits si `LNBITS_URL` et `LNBITS_API_KEY` sont configurés.
 - Mode simulation integre pour les demos hackathon sans wallet reel.
 - Creation d'invoices, QR code et verification de paiement par polling.
 - Registre interne chaine par hashes SHA-256.
