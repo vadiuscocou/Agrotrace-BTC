@@ -1,7 +1,3 @@
-Voici une version modernisée, structurée et peinte aux couleurs de l'innovation pour ton projet **AgroTrace BTC**. Ce contenu est idéal pour un **README GitHub**, un dossier de présentation ou la description officielle de ton projet de Hackathon.
-
----
-
 # 🌾 AgroTrace BTC
 ### *La vérité du champ à la Blockchain.*
 
