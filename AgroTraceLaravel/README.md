@@ -39,7 +39,7 @@ AgroTrace sécurise l'écosystème grâce à un cadre juridique et technique str
 
 ---
 
-## Partie 2 : Guide Technique (Développeurs & Juges)
+## Partie 2 : Guide Technique
 
 ### 1. Prérequis
 - **Environnement :** PHP 8.2+, Node.js 18+, MySQL 8.0.
