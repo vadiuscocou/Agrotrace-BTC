@@ -1,91 +1,125 @@
-AgroTrace BTC est une plateforme novatrice qui permet à la diaspora et aux investisseurs du monde entier de financer directement des coopératives agricoles au Bénin, 
-en utilisant la puissance et la rapidité du réseau Bitcoin Lightning.
+🌾 AgroTrace BTC
 
+La vérité du champ à la Blockchain.
 
-Partie 1 : Comment fonctionne la plateforme ? (Guide Investisseur)
+AgroTrace BTC est une plateforme de financement participatif agricole qui brise
+le plafond de verre de la méfiance en Afrique. En fusionnant l'agronomie
+béninoise avec la puissance de Bitcoin Lightning, nous permettons à la diaspora
+de financer la terre natale avec une certitude mathématique : chaque Satoshi
+investi produit un impact réel, vérifié et immuable.
 
-Notre objectif est de rendre l'investissement agricole simple, transparent et rentable pour n'importe qui, même sans connaissances techniques poussées. Voici comment cela fonctionne en 4 étapes simples :
+🧭 Partie 1 : L'Expérience AgroTrace (Guide Investisseur)
 
-1. Choisissez un projet qui a du sens
-Parcourez notre catalogue de projets agricoles (par exemple : Plantation de Tomates Bio, Coopérative de Maïs). 
-Chaque projet affiche clairement son objectif financier, sa localisation au Bénin et le retour sur investissement estimé (généralement autour de +30%).
+Notre mission est de transformer l'envoi d'argent informel en un investissement
+productif, transparent et rentable.
 
-2. Investissez instantanément avec Bitcoin
-Une fois le projet choisi, vous pouvez investir la somme de votre choix. 
-Le paiement s'effectue via le Lightning Network de Bitcoin. C'est instantané, sécurisé, et les frais de transfert sont quasiment nuls (frais fixes de plateforme de 2%). 
-Fini les virements internationaux lents et coûteux !
+1. Sélectionner l'Impact
 
-3. Suivez l'avancement en toute transparence (Le cœur de la confiance)
-C'est ici qu'AgroTrace se démarque. L'argent n'est pas envoyé "à l'aveugle". 
-Le projet est divisé en jalons (étapes de travail, par exemple : Achat des semences, Récolte). 
-À chaque étape, la coopérative doit fournir des preuves (photos, factures) sur la plateforme.
-Une fois la preuve validée par nos équipes, elle est gravée pour toujours sur la blockchain Bitcoin (via la fonction OP_RETURN).
-Personne ne pourra jamais la falsifier. Vous avez la garantie absolue que l'argent sert à travailler la terre.
+Explorez notre cartographie interactive couvrant les 12 départements du Bénin.
+Qu'il s'agisse de Maïs dans le Borgou ou de Coton dans l'Alibori, chaque projet
+est audité et présente des objectifs clairs et un ROI (Retour sur
+Investissement) cible attractif.
 
-4. Le Retour sur Investissement (ROI) Automatisé
-Une fois le projet terminé, le retour sur investissement est calculé et distribué de manière transparente :
-- L'agriculteur se connecte sur son espace et clique sur "Déclarer sa Récolte". Il entre simplement la quantité récoltée (en kg) et le prix de vente moyen.
-- La plateforme calcule automatiquement le chiffre d'affaires total généré.
-- Le contrat intelligent virtuel s'applique immédiatement : 70% pour la coopérative, et 30% de bénéfices pour les investisseurs.
-- Le système effectue un routage automatique des dividendes (les 30%) directement vers les portefeuilles Lightning Network des investisseurs, au prorata de leur investissement initial. Tout est instantané !
+2. Investissement "Frictionless"
 
-Le Contrat Numérique et les Garanties
-Pour protéger toutes les parties prenantes, AgroTrace intègre un système de contrat d'engagement numérique :
-- Un modèle "Crowdfunding" (Financement Participatif) et Règles de Financement : La plateforme permet une flexibilité totale. Un investisseur peut financer plusieurs projets différents pour diversifier ses risques. Inversement, un seul projet agricole peut être financé par des dizaines d'investisseurs différents. Le contrat lie l'agriculteur d'un côté, et la plateforme AgroTrace de l'autre (qui représente légalement l'ensemble des investisseurs). 
-- Génération automatique & Signature : À la seconde même où une coopérative crée un projet sur la plateforme, un contrat est généré. La plateforme crée une empreinte cryptographique (Hash) basée sur les données du projet. Ce Hash fait office de signature numérique irrévocable pour l'agriculteur.
-- Répartition équitable : Le contrat stipule clairement la règle d'or d'AgroTrace : 70% des revenus vont à l'agriculteur, et 30% sont redistribués aux investisseurs. Il prévoit également des clauses de force majeure (catastrophes naturelles) pour sécuriser le modèle.
+Oubliez les délais SWIFT et les frais de 10%. Grâce au Lightning Network,
+investissez instantanément.
 
+  - Rapidité : Paiement en 3 secondes via QR Code.
+  - Coût : Frais de transfert quasi-nuls.
+  - Accessibilité : Micro-investissement possible dès quelques milliers de
+    Satoshis.
 
-Partie 2 : Guide Technique (Installation et Démarrage)
+3. La Preuve de Travail Agricole (Le Cœur du Système)
 
-Cette section est destinée aux développeurs et aux juges du Hackathon souhaitant faire tourner le projet sur leur machine locale.
+L'argent n'est jamais libéré en une seule fois. Le projet est découpé en Jalons
+(Milestones).
+
+  - Action Terrain : Pour débloquer les fonds d'un jalon, la coopérative doit
+    fournir une preuve (Photo + Coordonnées GPS).
+  - Ancrage Blockchain : Une fois validée, l'empreinte numérique (Hash) de cette
+    preuve est gravée sur la blockchain Bitcoin via la fonction OP_RETURN.
+  - Transparence : L'investisseur suit l'évolution de son champ en temps réel
+    sur son dashboard.
+
+4. Partage de Récolte Automatisé
+
+À la fin du cycle, la répartition des richesses est régie par un contrat
+numérique transparent :
+
+  - Récolte : L'agriculteur déclare le rendement et le prix de vente.
+  - Répartition 70/30 : 70% des revenus sont conservés par la coopérative (frais
+    de production + revenus fermiers).
+  - Routage Lightning : Les 30% restants (bénéfices) sont redistribués
+    automatiquement aux portefeuilles Bitcoin des investisseurs, au prorata de
+    leur participation.
+
+🛡️ Confiance Numérique & Garanties
+
+AgroTrace sécurise l'écosystème grâce à un cadre juridique et technique innovant
+:
+
+  - Pacte d'Intégrité : Un contrat d'engagement généré automatiquement pour
+    chaque projet, liant juridiquement la coopérative à la plateforme.
+  - Signature Cryptographique : Chaque validation de jalon est signée par un
+    Hash unique, faisant office de preuve irrévocable devant les parties.
+  - Inclusion Totale : Grâce à notre passerelle SMS/USSD, même les producteurs
+    en zone blanche (sans internet) peuvent soumettre des preuves et participer
+    à l'économie Bitcoin.
+
+🛠️ Partie 2 : Guide Technique (Développeurs & Juges)
+
+Ce guide permet de déployer l'infrastructure GreenBolt Collective en local.
 
 1. Prérequis
-- PHP 8.2 ou supérieur
-- Composer (Gestionnaire de paquets PHP)
-- Node.js & NPM (Pour compiler le design Tailwind)
-- MySQL (Via XAMPP, WAMP, Laravel Herd ou autre)
 
-2. Cloner et configurer le projet
-Ouvrez un terminal et exécutez les commandes suivantes :
+  - Environnement : PHP 8.2+, Node.js 18+, MySQL 8.0.
+  - Outils : Composer, NPM.
 
-Cloner le dépôt :
+2. Installation Rapide
+
+# 1. Cloner le projet
 git clone <URL_DU_DEPOT>
 cd AgroTraceLaravel
 
-Installer les dépendances PHP :
+# 2. Dépendances Back-end & Front-end
 composer install
+npm install && npm run build
 
-Installer les dépendances Frontend (Tailwind CSS) :
-npm install
-
-Créer le fichier d'environnement et générer la clé de sécurité :
+# 3. Environnement
 cp .env.example .env
 php artisan key:generate
 
+3. Base de Données & Seeding
 
-3. Base de données et Fausses Données (Seeding)
-1. Créez une base de données MySQL vierge nommée agrotrace.
-2. Ouvrez le fichier .env à la racine du projet et vérifiez vos identifiants de base de données (par défaut DB_USERNAME=root et DB_PASSWORD= vide).
-3. Construisez la base de données et remplissez-la avec nos données de test (Investisseurs, Coopératives et Projets au Bénin) avec la commande suivante :
+Configurez votre .env avec vos identifiants MySQL, puis initialisez l'écosystème
+béninois :
+
+# Création des tables et injection des 12 régions et comptes de test
 php artisan migrate:fresh --seed
 
+4. Intégration Lightning (LNbits)
 
-4. Démarrer l'application
-Pour que l'interface s'affiche correctement, vous devez d'abord compiler le design avec la commande :
-npm run build
+Pour activer les vrais paiements, renseignez vos clés dans le .env :
 
-(Note : Si vous souhaitez modifier le code en direct, utilisez plutôt npm run dev dans un terminal séparé).
+LNBITS_URL=https://legend.lnbits.com
+LNBITS_API_KEY=votre_cle_invoice_read
 
-Enfin, lancez le serveur web local avec la commande :
+5. Lancement
+
 php artisan serve
 
-Le projet est maintenant accessible sur http://localhost:8000.
+Accédez à l'interface : http://localhost:8000
 
-Comment se connecter pour tester ?
-Grâce à la commande de "seeding" effectuée à l'étape 3, des comptes de test sont déjà créés :
-- Admin : admin@agrotrace.com / Mot de passe : password
-- Investisseur : investor@agrotrace.com / Mot de passe : password
-- Coopérative : coop@agrotrace.com / Mot de passe : password
+🧪 Scénarios de Test (Comptes Démo)
 
-(Vous pouvez également créer de nouveaux comptes librement via la page "S'inscrire").
+Utilisez ces profils pour explorer les trois facettes de la plateforme :
+
+| Rôle               | Email                    | Mot de passe | Action Clé                                    |
+| :----------------- | :----------------------- | :----------- | :-------------------------------------------- |
+| **Administrateur** | `admin@agrotrace.com`    | `password`   | Valider les jalons et ancrer sur Bitcoin.     |
+| **Investisseur**   | `investor@agrotrace.com` | `password`   | Financer un projet via Lightning QR.          |
+| **Coopérative**    | `coop@agrotrace.com`     | `password`   | Créer un projet et soumettre des preuves GPS. |
+
+AgroTrace BTC : Parce que la confiance est le premier engrais de l'agriculture.
+🚀🇧🇯⚡️
