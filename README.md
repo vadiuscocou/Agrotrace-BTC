@@ -126,7 +126,7 @@ Vadius COCOU
 
 **AgroTrace Tech Lead**
 David BOCOSSA
-[Github](https://github.com/Es2290)[LinkedIn](https://www.linkedin.com/in/david-bocossa-b698b2353) · davidbocossa23@gmail.com
+[Github](https://github.com/Es2290) · [LinkedIn](https://www.linkedin.com/in/david-bocossa-b698b2353) · <davidbocossa23@gmail.com>
 
 **AgroTrace Tech Lead**
 Hosanna AKPAKA
