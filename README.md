@@ -130,7 +130,7 @@ David BOCOSSA
 
 **AgroTrace Tech Lead**
 Hosanna AKPAKA
-[GitHub](https://github.com/hosannakpaaka-cpu) · hosannaakpaka@gmail.com
+[GitHub](https://github.com/hosanakpaaka-cpu) · hosannaakpaka@gmail.com
 
 ## Licence
 
